@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<config
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd" >
+    <default>
+        <jetrails_varnish>
+            <general_configuration>
+                <enabled>0</enabled>
+                <servers>127.0.0.1:8080</servers>
+            </general_configuration>
+            <automatic_cache_purge>
+                <product_save>1</product_save>
+                <cms_page_save>1</cms_page_save>
+            </automatic_cache_purge>
+            <cache_exclusion_patterns>
+                <excluded_urls></excluded_urls>
+                <excluded_routes></excluded_routes>
+            </cache_exclusion_patterns>
+        </jetrails_varnish>
+    </default>
+</config>

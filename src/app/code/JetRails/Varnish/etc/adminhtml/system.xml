@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+
+<config
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd" >
+	<system>
+		<tab id="jetrails_tab" translate="label" sortOrder="0" >
+			<label>JetRails</label>
+		</tab>
+		<section
+			id="jetrails_varnish"
+			translate="label"
+			type="text"
+			sortOrder="100"
+			showInDefault="1"
+			showInWebsite="1"
+			showInStore="1" >
+			<label>Varnish Cache</label>
+			<tab>jetrails_tab</tab>
+			<resource>JetRails_Varnish::config</resource>
+			<group
+				id="general_configuration"
+				translate="label"
+				type="text"
+				sortOrder="10"
+				showInDefault="1"
+				showInWebsite="1"
+				showInStore="1" >
+				<label>General Configuration</label>
+				<attribute type="expanded" >1</attribute>
+				<field
+					id="enabled"
+					translate="label"
+					type="select"
+					sortOrder="10"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Enable</label>
+					<source_model>JetRails\Varnish\Model\Config\Options\YesNo</source_model>
+				</field>
+				<field
+					id="servers"
+					translate="label"
+					type="textarea"
+					sortOrder="20"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Varnish Servers</label>
+					<comment>New line separated values, e.g. IP_ADDRESS:PORT_NUMBER</comment>
+				</field>
+			</group>
+			<group
+				id="automatic_cache_purge"
+				translate="label"
+				type="text"
+				sortOrder="20"
+				showInDefault="1"
+				showInWebsite="1"
+				showInStore="1" >
+				<label>Automatic Cache Purge</label>
+				<attribute type="expanded" >1</attribute>
+				<field
+					id="product_save"
+					translate="label"
+					type="select"
+					sortOrder="10"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Product Save</label>
+					<source_model>JetRails\Varnish\Model\Config\Options\YesNo</source_model>
+					<comment>Automatically purge cache for product url whenever product is saved.</comment>
+				</field>
+				<field
+					id="cms_page_save"
+					translate="label"
+					type="select"
+					sortOrder="20"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>CMS Page Save</label>
+					<source_model>JetRails\Varnish\Model\Config\Options\YesNo</source_model>
+					<comment>Automatically purge cache for CMS page whenever page is updated.</comment>
+				</field>
+			</group>
+			<group
+				id="cache_exclusion_patterns"
+				translate="label"
+				type="text"
+				sortOrder="30"
+				showInDefault="1"
+				showInWebsite="1"
+				showInStore="1" >
+				<label>Cache Exclusion Patterns</label>
+				<attribute type="expanded" >1</attribute>
+				<field
+					id="excluded_urls"
+					translate="label"
+					type="textarea"
+					sortOrder="10"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Excluded URLs</label>
+					<comment>New line separated, e.g. /sales/guest/form/</comment>
+				</field>
+				<field
+					id="excluded_routes"
+					translate="label"
+					type="textarea"
+					sortOrder="20"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Excluded Routes</label>
+					<comment>New line separated e.g. cms_page_view</comment>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

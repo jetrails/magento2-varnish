@@ -1,0 +1,22 @@
+{
+	"name": "varnish",
+	"version": "1.0.0",
+	"description": "Magento 2 - Manage Varnish Cache",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jetrails/varnish.git"
+	},
+	"author": "Rafael Grigorian",
+	"license": "UNLICENSED",
+	"bugs": {
+		"url": "https://github.com/jetrails/varnish/issues"
+	},
+	"homepage": "https://github.com/jetrails/varnish#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "^1.0.1",
+		"grunt-contrib-compress": "^1.4.3",
+		"grunt-mkdir": "^1.0.0",
+		"grunt-replace": "^1.0.1"
+	}
+}

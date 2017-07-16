@@ -1,0 +1,39 @@
+<div class="varnish-cache-management" >
+    <h2>
+        <span>Varnish Cache Management</span>
+    </h2>
+    <p class="jetrails-varnish-action-row" >
+        <form method="post" action="http://localhost.com/admin/varnish/purge/url" >
+            <span>Purge By URL:</span>
+            <input type="text" placeholder="URL" name="url" />
+            <button
+                type="submit"
+                class="action-default scalable primary flush-cache-magento" >
+                <span>Purge</span>
+            </button>
+        </form>
+    </p>
+    <p class="jetrails-varnish-action-row" >
+        <span>Purge By Store:</span>
+        <select class="required-entry local-validation admin__control-select _selected" >
+            <option value="1" >Store View #1</option>
+            <option value="2" >Store View #2</option>
+            <option value="3" >Store View #3</option>
+        </select>
+        <button
+            type="button"
+            class="action-default scalable primary flush-cache-magento"
+            onclick="setLocation ('http://localhost.com/admin')" >
+            <span>Purge</span>
+        </button>
+    </p>
+    <p class="jetrails-varnish-action-row" >
+        <span style="margin-right: 324px;" >Purge All:</span>
+        <button
+            type="button"
+            class="action-default scalable primary flush-cache-magento"
+            onclick="setLocation ('http://localhost.com/admin')" >
+            <span>Purge</span>
+        </button>
+    </p>
+</div>
