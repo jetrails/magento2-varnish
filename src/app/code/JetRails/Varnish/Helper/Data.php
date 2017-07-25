@@ -4,31 +4,38 @@
 
 	use JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable;
 	use JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo;
+	use Magento\Framework\App\Cache\TypeListInterface;
+	use Magento\Framework\App\Cache\Type\Config;
 	use Magento\Framework\App\Config\ScopeConfigInterface;
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\App\Helper\AbstractHelper;
 	use Magento\Framework\App\ObjectManager;
-	use Magento\PageCache\Model\Config;
+	use Magento\PageCache\Model\Config as CacheConfig;
 	use Magento\Store\Model\ScopeInterface;
 	use Magento\Store\Model\StoreManagerInterface;
 
 	class Data extends AbstractHelper {
 
+		protected $_cacheTypeList;
 		protected $_configReader;
 		protected $_configWriter;
 		protected $_storeManager;
 
 		public function __construct (
+			TypeListInterface $cacheTypeList,
 			ScopeConfigInterface $configReader,
 			StoreManagerInterface $storeManager,
 			WriterInterface $configWriter
 		) {
+			$this->_cacheTypeList = $cacheTypeList;
 			$this->_configReader = $configReader;
 			$this->_storeManager = $storeManager;
 			$this->_configWriter = $configWriter;
 		}
 
 		private function _getStoreValue ( $path, $scope = ScopeInterface::SCOPE_STORE ) {
+			// Clean the config cache so we go the right values
+			$this->_cacheTypeList->cleanType ( Config::TYPE_IDENTIFIER );
 			// Ask the config reader to get the value in the store scope
 			return $this->_configReader->getValue ( $path, $scope );
 		}
@@ -84,7 +91,7 @@
 			// Get the value of the caching application and save it
 			$enabled = $this->_getStoreValue ( "system/full_page_cache/caching_application" );
 			// Return true if it is set to varnish
-			return $enabled == Config::VARNISH;
+			return $enabled == CacheConfig::VARNISH;
 		}
 
 		public function setCachingApplication ( $value ) {

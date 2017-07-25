@@ -28,29 +28,39 @@
 		}
 
 		public function execute () {
-			// Ask to purge and iterate over responses
-			foreach ( $this->_purger->purgeAll () as $response ) {
-				// Log what we are trying to do
-				$message = [
-					"action" => "purge:all",
-					"status" => $response->status,						
-					"server" => $response->server
-				];
-				$this->_logger->blame ( $this->_data->getLoggedInUserInfo (), $message );
-				// Check to see if response was successful
-				if ( $response->status == 200 ) {
-					// Add success response message
-					$serverHtml = "<font color='#79A22E' ><b>$response->server</b></font>";
-					$msg = "Successfully purged all cache on $serverHtml";
-					$this->messageManager->addSuccess ( $msg );
+			// Check to see if varnish cache is enabled
+			if ( $this->_data->isEnabled () ) {
+				// Ask to purge and iterate over responses
+				foreach ( $this->_purger->purgeAll () as $response ) {
+					// Log what we are trying to do
+					$message = [
+						"action" => "purge:all",
+						"status" => $response->status,						
+						"server" => $response->server
+					];
+					$this->_logger->blame ( $this->_data->getLoggedInUserInfo (), $message );
+					// Check to see if response was successful
+					if ( $response->status == 200 ) {
+						// Add success response message
+						$serverHtml = "<font color='#79A22E' ><b>$response->server</b></font>";
+						$msg = "Successfully purged all cache on $serverHtml";
+						$this->messageManager->addSuccess ( $msg );
+					}
+					else {
+						// Otherwise add an error message
+						$serverHtml = "<font color='#E22626' ><b>$response->server</b></font>";
+						$statusHtml = "<font color='#E22626' ><b>$response->status</b></font>";
+						$msg = "Error Purging all cache on $serverHtml with response code $statusHtml";
+						$this->messageManager->addError ( $msg );
+					}
 				}
-				else {
-					// Otherwise add an error message
-					$serverHtml = "<font color='#E22626' ><b>$response->server</b></font>";
-					$statusHtml = "<font color='#E22626' ><b>$response->status</b></font>";
-					$msg = "Error Purging all cache on $serverHtml with response code $statusHtml";
-					$this->messageManager->addError ( $msg );
-				}
+			}
+			else {
+				// Cache application is not Varnish, warn user
+				$this->messageManager->addError (
+					"Cache application must be set to <b>Varnish Cache</b>, set it by configuring" .
+					" <b>Stores → Advanced → Developer → System → Full Page Cache → Caching Application</b>"
+				);
 			}
 			// Redirect back to cache management page
 			$redirect = $this->resultFactory->create ( ResultFactory::TYPE_REDIRECT );

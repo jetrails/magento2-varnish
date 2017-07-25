@@ -26,10 +26,6 @@
 	    }
 	 
 	    protected function execute ( InputInterface $input, OutputInterface $output ) {
-			// Clear config cache
-			$arrayInput = new ArrayInput ([ "command" => "cache:clean", "types" => [ "config" ] ]);
-			$command = $this->getApplication ()->find ("cache:clean");
-		    $command->run ( $arrayInput, new NullOutput () );
 	    	// Check to see if varnish caching is enabled
 	    	$status = $this->_data->isEnabled ();
 	    	$type = $status ? "<fg=green>Varnish Cache</>" : "<fg=red>Built-in Cache</>";

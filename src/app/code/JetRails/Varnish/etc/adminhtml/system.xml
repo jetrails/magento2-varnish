@@ -50,7 +50,7 @@
 					showInStore="1" >
 					<label>Backend Server</label>
 					<comment><![CDATA[
-						In form of <b>HOST</b>:<b>PORT</b><br>e.g. 127.0.0.1:8080
+						Used strictly for VCL file generation, should be in the form of <b>HOST</b>:<b>PORT</b><br>e.g. 127.0.0.1:8080
 					]]></comment>
 				</field>
 				<field

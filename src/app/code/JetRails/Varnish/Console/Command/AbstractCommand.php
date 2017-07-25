@@ -26,9 +26,19 @@
 		}
 
 		protected function execute ( InputInterface $input, OutputInterface $output ) {
-			$output->writeln ("");
-			$this->runCommand ( $input, $output );
-			$output->writeln ("");
+			$purgeCommand = preg_match ( "/^varnish:purge/", $this->getName () );
+			if ( $purgeCommand && !$this->_data->isEnabled () ) {
+				$output->writeln (
+					"\nCache application must be set to <fg=red>Varnish Cache</>, set it by configuring" .
+					" Stores → Advanced → Developer → System → Full Page Cache → Caching Application.\n" . 
+					"Alternatively, you can run the <fg=red>varnish:cache:enable</> command.\n"
+				);
+			}
+			else {
+				$output->writeln ("");
+				$this->runCommand ( $input, $output );
+				$output->writeln ("");
+			}
 		}
 	 
 	}

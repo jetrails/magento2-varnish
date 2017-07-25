@@ -66,7 +66,7 @@
 				];
 			}
 			// If it is invalid return false
-			return "Invalid URL passed";
+			return "The passed url is invalid";
 		}
 
 		public function validateAndResolveStoreId ( $id ) {

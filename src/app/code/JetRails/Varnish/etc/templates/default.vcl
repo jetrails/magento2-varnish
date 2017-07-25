@@ -6,12 +6,12 @@ import std;
 # For SSL offloading, pass the following header in your proxy server or load balancer: 'X-Forwarded-Proto: https'
 
 backend default {
-	.host = "%_BACKEND_HOST_%";
-	.port = "%_BACKEND_PORT_%";
+	.host = "{{_BACKEND_HOST_}}";
+	.port = "{{_BACKEND_PORT_}}";
 }
 
 acl local {
-	%_ACL_%
+	{{_PURGE_ACL_}}
 }
 
 sub vcl_recv {
@@ -208,6 +208,5 @@ sub vcl_deliver {
 	unset resp.http.Link;
 	// Set some custom header parameters
 	set resp.http.X-Powered-By = "JetRails Magic";
-	# set resp.http.Server = "<script>alert ('hello');</script>";
-	set resp.http.Server = "alert";
+	set resp.http.Server = "JetRails";
 }
