@@ -29,26 +29,53 @@
 				<label>General Configuration</label>
 				<attribute type="expanded" >1</attribute>
 				<field
-					id="enabled"
+					id="debug"
 					translate="label"
 					type="select"
 					sortOrder="10"
 					showInDefault="1"
 					showInWebsite="1"
 					showInStore="1" >
-					<label>Enable</label>
-					<source_model>JetRails\Varnish\Model\Config\Options\YesNo</source_model>
+					<label>Debug Mode</label>
+					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable</source_model>
+					<comment>Response headers will say if there was a hit or miss in varnish cache</comment>
+				</field>
+				<field
+					id="backend"
+					translate="label"
+					type="text"
+					sortOrder="20"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Backend Server</label>
+					<comment><![CDATA[
+						In form of <b>HOST</b>:<b>PORT</b><br>e.g. 127.0.0.1:8080
+					]]></comment>
 				</field>
 				<field
 					id="servers"
 					translate="label"
 					type="textarea"
-					sortOrder="20"
+					sortOrder="30"
 					showInDefault="1"
 					showInWebsite="1"
 					showInStore="1" >
 					<label>Varnish Servers</label>
-					<comment>New line separated values, e.g. IP_ADDRESS:PORT_NUMBER</comment>
+					<comment><![CDATA[
+						New line separated values in form of <b>HOST</b>:<b>PORT</b><br>e.g. 127.0.0.1:80
+					]]></comment>
+				</field>
+				<field
+					id="export"
+					translate="label"
+					type="button"
+					sortOrder="40"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Export Configuration</label>
+					<frontend_model>JetRails\Varnish\Block\Adminhtml\System\Config\Form\Export</frontend_model>
 				</field>
 			</group>
 			<group
@@ -70,7 +97,7 @@
 					showInWebsite="1"
 					showInStore="1" >
 					<label>Product Save</label>
-					<source_model>JetRails\Varnish\Model\Config\Options\YesNo</source_model>
+					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo</source_model>
 					<comment>Automatically purge cache for product url whenever product is saved.</comment>
 				</field>
 				<field
@@ -82,7 +109,7 @@
 					showInWebsite="1"
 					showInStore="1" >
 					<label>CMS Page Save</label>
-					<source_model>JetRails\Varnish\Model\Config\Options\YesNo</source_model>
+					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo</source_model>
 					<comment>Automatically purge cache for CMS page whenever page is updated.</comment>
 				</field>
 			</group>
@@ -97,15 +124,17 @@
 				<label>Cache Exclusion Patterns</label>
 				<attribute type="expanded" >1</attribute>
 				<field
-					id="excluded_urls"
+					id="excluded_url_paths"
 					translate="label"
 					type="textarea"
 					sortOrder="10"
 					showInDefault="1"
 					showInWebsite="1"
 					showInStore="1" >
-					<label>Excluded URLs</label>
-					<comment>New line separated, e.g. /sales/guest/form/</comment>
+					<label>Excluded URL Paths</label>
+					<comment><![CDATA[
+						New line separated, url path must start with <b>/</b> and trailing <b>/</b> will be ignored<br>e.g. /contact_us
+					]]></comment>
 				</field>
 				<field
 					id="excluded_routes"
@@ -116,7 +145,9 @@
 					showInWebsite="1"
 					showInStore="1" >
 					<label>Excluded Routes</label>
-					<comment>New line separated e.g. cms_page_view</comment>
+					<comment><![CDATA[
+						New line separated, left associative<br>e.g. route/module/controller/action
+					]]></comment>
 				</field>
 			</group>
 		</section>

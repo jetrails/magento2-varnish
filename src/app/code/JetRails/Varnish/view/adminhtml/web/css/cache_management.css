@@ -1,64 +1,27 @@
 div.varnish-cache-management {
-	padding-bottom:  									150px;
+	padding-bottom:                                                             15px;
 }
 
-p.jetrails-varnish-action-row {
-	position: 											relative;
-	display: 											inline;
-	float: 												left;
-	height: 											43px;
-	width: 												100%;
-	margin-bottom: 										0;
-	padding: 											5px 15px;
-	transition: 										all 200ms;
-	box-sizing: 										border-box;
+div.varnish-cache-management > form {
+	margin-bottom:                                                              10px;
 }
 
-p.jetrails-varnish-action-row > form {
-	position: 											relative;
-	display: 											inline;
-	float: 												left;
-	height: 											43px;
-	width: 												100%;
-	margin-bottom: 										0;
-	padding: 											5px 15px;
-	transition: 										all 200ms;
-	box-sizing: 										border-box;
+div.varnish-cache-management > form > span {
+	position:                                                                   relative;
+	display:                                                                    inline;
+	float:                                                                      left;
+	width:                                                                      125px;
+	line-height:                                                                33px;
+	margin:                                                                     0;
 }
 
-p.jetrails-varnish-action-row > form > span {
-	position: 											relative;
-	display: 											inline;
-	float: 												left;
-	width: 												300px;
-	line-height: 										33px;
-	margin: 											0;
+div.varnish-cache-management > form > input[type=text] {
+	min-width:                                                                  300px;
+	margin-right:                                                               20px;
+	padding:                                                                    5px 10px;
 }
 
-p.jetrails-varnish-action-row > form > input[type=text] {
-	min-width: 											300px;
-	margin-right: 										20px;
-	padding: 											5px 10px;
-}
-
-p.jetrails-varnish-action-row > form > select {
-	min-width: 											300px;
-	margin-right: 										20px;
-}
-
-p.jetrails-varnish-action-row > form > button.action-default > span {
-	color: 												#FFF;
-}
-
-p.jetrails-varnish-action-row > form > button:hover {
-	background: 	#dbdbdb;
-}
-
-p.jetrails-varnish-action-row > form > button.action-default:hover {
-	background: 										#ba4000;
-}
-
-p.jetrails-varnish-action-row:hover {
-	background: 										#F5F5F5;
-
+div.varnish-cache-management > form > select {
+	min-width:                                                                  300px;
+	margin-right:                                                               20px;
 }

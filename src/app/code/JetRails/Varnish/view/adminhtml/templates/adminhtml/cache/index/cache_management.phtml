@@ -1,39 +1,22 @@
+<?php $data = $this->helper ("JetRails\Varnish\Helper\Data"); ?>
 <div class="varnish-cache-management" >
-    <h2>
-        <span>Varnish Cache Management</span>
-    </h2>
-    <p class="jetrails-varnish-action-row" >
-        <form method="post" action="http://localhost.com/admin/varnish/purge/url" >
-            <span>Purge By URL:</span>
-            <input type="text" placeholder="URL" name="url" />
-            <button
-                type="submit"
-                class="action-default scalable primary flush-cache-magento" >
-                <span>Purge</span>
-            </button>
-        </form>
-    </p>
-    <p class="jetrails-varnish-action-row" >
+    <h2>Varnish Cache Management</h2>
+    <form method="post" action="<?= $block->getUrl ('varnish/purge/url') ?>" >
+        <span>Purge By URL:</span>
+        <input type="text" placeholder="URL" name="url" />
+        <button type="submit" ><span>Purge</span></button>
+    </form>
+    <form method="post" action="<?= $block->getUrl ('varnish/purge/store') ?>" >
         <span>Purge By Store:</span>
-        <select class="required-entry local-validation admin__control-select _selected" >
-            <option value="1" >Store View #1</option>
-            <option value="2" >Store View #2</option>
-            <option value="3" >Store View #3</option>
+        <select name="id" class="admin__control-select" >
+            <?php foreach ( $data->getStoreViews () as $storeView ): ?>
+                <option value="<?= $storeView->id ?>" ><?= $storeView->name ?></option>
+            <?php endforeach ?>
         </select>
-        <button
-            type="button"
-            class="action-default scalable primary flush-cache-magento"
-            onclick="setLocation ('http://localhost.com/admin')" >
-            <span>Purge</span>
-        </button>
-    </p>
-    <p class="jetrails-varnish-action-row" >
+        <button type="submit" ><span>Purge</span></button>
+    </form>
+    <form method="post" action="<?= $block->getUrl ('varnish/purge/all') ?>" >
         <span style="margin-right: 324px;" >Purge All:</span>
-        <button
-            type="button"
-            class="action-default scalable primary flush-cache-magento"
-            onclick="setLocation ('http://localhost.com/admin')" >
-            <span>Purge</span>
-        </button>
-    </p>
+        <button type="submit" ><span>Purge</span></button>
+    </form>
 </div>

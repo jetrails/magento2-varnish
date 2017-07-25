@@ -1,13 +1,12 @@
 <?php
 
-	namespace JetRails\Varnish\Model\Config\Options;
+	namespace JetRails\Varnish\Model\Adminhtml\Config\Options;
 
 	class YesNo implements \Magento\Framework\Option\ArrayInterface {
 
- 		/**
-		 * 
-		 * @return
-		 */
+		const YES = 1;
+		const NO = 0;
+
 		public function toOptionArray () {
 			// Return the options in array form (label/value)
 			return [

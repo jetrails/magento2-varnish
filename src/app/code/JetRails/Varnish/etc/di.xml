@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<config
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd" >
+	<type name="Magento\Framework\Console\CommandList" >
+		<arguments>
+			<argument name="commands" xsi:type="array" >
+				<item name="cache:status" xsi:type="object" >JetRails\Varnish\Console\Command\Cache\Status</item>
+				<item name="cache:enable" xsi:type="object" >JetRails\Varnish\Console\Command\Cache\Enable</item>
+				<item name="cache:disable" xsi:type="object" >JetRails\Varnish\Console\Command\Cache\Disable</item>
+				<item name="config:show" xsi:type="object" >JetRails\Varnish\Console\Command\Config\Show</item>
+				<item name="purge:url" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Url</item>
+				<item name="purge:store" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Store</item>
+				<item name="purge:all" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\All</item>
+			</argument>
+		</arguments>
+	</type>
+    <type name="JetRails\Varnish\Logger\Handler" >
+        <arguments>
+            <argument name="filesystem" xsi:type="object" >Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="JetRails\Varnish\Logger\Logger" >
+        <arguments>
+            <argument name="name" xsi:type="string" >purge</argument>
+            <argument name="handlers"  xsi:type="array" >
+                <item name="system" xsi:type="object" >JetRails\Varnish\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

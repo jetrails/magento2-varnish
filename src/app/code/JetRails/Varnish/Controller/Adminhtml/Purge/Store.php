@@ -9,7 +9,7 @@
 	use Magento\Framework\App\Action\Context;
 	use Magento\Framework\Controller\ResultFactory;
 
-	class Url extends Action {
+	class Store extends Action {
 
 		protected $_data;
 		protected $_logger;
@@ -28,17 +28,17 @@
 		}
 
 		public function execute () {
-			// Load passed url parameter and validate it
-			$url = $this->getRequest ()->getParam ("url");
-			$url = $this->_purger->validateUrl ( $url );
-			// If an object was returned, then it was a valid url
+			// Load passed store id and validate it's existence
+			$storeId = intval ( $this->getRequest ()->getParam ("id") );
+			// Make sure store id is valid
+			$url = $this->_purger->validateAndResolveStoreId ( $storeId );
 			if ( gettype ( $url ) == "object" ) {
 				// Ask to purge and iterate over responses
-				foreach ( $this->_purger->purgeUrl ( $url ) as $response ) {
+				foreach ( $this->_purger->purgeStore ( $url ) as $response ) {
 					// Log what we are trying to do
 					$message = [
 						"status" => $response->status,
-						"action" => "purge:url",
+						"action" => "purge:store",
 						"target" => $response->target,
 						"server" => $response->server
 					];
@@ -46,23 +46,23 @@
 					// Check to see if response was successful
 					if ( $response->status == 200 ) {
 						// Add success response message
-						$targetHtml = "<font color='#79A22E' ><b>$response->target</b></font>";
+						$storeHtml = "<font color='#79A22E' ><b>$response->target</b></font>";
 						$serverHtml = "<font color='#79A22E' ><b>$response->server</b></font>";
-						$message = "Successfully purged url $targetHtml on $serverHtml";
-						$this->messageManager->addSuccess ( $message );
+						$msg = "Successfully purged store view $storeHtml on $serverHtml";
+						$this->messageManager->addSuccess ( $msg );
 					}
 					else {
 						// Otherwise add an error message
-						$targetHtml = "<font color='#E22626' ><b>$response->target</b></font>";
+						$storeHtml = "<font color='#E22626' ><b>$response->target</b></font>";
 						$serverHtml = "<font color='#E22626' ><b>$response->server</b></font>";
 						$statusHtml = "<font color='#E22626' ><b>$response->status</b></font>";
-						$message = "Error purging url $targetHtml on $serverHtml with response code $statusHtml";
-						$this->messageManager->addError ( $message );
+						$msg = "Error Purging store view $storeHtml on $serverHtml with response code $statusHtml";
+						$this->messageManager->addError ( $msg );
 					}
 				}
 			}
-			// Otherwise an error was returned in the form of a string
-			else { $this->messageManager->addError ( $url ); }
+			// If it is invalid, warn caller
+			else { $this->messageManager->addError ( "Invalid store id '$storeId' passed" ); }
 			// Redirect back to cache management page
 			$redirect = $this->resultFactory->create ( ResultFactory::TYPE_REDIRECT );
         	return $redirect->setPath ("adminhtml/cache/index");

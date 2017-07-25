@@ -1,7 +1,5 @@
 <?php
 
-\Magento\Framework\Component\ComponentRegistrar::register (
-	\Magento\Framework\Component\ComponentRegistrar::MODULE,
-	"JetRails_Varnish",
-	__DIR__
-);
+	use Magento\Framework\Component\ComponentRegistrar;
+
+	ComponentRegistrar::register ( ComponentRegistrar::MODULE, "JetRails_Varnish", __DIR__ );

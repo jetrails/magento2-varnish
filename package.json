@@ -16,7 +16,9 @@
 	"devDependencies": {
 		"grunt": "^1.0.1",
 		"grunt-contrib-compress": "^1.4.3",
+		"grunt-contrib-watch": "^1.0.0",
 		"grunt-mkdir": "^1.0.0",
-		"grunt-replace": "^1.0.1"
+		"grunt-replace": "^1.0.1",
+		"grunt-rsync": "^2.0.1"
 	}
 }

@@ -9,7 +9,7 @@
 	<body>
 		<referenceContainer name="content" >
 			<block
-				class="JetRails\Varnish\Block\Adminhtml\Cache\Index\CacheManagement"
+				class="Magento\Framework\View\Element\Template"
 				name="jetrails_varnish"
 				as="jetrails_varnish"
 				template="JetRails_Varnish::adminhtml/cache/index/cache_management.phtml"
