@@ -16,12 +16,16 @@
 	        ->addArgument ( "url", InputArgument::REQUIRED, "What URL do you want to purge?" );
 	    }
 	 
-	    protected function runCommand ( InputInterface $input, OutputInterface $output ) {
+	    protected function runCommand ( InputInterface $input ) {
 			// Load passed url parameter and validate it
 			$url = $input->getArgument ("url");
 			$url = $this->_purger->validateUrl ( $url );
 			// If an object was returned, then it was a valid url
 			if ( gettype ( $url ) == "object" ) {
+				$total = 0;
+				$success = 0;
+				$payload = [];
+
 				// Ask to purge and iterate over responses
 				foreach ( $this->_purger->purgeUrl ( $url ) as $response ) {
 					// Log what we are trying to do
@@ -37,21 +41,24 @@
 						// Add success response message
 						$targetHtml = "<fg=green>$response->target</>";
 						$serverHtml = "<fg=green>$response->server</>";
-						$message = "Successfully purged url $targetHtml on $serverHtml";
-						$output->writeln ( $message );
+						$message = "<bg=green>           </>\n<bg=green;fg=white;options=bold>  SUCCESS  </> purged url $targetHtml on $serverHtml\n<bg=green>           </>";
+						array_push ( $payload, $message );
+						$success++;
 					}
 					else {
 						// Otherwise add an error message
 						$targetHtml = "<fg=red>$response->target</>";
 						$serverHtml = "<fg=red>$response->server</>";
 						$statusHtml = "<fg=red>$response->status</>";
-						$message = "Error purging url $targetHtml on $serverHtml with response code $statusHtml";
-						$output->writeln ( $message );
+						$message = "<bg=red>           </>\n<bg=red;fg=white;options=bold>   ERROR   </> couldn't purge url $targetHtml on $serverHtml with response code $statusHtml\n<bg=red>           </>";
+						array_push ( $payload, $message );
 					}
+					$total++;
 				}
+				return [ "status" => $success > 0 && $total - $success > 0 ? null : $total == $success, "message" => "purged url from $success/$total varnish servers", "payload" => $payload ];
 			}
 			// Otherwise an error was returned in the form of a string
-			else { $output->writeln ( "<fg=red>" . $url . "</>" ); }
+			return [ "status" => false, "message" => $url ];
 	    }
 	 
 	}

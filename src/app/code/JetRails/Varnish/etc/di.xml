@@ -6,13 +6,12 @@
 	<type name="Magento\Framework\Console\CommandList" >
 		<arguments>
 			<argument name="commands" xsi:type="array" >
-				<item name="cache:status" xsi:type="object" >JetRails\Varnish\Console\Command\Cache\Status</item>
-				<item name="cache:enable" xsi:type="object" >JetRails\Varnish\Console\Command\Cache\Enable</item>
-				<item name="cache:disable" xsi:type="object" >JetRails\Varnish\Console\Command\Cache\Disable</item>
-				<item name="config:show" xsi:type="object" >JetRails\Varnish\Console\Command\Config\Show</item>
+				<item name="status" xsi:type="object" >JetRails\Varnish\Console\Command\Status</item>
+				<item name="status:set" xsi:type="object" >JetRails\Varnish\Console\Command\Status\Set</item>
+				<!-- <item name="config:show" xsi:type="object" >JetRails\Varnish\Console\Command\Config\Show</item> -->
 				<item name="purge:url" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Url</item>
-				<item name="purge:store" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Store</item>
-				<item name="purge:all" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\All</item>
+				<!-- <item name="purge:store" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Store</item> -->
+				<!-- <item name="purge:all" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\All</item>  -->
 			</argument>
 		</arguments>
 	</type>
