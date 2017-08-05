@@ -17,7 +17,6 @@
 		protected $_fileFactory;
 		protected $_moduleReader;
 		protected $_readFactory;
-		protected $_response;
 
 		public function __construct (
 			Context $context,
@@ -26,12 +25,11 @@
 			ReadFactory $readFactory,
 			Reader $moduleReader
 		) {
+			parent::__construct ( $context );
 			$this->_data = $data;
 			$this->_fileFactory = $fileFactory;
 			$this->_moduleReader = $moduleReader;
 			$this->_readFactory = $readFactory;
-			$this->_response = $context->getResponse ();
-			parent::__construct ( $context );
 		}
 
 		private function _returnError ( $message ) {
@@ -77,7 +75,7 @@
 			$filename = "default.vcl";
 			$content = strtr ( $template, $replacements );
 			// Serve the file to the client
-			return $this->_fileFactory->create ( $filename, $content, DirectoryList::VAR_DIR );
+			return $this->_fileFactory->create ( $filename, $content, DirectoryList::TMP );
 		}
 
 	}

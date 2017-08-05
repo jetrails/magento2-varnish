@@ -20,18 +20,28 @@ sub vcl_recv {
 		}
 
 		if ( req.http.JetRails-Purge-Type ) {
-			if ( req.http.JetRails-Purge-Type == "url" && req.http.JetRails-Host && req.http.JetRails-Url ) {
+
+			if ( req.http.JetRails-Purge-Type == "url" &&
+				 req.http.JetRails-Host &&
+				 req.http.JetRails-Url
+			) {
 				ban ( "req.http.host == " + req.http.JetRails-Host + " && req.url == " + req.http.JetRails-Url );
 				return ( synth ( 200, "Purged" ) );
 			}
-			elsif ( req.http.JetRails-Purge-Type == "store" && req.http.JetRails-Host && req.http.JetRails-Url ) {
+
+			elsif ( req.http.JetRails-Purge-Type == "store" &&
+				    req.http.JetRails-Host &&
+				    req.http.JetRails-Url
+			) {
 				ban ( "req.http.host == " + req.http.JetRails-Host + " && req.url ~ " + req.http.JetRails-Url );
 				return ( synth ( 200, "Purged" ) );
 			}
+
 			elsif ( req.http.JetRails-Purge-Type == "all" ) {
 				ban ("req.http.host ~ .*");
 				return ( synth ( 200, "Purged" ) );
 			}
+			
 		}
 
 		# Otherwise it is a malformed request and requires more information

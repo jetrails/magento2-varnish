@@ -21,10 +21,10 @@
 			Logger $logger,
 			Purger $purger 
 		) {
+			parent::__construct ( $context );
 			$this->_data = $data;
 			$this->_logger = $logger;
 			$this->_purger = $purger;
-			parent::__construct ( $context );
 		}
 
 		public function execute () {

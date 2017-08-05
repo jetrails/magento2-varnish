@@ -1,9 +1,8 @@
 # varnish
 Magento 2 - Manage Varnish Cache
 
-sudo varnishd -a 127.0.0.1:80 -T 127.0.0.1:6082 -f /usr/local/etc/varnish/default.vcl -s file,/tmp,500M
-sudo apachectl restart
-sudo pkill varnishd
+
+sudo apachectl restart && sudo pkill varnishd && sleep 2 ; sudo varnishd -a 127.0.0.1:80 -T 127.0.0.1:6082 -f /usr/local/etc/varnish/default.vcl -s file,/tmp,500M
 
 varnishadm "vcl.load default /usr/local/etc/varnish/default.vcl"
 varnishadm "vcl.use default"
@@ -23,3 +22,5 @@ primer:queue
 primer:queue:show
 
 
+
+THings that need to be added, hole punching based on block path

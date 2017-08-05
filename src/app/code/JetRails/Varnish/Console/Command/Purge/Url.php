@@ -9,10 +9,12 @@
 
 	class Url extends AbstractCommand {
 
+		protected $_runIfDisabled = false;
+
 	    protected function configure () {
 	    	// Register the command and set the arguments 
 	        $this->setName ("varnish:purge:url")
-	        ->setDescription ("Purge specific url from Varnish cache")
+	        ->setDescription ("Purge specific url from varnish cache")
 	        ->addArgument ( "url", InputArgument::REQUIRED, "What URL do you want to purge?" );
 	    }
 	 
@@ -22,10 +24,10 @@
 			$url = $this->_purger->validateUrl ( $url );
 			// If an object was returned, then it was a valid url
 			if ( gettype ( $url ) == "object" ) {
+				// Initialize the accounting variables and payload array
 				$total = 0;
 				$success = 0;
 				$payload = [];
-
 				// Ask to purge and iterate over responses
 				foreach ( $this->_purger->purgeUrl ( $url ) as $response ) {
 					// Log what we are trying to do
@@ -41,7 +43,7 @@
 						// Add success response message
 						$targetHtml = "<fg=green>$response->target</>";
 						$serverHtml = "<fg=green>$response->server</>";
-						$message = "<bg=green>           </>\n<bg=green;fg=white;options=bold>  SUCCESS  </> purged url $targetHtml on $serverHtml\n<bg=green>           </>";
+						$message = "successfully purged url $targetHtml on $serverHtml";
 						array_push ( $payload, $message );
 						$success++;
 					}
@@ -50,12 +52,18 @@
 						$targetHtml = "<fg=red>$response->target</>";
 						$serverHtml = "<fg=red>$response->server</>";
 						$statusHtml = "<fg=red>$response->status</>";
-						$message = "<bg=red>           </>\n<bg=red;fg=white;options=bold>   ERROR   </> couldn't purge url $targetHtml on $serverHtml with response code $statusHtml\n<bg=red>           </>";
+						$message  = "couldn't purge url $targetHtml on $serverHtml ";
+						$message .= "with response code $statusHtml";
 						array_push ( $payload, $message );
 					}
 					$total++;
 				}
-				return [ "status" => $success > 0 && $total - $success > 0 ? null : $total == $success, "message" => "purged url from $success/$total varnish servers", "payload" => $payload ];
+				// Return every intermediate result as one
+				return [
+					"status" => $success > 0 && $total - $success > 0 ? null : $total == $success,
+					"message" => "purged url from $success/$total varnish servers",
+					"payload" => $payload
+				];
 			}
 			// Otherwise an error was returned in the form of a string
 			return [ "status" => false, "message" => $url ];

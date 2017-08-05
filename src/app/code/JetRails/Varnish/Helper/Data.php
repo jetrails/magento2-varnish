@@ -6,7 +6,7 @@
 	use JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo;
 	use Magento\Framework\App\Cache\TypeListInterface;
 	use Magento\Framework\App\Cache\Type\Config;
-	use Magento\Framework\App\Config\ScopeConfigInterface;
+	use Magento\Framework\App\Config\ScopeConfigInterface; 
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\App\Helper\AbstractHelper;
 	use Magento\Framework\App\ObjectManager;

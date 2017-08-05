@@ -13,7 +13,7 @@
 	    protected function configure () {
 	    	// Register the command and set the arguments 
 	        $this->setName ("varnish:status")
-	        ->setDescription ("Check to see if what caching application is being used");
+	        ->setDescription ("Check to see what caching application is being used");
 	    }
 	 
 	    protected function runCommand ( InputInterface $input ) {

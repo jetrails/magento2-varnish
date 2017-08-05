@@ -77,6 +77,17 @@
 					<label>Export Configuration</label>
 					<frontend_model>JetRails\Varnish\Block\Adminhtml\System\Config\Form\Export</frontend_model>
 				</field>
+				<field
+					id="link"
+					translate="label"
+					type="button"
+					sortOrder="50"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Link To Purge Varnish Cache</label>
+					<frontend_model>JetRails\Varnish\Block\Adminhtml\System\Config\Form\Link</frontend_model>
+				</field>
 			</group>
 			<group
 				id="automatic_cache_purge"

@@ -14,7 +14,7 @@
 	    protected function configure () {
 	    	// Register the command and set the arguments 
 	        $this->setName ("varnish:status:set")
-	        ->setDescription ("Check to see if what caching application is being used")
+	        ->setDescription ("Set what caching application is being used")
 	        ->addArgument ( "state", InputArgument::REQUIRED, "Should we enable varnish cache?" );
 	    }
 	 

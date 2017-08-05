@@ -9,6 +9,8 @@
 
 	class Store extends AbstractCommand {
 	 
+		protected $_runIfDisabled = false;
+
 		private function _findStoreViewById ( $storeViews, $id ) {
 			foreach ( $storeViews as $storeView ) {
 				if ( $storeView->id == $id ) {
@@ -18,40 +20,46 @@
 			return false;
 		}
 
-	    protected function configure () {
-	    	// Register the command and set the arguments 
-	        $this->setName ("varnish:purge:store")
-	        ->setDescription ("Purge varnish cache based on store view")
-	        ->addArgument ( "store", InputArgument::OPTIONAL, "Store view id to purge" );
-	    }
+		protected function configure () {
+			// Register the command and set the arguments 
+			$this->setName ("varnish:purge:store")
+			->setDescription ("Purge varnish cache based on store view")
+			->addArgument ( "store", InputArgument::OPTIONAL, "Store view id to purge" );
+		}
 	 
-	    protected function runCommand ( InputInterface $input, OutputInterface $output ) {
-	    	$store = $input->getArgument ("store");
-	    	$storeViews = $this->_data->getStoreViews ();
-	    	if ( !$store ) {
-	    		$output->writeln ("");
-	    		$header = sprintf (
-    				"<options=bold>%-8s</><options=bold>%-35s</> <options=bold>%-35s</>",
-    				"ID",
-    				"Store View Name",
-    				"Store View Base Url"
-    			);
-    			$output->writeln ( $header );
-    			foreach ( $storeViews as $storeView ) {
-	    			$msg = sprintf (
-	    				"<fg=green>%-8s</>%-35s %-35s",
-	    				$storeView->id,
-	    				$storeView->name,
-	    				$storeView->url
-	    			);
-	    			$output->writeln ( $msg );
-	    		}
-	    		$output->writeln ("");
-	    	}
-	    	else if ( $storeView = $this->_findStoreViewById ( $storeViews, $store ) ) {
+		protected function runCommand ( InputInterface $input ) {
+			$store = $input->getArgument ("store");
+			$storeViews = $this->_data->getStoreViews ();
+			if ( !$store ) {
+				$payload = [ sprintf (
+					"<options=bold>%-16s</><options=bold>%-35s</> <options=bold>%-35s</>",
+					"ID",
+					"Store View Name",
+					"Store View Base Url"
+				)];
+				foreach ( $storeViews as $storeView ) {
+					$msg = sprintf (
+						"<fg=green>%-16s</>%-35s %-35s",
+						$storeView->id,
+						$storeView->name,
+						$storeView->url
+					);
+					array_push ( $payload, $msg );
+				}
+				return [
+					"status" => false,
+					"message" => "please pass store view id as parameter, store views are below:",
+					"payload" => $payload
+				];
+			}
+			else if ( $storeView = $this->_findStoreViewById ( $storeViews, $store ) ) {
 				// Make sure store id is valid
 				$url = $this->_purger->validateAndResolveStoreId ( $store );
 				if ( gettype ( $url ) == "object" ) {
+					// Initialize the accounting variables and payload array
+					$total = 0;
+					$success = 0;
+					$payload = [];
 					// Ask to purge and iterate over responses
 					foreach ( $this->_purger->purgeStore ( $url ) as $response ) {
 						// Log what we are trying to do
@@ -68,7 +76,8 @@
 							$storeHtml = "<fg=green>$response->target</>";
 							$serverHtml = "<fg=green>$response->server</>";
 							$msg = "Successfully purged store view $storeHtml on $serverHtml";
-							$output->writeln ( $msg );
+							array_push ( $payload, $msg );
+							$success++;
 						}
 						else {
 							// Otherwise add an error message
@@ -76,14 +85,21 @@
 							$serverHtml = "<fg=red>$response->server</>";
 							$statusHtml = "<fg=red>$response->status</>";
 							$msg = "Error Purging store view $storeHtml on $serverHtml with response code $statusHtml";
-							$output->writeln ( $msg );
+							array_push ( $payload, $msg );
 						}
+						// Increment the total accounting variable
+						$total++;
 					}
+					// Return every intermediate result as one
+					return [
+						"status" => $success > 0 && $total - $success > 0 ? null : $total == $success,
+						"message" => "purged store view cache from $success/$total varnish servers",
+						"payload" => $payload
+					];
 				}
-	    	}
-	    	else {
-	    		$output->writeln ("\n<fg=red>Error</>: Could not find store view with id $store\n");
-	    	}
-	    }
+			}
+			// Return an error message
+			return [ "status" => false, "message" => "could not find specified store view" ];
+		}
 	 
 	}
