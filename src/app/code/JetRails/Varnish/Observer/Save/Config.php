@@ -9,22 +9,56 @@
 	use Magento\Framework\Message\ManagerInterface;
 	use Magento\Store\Model\ScopeInterface;
 
+	/**
+	 * Config.php - This observer event is triggered whenever the store config is saved for this
+	 * module.  It then validates all the fields and makes sure no invalid server information, urls,
+	 * or routes are saved in the database.  If invalid ones are passed, then an error message is
+	 * attached to the caller's session.
+	 * @version         1.0.0
+	 * @package         JetRails® Varnish
+	 * @category        Save
+	 * @author          Rafael Grigorian - JetRails®
+	 * @copyright       JetRails®, all rights reserved
+	 */
 	class Config implements ObserverInterface {
 
+		/**
+		 * These internal data members include instances of helper classes that are injected into
+		 * the class using dependency injection on runtime.
+		 * @var         ManagerInterface        _message        Instance of ManagerInterface
+		 * @var         ScopeConfigInterface    _configReader   Instance of ScopeConfigInterface
+		 * @var         WriterInterface         _configWriter   Instance of WriterInterface
+		 */
 		protected $_message;
 		protected $_configReader;
 		protected $_configWriter;
 
+		/**
+		 * This constructor is overloaded from the parent class in order to use dependency injection
+		 * to get the dependency classes that we need for this module's command actions to execute.
+		 * @param       ManagerInterface        message         Instance of ManagerInterface
+		 * @param       ScopeConfigInterface    configReader    Instance of ScopeConfigInterface
+		 * @param       WriterInterface         configWriter    Instance of WriterInterface
+		 */
 		public function __construct (
 			ManagerInterface $message,
 			ScopeConfigInterface $configReader,
 			WriterInterface $configWriter
 		) {
+			// Save the injected class instances
 			$this->_message = $message;
 			$this->_configReader = $configReader;
 			$this->_configWriter = $configWriter;
 		}
 
+		/**
+		 * This method takes in a string of line separated varnish server values with host and port
+		 * values separated with a colon.  It then loops through each one and it validates the
+		 * values.  If all is valid the exact (trimmed) values will be saved in the store config.
+		 * Otherwise an error message is added to the caller's session and the entry is ignored.
+		 * @param       String              servers             Line separated server information
+		 * @return      String                                  Only valid server entries
+		 */
 		private function _validateServers ( $servers ) {
 			// Clean the value first
 			$servers = explode ( "\n", trim ( $servers ) );
@@ -40,12 +74,12 @@
 					$port = intval ( $matches [ 2 ] );
 					// Set validation flags for validation
 					$validPort = $port > 0 && $port <= 65535;
-            		$validIp = filter_var ( $host, FILTER_VALIDATE_IP );
-            		$validDomain1 = strpos ( $host, "/" ) === false;
-            		$validDomain2 = filter_var ( "http://" . $host, FILTER_VALIDATE_URL );
-            		$validDomain = $validDomain1 && $validDomain2;
-            		// If the entry is valid, then return the value
-            		if ( $validPort && ( $validIp || $validDomain ) ) return trim ( $server );
+					$validIp = filter_var ( $host, FILTER_VALIDATE_IP );
+					$validDomain1 = strpos ( $host, "/" ) === false;
+					$validDomain2 = filter_var ( "http://" . $host, FILTER_VALIDATE_URL );
+					$validDomain = $validDomain1 && $validDomain2;
+					// If the entry is valid, then return the value
+					if ( $validPort && ( $validIp || $validDomain ) ) return trim ( $server );
 				}
 				// Add a warning and return nothing
 				return $this->_message->addWarning (
@@ -58,6 +92,14 @@
 			return implode ( "\n", $servers );
 		}
 
+		/**
+		 * This method takes in a string that contains the server's hostname and port separated with
+		 * a colon.  If the entry is valid, then it is saved to the database.  Otherwise a message
+		 * is added to the caller's session and it is reported that an invalid string was attempted
+		 * to be saved.
+		 * @param       String              backend             HOST:PORT backend config string
+		 * @return      String                                  Valid backend server string
+		 */
 		private function _validateBackend ( $backend ) {
 			// Clean the backend string
 			$backend = trim ( $backend );
@@ -68,12 +110,12 @@
 				$port = intval ( $matches [ 2 ] );
 				// Set validation flags for validation
 				$validPort = $port > 0 && $port <= 65535;
-        		$validIp = filter_var ( $host, FILTER_VALIDATE_IP );
-        		$validDomain1 = strpos ( $host, "/" ) === false;
-        		$validDomain2 = filter_var ( "http://" . $host, FILTER_VALIDATE_URL );
-        		$validDomain = $validDomain1 && $validDomain2;
-        		// If the entry is valid, then return the value
-        		if ( $validPort && ( $validIp || $validDomain ) ) return $backend;
+				$validIp = filter_var ( $host, FILTER_VALIDATE_IP );
+				$validDomain1 = strpos ( $host, "/" ) === false;
+				$validDomain2 = filter_var ( "http://" . $host, FILTER_VALIDATE_URL );
+				$validDomain = $validDomain1 && $validDomain2;
+				// If the entry is valid, then return the value
+				if ( $validPort && ( $validIp || $validDomain ) ) return $backend;
 			}
 			// If it is empty then just accept it
 			else if ( $backend == "" ) return;
@@ -83,6 +125,13 @@
 			) ? "" : "";
 		}
 
+		/**
+		 * This method takes in a line separated list of routes.  It then validates each one.  If
+		 * they are valid then they are saved in the store config.  Otherwise an error message is
+		 * attached to the caller's session.
+		 * @param       String              routes              Unvalidated routes (line separated)
+		 * @return      String                                  Valid route entries
+		 */
 		private function _validateRoutes ( $routes ) {
 			// Clean the value first
 			$routes = explode ( "\n", trim ( $routes ) );
@@ -105,6 +154,13 @@
 			return implode ( "\n", $routes );
 		}
 
+		/**
+		 * This method takes in a line separated list of URLs.  It then validates each one.  If they
+		 * are valid then they are saved in the store config.  Otherwise an error message is
+		 * attached to the caller's session.
+		 * @param       String              URLs                Unvalidated URLs (line separated)
+		 * @return      String                                  Valid URL entries
+		 */
 		private function _validateUrls ( $urls ) {
 			// Clean the value first
 			$urls = explode ( "\n", trim ( $urls ) );
@@ -125,6 +181,13 @@
 			return implode ( "\n", $urls );
 		}
 
+		/**
+		 * This method is required because this class implements the ObserverInterface class.  This
+		 * method gets executed when the registered event is fired for this class.  The event that
+		 * this method will file for can be found in the events.xml file.
+		 * @param       Observer            observer            Observer with event information
+		 * @return      void
+		 */
 		public function execute ( Observer $observer ) {
 			// Define the group path and the store scope
 			$groupGC = "jetrails_varnish/general_configuration";

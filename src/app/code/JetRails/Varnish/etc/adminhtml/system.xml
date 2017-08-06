@@ -50,7 +50,9 @@
 					showInStore="1" >
 					<label>Backend Server</label>
 					<comment><![CDATA[
-						Used strictly for VCL file generation, should be in the form of <b>HOST</b>:<b>PORT</b><br>e.g. 127.0.0.1:8080
+						Used strictly for VCL file generation, should be in the form of
+						<b>HOST</b>:<b>PORT</b>
+						<br>e.g. 127.0.0.1:8080
 					]]></comment>
 				</field>
 				<field
@@ -63,7 +65,9 @@
 					showInStore="1" >
 					<label>Varnish Servers</label>
 					<comment><![CDATA[
-						New line separated values in form of <b>HOST</b>:<b>PORT</b><br>e.g. 127.0.0.1:80
+						New line separated values in form of
+						<b>HOST</b>:<b>PORT</b>
+						<br>e.g. 127.0.0.1:80
 					]]></comment>
 				</field>
 				<field
@@ -144,7 +148,8 @@
 					showInStore="1" >
 					<label>Excluded URL Paths</label>
 					<comment><![CDATA[
-						New line separated, url path must start with <b>/</b> and trailing <b>/</b> will be ignored<br>e.g. /contact_us
+						New line separated, url path must start with <b>/</b> and trailing <b>/</b> will be ignored
+						<br>e.g. /contact_us
 					]]></comment>
 				</field>
 				<field
@@ -157,7 +162,8 @@
 					showInStore="1" >
 					<label>Excluded Routes</label>
 					<comment><![CDATA[
-						New line separated, left associative<br>e.g. route/module/controller/action
+						New line separated, left associative
+						<br>e.g. route/module/controller/action
 					]]></comment>
 				</field>
 			</group>

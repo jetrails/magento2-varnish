@@ -9,17 +9,42 @@
 	use Magento\Framework\App\Action\Context;
 	use Magento\Framework\Controller\ResultFactory;
 
+	/**
+	 * All.php - This class is a controller action and when it is triggered, it is responsible for
+	 * looping through all the saved varnish cache servers and purging all the cache for all the
+	 * urls that are stored with those varnish cache servers.
+	 * @version         1.0.0
+	 * @package         JetRails® Varnish
+	 * @category        Purge
+	 * @author          Rafael Grigorian - JetRails®
+	 * @copyright       JetRails®, all rights reserved
+	 */
 	class All extends Action {
 
+		/**
+		 * These internal data members include instances of helper classes that are injected into
+		 * the class using dependency injection on runtime.
+		 * @var         Data                _data               Instance of the Data class
+		 * @var         Logger              _logger             Instance of the Logger class
+		 * @var         Purger              _purger             Instance of the Purger class
+		 */
 		protected $_data;
 		protected $_logger;
 		protected $_purger;
 
+		/**
+		 * This constructor is overloaded from the parent class in order to use dependency injection
+		 * to get the dependency classes that we need for this module's command actions to execute.
+		 * @param       Context             $context            The context of the caller
+		 * @param       Data                $data               Instance of the Data helper class
+		 * @param       Logger              $logger             Instance of the Logger class
+		 * @param       Purger              $purger             Instance of the Purger class
+		 */
 		public function __construct (
 			Context $context,
 			Data $data,
 			Logger $logger,
-			Purger $purger 
+			Purger $purger
 		) {
 			parent::__construct ( $context );
 			$this->_data = $data;
@@ -27,6 +52,12 @@
 			$this->_purger = $purger;
 		}
 
+		/**
+		 * This method is overloaded because the parent class Action requires it.  This method is
+		 * triggered whenever the controller is reached.  It handles all the logic of the controller
+		 * action.
+		 * @return      ResultFactory                           ResultFactory redirect on success
+		 */
 		public function execute () {
 			// Check to see if varnish cache is enabled
 			if ( $this->_data->isEnabled () ) {
@@ -35,7 +66,7 @@
 					// Log what we are trying to do
 					$message = [
 						"action" => "purge:all",
-						"status" => $response->status,						
+						"status" => $response->status,
 						"server" => $response->server
 					];
 					$this->_logger->blame ( $this->_data->getLoggedInUserInfo (), $message );

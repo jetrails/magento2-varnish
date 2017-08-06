@@ -4,19 +4,44 @@
 
 	use JetRails\Varnish\Console\Command\AbstractCommand;
 	use Symfony\Component\Console\Input\InputInterface;
-	use Symfony\Component\Console\Output\OutputInterface;
 
+	/**
+	 * All.php - This class inherits from the AbstractCommand.  This command contacts all the
+	 * configured varnish cache servers and asks them to flush all the cache for all urls.
+	 * @version         1.0.0
+	 * @package         JetRails® Varnish
+	 * @category        Purge
+	 * @author          Rafael Grigorian - JetRails®
+	 * @copyright       JetRails®, all rights reserved
+	 */
 	class All extends AbstractCommand {
-	
+
+		/**
+		 * This internal data member defines if the action should be run if the feature is disabled
+		 * in the store config.
+		 * @var         Boolean             _runIfDisabled      Execute method if feature isn't on?
+		 */
 		protected $_runIfDisabled = false;
 
-	    protected function configure () {
-	    	// Register the command and set the arguments 
-	        $this->setName ("varnish:purge:all")
-	        ->setDescription ("Purge all cache from varnish servers");
-	    }
-	 
-	    protected function runCommand ( InputInterface $input ) {
+		/**
+		 * This method is overloaded because of the Command class that was originally defined the
+		 * Symfony package.  Inside we set the command name and set the command description.
+		 * @return      void
+		 */
+		protected function configure () {
+			// Register the command and set the arguments
+			$this->setName ("varnish:purge:all")
+			->setDescription ("Purge all cache from varnish servers");
+		}
+
+		/**
+		 * This method is defined because it is required by the abstract parent class.  It takes in
+		 * an input interface and actually does all the work.  It then returns an object that
+		 * defines the response that will be displayed in the console.
+		 * @param       InputInterface      input               The input interface with the console
+		 * @return      Object
+		 */
+		protected function runCommand ( InputInterface $input ) {
 			// Initialize the accounting variables and payload array
 			$total = 0;
 			$success = 0;
@@ -26,7 +51,7 @@
 				// Log what we are trying to do
 				$message = [
 					"action" => "purge:all",
-					"status" => $response->status,						
+					"status" => $response->status,
 					"server" => $response->server
 				];
 				$this->_logger->blame ( $this->_data->getLoggedInUserInfo (), $message );
@@ -53,6 +78,6 @@
 				"message" => "purged all cache from $success/$total varnish servers",
 				"payload" => $payload
 			];
-	    }
-	 
+		}
+
 	}

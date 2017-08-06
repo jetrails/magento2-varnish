@@ -4,19 +4,51 @@
 
 	use JetRails\Varnish\Helper\Data;
 	use Magento\Framework\App\Helper\AbstractHelper;
-	use Magento\Framework\App\ObjectManager;
 	use Magento\Store\Model\StoreManagerInterface;
 
+	/**
+	 * Purger.php - This class is encapsulated with purge specific methods in order to use them on
+	 * the backend controllers and the console commands.  These methods specifically purge single
+	 * URLs, store views, and even purge all cache from a list of given varnish servers.
+	 * @version         1.0.0
+	 * @package         JetRails® Varnish
+	 * @category        Helper
+	 * @author          Rafael Grigorian - JetRails®
+	 * @copyright       JetRails®, all rights reserved
+	 */
 	class Purger extends AbstractHelper {
 
+		/**
+		 * These internal data members include instances of helper classes that are injected into
+		 * the class using dependency injection on runtime.
+		 * @var         Data                _data               Instance of the Data helper class
+		 * @var         Data                _storeManager       Instance of the StoreManager
+		 */
 		protected $_data;
 		protected $_storeManager;
 
+		/**
+		 * This constructor is overloaded from the parent class in order to use dependency injection
+		 * to get the dependency classes that we need for this module's command actions to execute.
+		 * @var         Data                data                Instance of the Data helper class
+		 * @var         Data                storeManager        Instance of the StoreManager
+		 */
 		public function __construct ( Data $data, StoreManagerInterface $storeManager ) {
+			// Save the injected class instances
 			$this->_data = $data;
 			$this->_storeManager = $storeManager;
 		}
 
+		/**
+		 * This method is private and it is used to traverse through all the configured varnish
+		 * servers.  It then constructs the request and adds the additional header parameters into
+		 * the request packet.  It sends this packet to all the configured varnish servers and
+		 * requests a purge of cache.  It records all the varnish server's responses and returns
+		 * them to the caller.
+		 * @param       Object              url                 Host / path URL definition
+		 * @param       Array               additionalHeaders   Optional additional packet params
+		 * @return      Array                                   All varnish server responses
+		 */
 		private function _purge ( $url, $additionalHeaders = [] ) {
 			// Initialize responses
 			$responses = [];
@@ -42,15 +74,22 @@
 				curl_close ( $handle );
 				// Append response to response url
 				array_push ( $responses, ( object ) [
-					"server" 	=> $varnishServer->host . ":" . $varnishServer->port,
-					"target" 	=> $url->host . $url->path,
-					"status" 	=> $responseCode
+					"server"    => $varnishServer->host . ":" . $varnishServer->port,
+					"target"    => $url->host . $url->path,
+					"status"    => $responseCode
 				]);
 			}
 			// Return all the responses
 			return $responses;
 		}
 
+		/**
+		 * This method takes in a URL and validates it.  Once we determine it is valid, we return an
+		 * object that consists of the URL's hostname and path.  If there was an error with the URL,
+		 * then an error message is passed back
+		 * @param       String              url                 The url to validate and examine
+		 * @return      Object|String                           Object on success, else error string
+		 */
 		public function validateUrl ( $url ) {
 			// Prepare url for validation
 			$url = trim ( $url );
@@ -60,15 +99,20 @@
 				// If the trailing slash is missing from domain name, add it
 				if ( count ( $matches ) == 3 ) $matches [ 3 ] = "/";
 				// Return the extracted pieces of the url
-				return ( object ) [
-					"host" => $matches [ 2 ],
-					"path" => $matches [ 3 ]
-				];
+				return ( object ) [ "host" => $matches [ 2 ], "path" => $matches [ 3 ] ];
 			}
 			// If it is invalid return false
 			return "The passed url is invalid";
 		}
 
+		/**
+		 * This method takes in a store view id and it makes sure that that store view id exists
+		 * within the store.  If there is an error then a string is returned.  Otherwise, an object
+		 * is returned that specifies the base URL of the store view and it is broken down into host
+		 * and path definitions.
+		 * @param       Integer             id                  The store view id to examine
+		 * @return      Object|String                           Object on success, else error string
+		 */
 		public function validateAndResolveStoreId ( $id ) {
 			// Load all the store views
 			$stores = $this->_storeManager->getStores ();
@@ -95,6 +139,13 @@
 			return "Invalid store id passed";
 		}
 
+		/**
+		 * This method takes in an object that defines a URL's host and path as data members and it
+		 * uses those values to construct a packet for the varnish servers.  This packet will purge
+		 * all urls that are part of this store view.
+		 * @param       Object              url                 Host / path object for store view
+		 * @return      Array                                   Responses from varnish servers
+		 */
 		public function purgeStore ( $url ) {
 			// Set the additional headers for this request
 			$typeParam = "JetRails-Purge-Type: store";
@@ -105,6 +156,13 @@
 			return $this->_purge ( $url, $additionalHeaders );
 		}
 
+		/**
+		 * This method takes in an object that defines a URL's host and path as data members and it
+		 * uses those values to construct a packet for the varnish servers.  This packet will purge
+		 * all urls that match the passed url exactly.
+		 * @param       Object              url                 Host / path object for URL
+		 * @return      Array                                   Responses from varnish servers
+		 */
 		public function purgeUrl ( $url ) {
 			// Set the additional headers for this request
 			$typeParam = "JetRails-Purge-Type: url";
@@ -115,6 +173,12 @@
 			return $this->_purge ( $url, $additionalHeaders );
 		}
 
+		/**
+		 * This method takes in an object that defines a URL's host and path as data members and it
+		 * uses those values to construct a packet for the varnish servers.  This packet will purge
+		 * all urls that are stored in that varnish server.
+		 * @return      Array                                   Responses from varnish servers
+		 */
 		public function purgeAll () {
 			// Make a url object and define the additional headers for this request
 			$url = ( object ) [ "host" => null, "path" => "/" ];

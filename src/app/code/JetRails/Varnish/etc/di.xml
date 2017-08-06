@@ -7,24 +7,24 @@
 		<arguments>
 			<argument name="commands" xsi:type="array" >
 				<item name="varnish:purge:all" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\All</item>
-				<item name="varnish:purge:store" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Store</item> 
-				<item name="varnish:purge:url" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Url</item>				
+				<item name="varnish:purge:store" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Store</item>
+				<item name="varnish:purge:url" xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Url</item>
 				<item name="varnish:status" xsi:type="object" >JetRails\Varnish\Console\Command\Status</item>
 				<item name="varnish:status:set" xsi:type="object" >JetRails\Varnish\Console\Command\Status\Set</item>
 			</argument>
 		</arguments>
 	</type>
-    <type name="JetRails\Varnish\Logger\Handler" >
-        <arguments>
-            <argument name="filesystem" xsi:type="object" >Magento\Framework\Filesystem\Driver\File</argument>
-        </arguments>
-    </type>
-    <type name="JetRails\Varnish\Logger\Logger" >
-        <arguments>
-            <argument name="name" xsi:type="string" >purge</argument>
-            <argument name="handlers"  xsi:type="array" >
-                <item name="system" xsi:type="object" >JetRails\Varnish\Logger\Handler</item>
-            </argument>
-        </arguments>
-    </type>
+	<type name="JetRails\Varnish\Logger\Handler" >
+		<arguments>
+			<argument name="filesystem" xsi:type="object" >Magento\Framework\Filesystem\Driver\File</argument>
+		</arguments>
+	</type>
+	<type name="JetRails\Varnish\Logger\Logger" >
+		<arguments>
+			<argument name="name" xsi:type="string" >purge</argument>
+			<argument name="handlers"  xsi:type="array" >
+				<item name="system" xsi:type="object" >JetRails\Varnish\Logger\Handler</item>
+			</argument>
+		</arguments>
+	</type>
 </config>
