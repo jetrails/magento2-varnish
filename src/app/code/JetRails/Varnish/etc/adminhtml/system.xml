@@ -41,21 +41,6 @@
 					<comment>Response headers will say if there was a hit or miss in varnish cache</comment>
 				</field>
 				<field
-					id="backend"
-					translate="label"
-					type="text"
-					sortOrder="20"
-					showInDefault="1"
-					showInWebsite="1"
-					showInStore="1" >
-					<label>Backend Server</label>
-					<comment><![CDATA[
-						Used strictly for VCL file generation, should be in the form of
-						<b>HOST</b>:<b>PORT</b>
-						<br>e.g. 127.0.0.1:8080
-					]]></comment>
-				</field>
-				<field
 					id="servers"
 					translate="label"
 					type="textarea"
@@ -69,17 +54,6 @@
 						<b>HOST</b>:<b>PORT</b>
 						<br>e.g. 127.0.0.1:80
 					]]></comment>
-				</field>
-				<field
-					id="export"
-					translate="label"
-					type="button"
-					sortOrder="40"
-					showInDefault="1"
-					showInWebsite="1"
-					showInStore="1" >
-					<label>Export Configuration</label>
-					<frontend_model>JetRails\Varnish\Block\Adminhtml\System\Config\Form\Export</frontend_model>
 				</field>
 				<field
 					id="link"

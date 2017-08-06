@@ -9,7 +9,7 @@
 	 * Link.php - This block alongside the template is used to render a link to the cache management
 	 * page in the magento store backend.  This block is also referenced as a frontend model in the
 	 * system.xml file.
-	 * @version         1.0.0
+	 * @version         1.1.0
 	 * @package         JetRails® Varnish
 	 * @category        Form
 	 * @author          Rafael Grigorian - JetRails®

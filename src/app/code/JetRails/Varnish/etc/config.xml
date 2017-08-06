@@ -7,7 +7,6 @@
 		<jetrails_varnish>
 			<general_configuration>
 				<debug>0</debug>
-				<backend>127.0.0.1:8080</backend>
 				<servers>127.0.0.1:80</servers>
 			</general_configuration>
 			<automatic_cache_purge>

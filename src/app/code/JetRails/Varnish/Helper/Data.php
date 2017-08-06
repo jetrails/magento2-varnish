@@ -18,7 +18,7 @@
 	 * Data.php - This helper class is responsible for data retrieval and configuration.  It can use
 	 * the store config and the Magento session information to return data about the user and about
 	 * the module configuration on the store scope.
-	 * @version         1.0.0
+	 * @version         1.1.0
 	 * @package         JetRails® Varnish
 	 * @category        Helper
 	 * @author          Rafael Grigorian - JetRails®
@@ -214,26 +214,6 @@
 					"url" => $store->getBaseUrl ()
 				];
 			}, array_values ( $this->_storeManager->getStores () ) );
-		}
-
-		/**
-		 * This method simply gets the current value for the backend server and returns it in a
-		 * formatted and validated object.
-		 * @return      Object                                  Backend server object (port & host)
-		 */
-		public function getBackendServer () {
-			// Get the value from magento
-			$path = "jetrails_varnish/general_configuration/backend";
-			$backend = $this->_getStoreValue ( $path );
-			// If the backend field is empty then return false
-			if ( trim ( $backend ) == "" ) return false;
-			// Explode the backend value and separate host from port
-			$backend = explode ( ":", $backend );
-			// Return as an object
-			return ( object ) [
-				"host" => $backend [ 0 ],
-				"port" => intval ( $backend [ 1 ] )
-			];
 		}
 
 		/**

@@ -14,7 +14,7 @@
 	 * module.  It then validates all the fields and makes sure no invalid server information, urls,
 	 * or routes are saved in the database.  If invalid ones are passed, then an error message is
 	 * attached to the caller's session.
-	 * @version         1.0.0
+	 * @version         1.1.0
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
@@ -93,39 +93,6 @@
 		}
 
 		/**
-		 * This method takes in a string that contains the server's hostname and port separated with
-		 * a colon.  If the entry is valid, then it is saved to the database.  Otherwise a message
-		 * is added to the caller's session and it is reported that an invalid string was attempted
-		 * to be saved.
-		 * @param       String              backend             HOST:PORT backend config string
-		 * @return      String                                  Valid backend server string
-		 */
-		private function _validateBackend ( $backend ) {
-			// Clean the backend string
-			$backend = trim ( $backend );
-			// Check to make sure it has a colon
-			if ( preg_match ( "/^(.+):([1-9][0-9]+)$/i", $backend, $matches ) ) {
-				// Extract the host and the port
-				$host = $matches [ 1 ];
-				$port = intval ( $matches [ 2 ] );
-				// Set validation flags for validation
-				$validPort = $port > 0 && $port <= 65535;
-				$validIp = filter_var ( $host, FILTER_VALIDATE_IP );
-				$validDomain1 = strpos ( $host, "/" ) === false;
-				$validDomain2 = filter_var ( "http://" . $host, FILTER_VALIDATE_URL );
-				$validDomain = $validDomain1 && $validDomain2;
-				// If the entry is valid, then return the value
-				if ( $validPort && ( $validIp || $validDomain ) ) return $backend;
-			}
-			// If it is empty then just accept it
-			else if ( $backend == "" ) return;
-			// Add a warning and return nothing
-			return $this->_message->addWarning (
-				"Ignoring invalid backend server: <font color='#EB5202' ><b>$backend</b></font>"
-			) ? "" : "";
-		}
-
-		/**
 		 * This method takes in a line separated list of routes.  It then validates each one.  If
 		 * they are valid then they are saved in the store config.  Otherwise an error message is
 		 * attached to the caller's session.
@@ -195,17 +162,14 @@
 			$storeScope = ScopeInterface::SCOPE_STORE;
 			// Get the original values that were updated
 			$servers = $this->_configReader->getValue ( "$groupGC/servers", $storeScope );
-			$backend = $this->_configReader->getValue ( "$groupGC/backend", $storeScope );
 			$routes = $this->_configReader->getValue ( "$groupCEP/excluded_routes", $storeScope );
 			$urls = $this->_configReader->getValue ( "$groupCEP/excluded_url_paths", $storeScope );
 			// Define new values after validating
 			$validatedServers = $this->_validateServers ( $servers );
-			$validatedBackend = $this->_validateBackend ( $backend );
 			$validatedRoutes = $this->_validateRoutes ( $routes );
 			$validatedUrls = $this->_validateUrls ( $urls );
 			// Save the values back into database
 			$this->_configWriter->save ( "$groupGC/servers", $validatedServers );
-			$this->_configWriter->save ( "$groupGC/backend", $validatedBackend );
 			$this->_configWriter->save ( "$groupCEP/excluded_routes", $validatedRoutes );
 			$this->_configWriter->save ( "$groupCEP/excluded_url_paths", $validatedUrls );
 		}
