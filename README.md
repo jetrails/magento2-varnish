@@ -1,26 +1,15 @@
-# varnish
-Magento 2 - Manage Varnish Cache
+Magento 2 - Varnish Module
+=============================
+This module helps manage varnish cache for your Magento 2 store.  It supports a multiple varnish server configuration.  Purge requests can be sent to all these servers in order to purge a specific URL, a whole store view, or simply to purge all the cache that is contained in said varnish server.
 
+## Installation
 
-sudo apachectl restart && sudo pkill varnishd && sleep 2 ; sudo varnishd -a 127.0.0.1:80 -T 127.0.0.1:6082 -f /usr/local/etc/varnish/default.vcl -s file,/tmp,500M
+To install, look into the 'releases' tab and download the version that you want.  Alternatively, the latest version should be packaged in the __dist__ folder of this repository.  Simply place that file in the base install directory of your Magento store and unzip the contents of that folder.  Finally, run `php ./bin/magento setup:upgrade` inside your base Magento install directory.  This will configure the module and everything should be installed after the command finished running.
 
-varnishadm "vcl.load default /usr/local/etc/varnish/default.vcl"
-varnishadm "vcl.use default"
+##  Command Line Interface
 
+Please run `php ./bin/magento list` inside your base install directory of your Magento store.  Once the command runs, look under the __varnish__ category.  There you will find all the possible CLI commands that can be run along with a description of what each one does.
 
-varnish:config
-varnish:status
-varnish:status:set <enable / disable>
-varnish:purge:url <url>
-varnish:purge:store <store_view_id>
-varnish:purge:all
+## Things to add in the future
 
-primer:config
-primer:status
-primer:status:set <enable / disable>
-primer:queue
-primer:queue:show
-
-
-
-THings that need to be added, hole punching based on block path
+-   Implement varnish hole punching based on block class path
