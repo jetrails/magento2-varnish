@@ -108,7 +108,7 @@ sub vcl_backend_response {
 		 beresp.http.JetRails-No-Cache-Blame-Url ||
 		 beresp.http.JetRails-No-Cache-Blame-Module
 	) {
-		return ( pass );
+		return ( deliver );
 	}
 
 	if (beresp.http.content-type ~ "text") {
