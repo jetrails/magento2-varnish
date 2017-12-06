@@ -38,7 +38,7 @@ services:
         image: jetrails/magento:2.x-cron
         hostname: cron.magento
         working_dir: /var/www/html
-        command: /run-cron.sh
+        command: run-cron.sh
         volumes_from:
             - filesystem
         environment:
