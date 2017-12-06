@@ -2,11 +2,13 @@
 
 	namespace JetRails\Varnish\Observer\Save;
 
+	use JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable;
 	use Magento\Framework\App\Config\ScopeConfigInterface;
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\Event\Observer;
 	use Magento\Framework\Event\ObserverInterface;
 	use Magento\Framework\Message\ManagerInterface;
+	use Magento\PageCache\Model\Config as CacheConfig;
 	use Magento\Store\Model\ScopeInterface;
 
 	/**
@@ -14,7 +16,7 @@
 	 * module.  It then validates all the fields and makes sure no invalid server information, urls,
 	 * or routes are saved in the database.  If invalid ones are passed, then an error message is
 	 * attached to the caller's session.
-	 * @version         1.1.0
+	 * @version         1.1.1
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
@@ -172,6 +174,12 @@
 			$this->_configWriter->save ( "$groupGC/servers", $validatedServers );
 			$this->_configWriter->save ( "$groupCEP/excluded_routes", $validatedRoutes );
 			$this->_configWriter->save ( "$groupCEP/excluded_url_paths", $validatedUrls );
+			// Change caching type based on status
+			$status = $this->_configReader->getValue ( "$groupGC/status", $storeScope );
+			$this->_configWriter->save (
+				"system/full_page_cache/caching_application",
+				$status == EnableDisable::ENABLED ? CacheConfig::VARNISH : CacheConfig::BUILT_IN
+			);
 		}
 
 	}

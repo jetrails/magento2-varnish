@@ -15,6 +15,12 @@
 			instance="JetRails\Varnish\Observer\Save\Config"
 		/>
 	</event>
+	<event name="admin_system_config_changed_section_system" >
+		<observer
+			name="jetrails_varnish_save_config"
+			instance="JetRails\Varnish\Observer\Save\Cache"
+		/>
+	</event>
 	<event name="catalog_product_save_after" >
 		<observer
 			name="jetrails_varnish_save_product"

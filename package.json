@@ -1,6 +1,6 @@
 {
 	"name": "Varnish",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Magento 2 - Manage Varnish Cache",
 	"repository": {
 		"type": "git",
@@ -22,12 +22,5 @@
 		"grunt-mkdir": "^1.0.0",
 		"grunt-replace": "^1.0.1",
 		"grunt-rsync": "^2.0.1"
-	},
-	"jetrailsDependencies": [],
-	"staging": {
-		"port": "22",
-		"user": "raffi",
-		"host": "localhost",
-		"dest": "~/Site/"
 	}
 }

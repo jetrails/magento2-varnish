@@ -10,7 +10,7 @@
 	 * Purger.php - This class is encapsulated with purge specific methods in order to use them on
 	 * the backend controllers and the console commands.  These methods specifically purge single
 	 * URLs, store views, and even purge all cache from a list of given varnish servers.
-	 * @version         1.1.0
+	 * @version         1.1.1
 	 * @package         JetRails® Varnish
 	 * @category        Helper
 	 * @author          Rafael Grigorian - JetRails®

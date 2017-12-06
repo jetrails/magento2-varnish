@@ -29,6 +29,18 @@
 				<label>General Configuration</label>
 				<attribute type="expanded" >1</attribute>
 				<field
+					id="status"
+					translate="label"
+					type="select"
+					sortOrder="0"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Status</label>
+					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable</source_model>
+					<comment>This will change your caching application</comment>
+				</field>
+				<field
 					id="debug"
 					translate="label"
 					type="select"
