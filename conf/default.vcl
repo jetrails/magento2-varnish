@@ -179,6 +179,6 @@ sub vcl_deliver {
 	unset resp.http.X-Varnish;
 	unset resp.http.Via;
 	unset resp.http.Link;
-	set resp.http.X-Powered-By = "JetRails Magic";
+	set resp.http.X-Powered-By = "Magic";
 	set resp.http.Server = "JetRails";
 }
