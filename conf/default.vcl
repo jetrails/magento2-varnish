@@ -3,12 +3,13 @@ vcl 4.0;
 import std;
 
 backend default {
-	.host = "{{_BACKEND_HOST_}}";
-	.port = "{{_BACKEND_PORT_}}";
+    .host = "127.0.0.1";
+    .port = "8080";
 }
 
 acl local {
-	{{_PURGE_ACL_}}
+    "127.0.0.1";
+    "localhost";
 }
 
 sub vcl_recv {
