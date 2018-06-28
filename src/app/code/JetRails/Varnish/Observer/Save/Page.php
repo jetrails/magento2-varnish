@@ -13,7 +13,7 @@
 	/**
 	 * Page.php - This observer is triggered when the CMS page save event is fired.  It then finds
 	 * the url of the CMS page and sends a URL purge request to the configured varnish servers.
-	 * @version         1.1.1
+	 * @version         1.1.2
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
@@ -72,7 +72,8 @@
 			if ( $this->_data->isEnabled () && $this->_data->shouldPurgeAfterCmsPageSave () ) {
 				// Get the page url
 				$pageUrl = $this->_page->getPageUrl ( $observer->getPage ()->getId () );
-				$pageUrl = reset ( ( explode ( "?", $pageUrl ) ) );
+				$temp = explode ( "?", $pageUrl );
+				$pageUrl = reset ( $temp );
 				// Validate the url
 				$url = $this->_purger->validateUrl ( $pageUrl );
 				// Loop though responses

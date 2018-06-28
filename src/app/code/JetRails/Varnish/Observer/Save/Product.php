@@ -13,7 +13,7 @@
 	/**
 	 * Product.php - This observer is triggered when the product save event is fired.  It then finds
 	 * the url of the product and sends a URL purge request to the configured varnish servers.
-	 * @version         1.1.1
+	 * @version         1.1.2
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
@@ -74,7 +74,8 @@
 				// Get the product and the product url specific to store view
 				$product = $observer->getProduct ();
 				$productUrl = $this->_productHelper->getProductUrl ( $product->getId () );
-				$productUrl = reset ( ( explode ( "/key/", $productUrl ) ) );
+				$temp = explode ( "/key/", $productUrl );
+				$productUrl = reset ( $temp );
 				// Validate the url
 				$url = $this->_purger->validateUrl ( $productUrl );
 				// Loop though responses, after purging store (store so we can use starts with for url)

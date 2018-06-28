@@ -16,7 +16,7 @@
 	 * module.  It then validates all the fields and makes sure no invalid server information, urls,
 	 * or routes are saved in the database.  If invalid ones are passed, then an error message is
 	 * attached to the caller's session.
-	 * @version         1.1.1
+	 * @version         1.1.2
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
