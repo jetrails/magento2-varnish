@@ -1,0 +1,19 @@
+{
+	"name": "jetrails/magento2-varnish",
+	"description": "Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend",
+	"type": "project",
+	"license": "UNLICENSED",
+	"authors": [
+		{
+			"name": "Rafael Grigorian",
+			"email": "me@raffi.io"
+		}
+	],
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "http://composer.magerepo.com/"
+		}
+	],
+	"require": {}
+}
