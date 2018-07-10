@@ -19,6 +19,7 @@
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
+	 * @license         MIT https://opensource.org/licenses/MIT
 	 */
 	class Cache implements ObserverInterface {
 

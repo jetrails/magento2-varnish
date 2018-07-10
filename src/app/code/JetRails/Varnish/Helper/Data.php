@@ -23,6 +23,7 @@
 	 * @category        Helper
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
+	 * @license         MIT https://opensource.org/licenses/MIT
 	 */
 	class Data extends AbstractHelper {
 

@@ -1,14 +1,14 @@
 {
 	"name": "Varnish",
 	"version": "1.1.2",
-	"description": "Magento 2 - Manage Varnish Cache",
+	"description": "Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/jetrails/varnish.git"
 	},
 	"company": "JetRails®",
 	"author": "Rafael Grigorian",
-	"license": "UNLICENSED",
+	"license": "MIT",
 	"copyright": "JetRails®, all rights reserved",
 	"bugs": {
 		"url": "https://github.com/jetrails/varnish/issues"

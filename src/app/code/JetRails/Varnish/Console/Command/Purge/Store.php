@@ -17,6 +17,7 @@
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
+	 * @license         MIT https://opensource.org/licenses/MIT
 	 */
 	class Store extends AbstractCommand {
 
