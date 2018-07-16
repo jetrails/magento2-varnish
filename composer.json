@@ -1,7 +1,8 @@
 {
 	"name": "jetrails/magento2-varnish",
 	"description": "Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend",
-	"type": "project",
+	"type": "magento2-module",
+	"version": "1.1.2",
 	"license": "MIT",
 	"authors": [
 		{
@@ -12,8 +13,14 @@
 	"repositories": [
 		{
 			"type": "composer",
-			"url": "http://composer.magerepo.com/"
+			"url": "https://composer.magerepo.com/"
 		}
 	],
-	"require": {}
+	"require": {
+		"magento/magento-composer-installer": "*"
+	},
+	"autoload": {
+		"psr-4": { "JetRails\\Varnish\\": "src/app/code/JetRails/Varnish" },
+		"files": [ "src/app/code/JetRails/Varnish/registration.php" ]
+	}
 }
