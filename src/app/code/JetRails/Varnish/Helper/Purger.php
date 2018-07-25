@@ -5,6 +5,8 @@
 	use JetRails\Varnish\Helper\Data;
 	use Magento\Framework\App\Helper\AbstractHelper;
 	use Magento\Store\Model\StoreManagerInterface;
+	use Magento\UrlRewrite\Model\UrlFinderInterface;
+	use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 
 	/**
 	 * Purger.php - This class is encapsulated with purge specific methods in order to use them on
@@ -24,20 +26,56 @@
 		 * the class using dependency injection on runtime.
 		 * @var         Data                _data               Instance of the Data helper class
 		 * @var         Data                _storeManager       Instance of the StoreManager
+		 *
+		 *
+		 *
+		 *
 		 */
 		protected $_data;
 		protected $_storeManager;
+		protected $_urlFinder;
 
 		/**
 		 * This constructor is overloaded from the parent class in order to use dependency injection
 		 * to get the dependency classes that we need for this module's command actions to execute.
 		 * @var         Data                data                Instance of the Data helper class
 		 * @var         Data                storeManager        Instance of the StoreManager
+		 *
 		 */
-		public function __construct ( Data $data, StoreManagerInterface $storeManager ) {
+		public function __construct (
+			Data $data,
+			StoreManagerInterface $storeManager,
+			UrlFinderInterface $urlFinder
+		) {
 			// Save the injected class instances
 			$this->_data = $data;
 			$this->_storeManager = $storeManager;
+			$this->_urlFinder = $urlFinder;
+		}
+
+		/**
+		 * This is a helper method that helps resolve url rewrites. It looks for all url rewrites with a
+		 * given target path. It then uses this target path to find all request paths that lead to said
+		 * target path. This search is done recursively, so if the rewrite is not direct and instead there
+		 * are many rewrites that lead to the target path, we will find them all. This method is also
+		 * acyclic therefore if there is a cycle in the rewrite logic, we won't fall for it.
+		 * @param       string              targetPath          Target path to look for
+		 * @param       array               visited             Already seen target paths
+		 * @return      array                                   Request paths that lead to target path
+		 */
+		public function getUrlRewrites ( $targetPath, $visited = [] ) {
+			// Base case, if already seen then return
+			if ( in_array ( $targetPath, $visited ) ) return [];
+			array_push ( $visited, $targetPath );
+			// Find all rewrites with target path and recursively find the derivatives
+			$rewrites = $this->_urlFinder->findAllByData ( [ UrlRewrite::TARGET_PATH => $targetPath ] );
+			$rewrites = array_map ( function ( $i ) { return $i->getRequestPath (); }, $rewrites );
+			$results = array_merge ( [ $targetPath ], $rewrites );
+			foreach ( $rewrites as $rewrite ) {
+				$results = array_merge ( $results, $this->getUrlRewrites ( $rewrite, $visited ) );
+			}
+			// Return a unique set of rewrites
+			return array_unique ( $results );
 		}
 
 		/**

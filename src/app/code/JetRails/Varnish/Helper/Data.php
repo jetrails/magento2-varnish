@@ -80,7 +80,7 @@
 			$type = "Unknown";
 			$os = "Unknown";
 			// Extract the operating system
-			if (preg_match ( "/linux/i", $agent ) ) $os = "Linux";
+			if ( preg_match ( "/linux/i", $agent ) ) $os = "Linux";
 			if ( preg_match ( "/macintosh|mac os x/i", $agent ) ) $os = "Mac";
 			if ( preg_match ( "/windows|win32/i", $agent ) ) $os = "Windows";
 			// Extract the browser type
