@@ -14,7 +14,7 @@
 	 * then looks at the URL and route of the controller action in question, and it checks the store
 	 * config for excluded URLs and routes.  If any match, then a header parameter is set in order
 	 * not to cache the page.
-	 * @version         1.1.2
+	 * @version         1.1.3
 	 * @package         JetRails® Varnish
 	 * @category        Observer
 	 * @author          Rafael Grigorian - JetRails®

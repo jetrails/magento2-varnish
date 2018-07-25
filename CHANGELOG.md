@@ -12,3 +12,6 @@
 
 ## Version 1.1.2
 -	Fixed GH-4, issue of passing non-variable to reset function
+
+## Version 1.1.3
+-	Fixed GH-7, issue of invalidating config cache too often
