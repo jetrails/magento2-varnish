@@ -4,8 +4,6 @@
 
 	use JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable;
 	use JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo;
-	use Magento\Framework\App\Cache\TypeListInterface;
-	use Magento\Framework\App\Cache\Type\Config;
 	use Magento\Framework\App\Config\ScopeConfigInterface;
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\App\Helper\AbstractHelper;
@@ -31,12 +29,10 @@
 		/**
 		 * These internal data members include instances of helper classes that are injected into
 		 * the class using dependency injection on runtime.
-		 * @var         TypeListInterface      _cacheTypeList  Instance of the TypeListInterface
 		 * @var         ScopeConfigInterface   _configReader   Instance of the ScopeConfigInterface
 		 * @var         StoreManagerInterface  _configWriter   Instance of the StoreManagerInterface
 		 * @var         WriterInterface        _storeManager   Instance of the WriterInterface
 		 */
-		protected $_cacheTypeList;
 		protected $_configReader;
 		protected $_configWriter;
 		protected $_storeManager;
@@ -44,19 +40,16 @@
 		/**
 		 * This constructor is overloaded from the parent class in order to use dependency injection
 		 * to get the dependency classes that we need for this module's command actions to execute.
-		 * @param       TypeListInterface      cacheTypeList   Instance of the TypeListInterface
 		 * @param       ScopeConfigInterface   configReader    Instance of the ScopeConfigInterface
 		 * @param       StoreManagerInterface  configWriter    Instance of the StoreManagerInterface
 		 * @param       WriterInterface        storeManager    Instance of the WriterInterface
 		 */
 		public function __construct (
-			TypeListInterface $cacheTypeList,
 			ScopeConfigInterface $configReader,
 			StoreManagerInterface $storeManager,
 			WriterInterface $configWriter
 		) {
 			// Save the injected class instances
-			$this->_cacheTypeList = $cacheTypeList;
 			$this->_configReader = $configReader;
 			$this->_storeManager = $storeManager;
 			$this->_configWriter = $configWriter;
@@ -71,8 +64,6 @@
 		 * @return      String                                  The value of the variable
 		 */
 		private function _getStoreValue ( $path, $scope = ScopeInterface::SCOPE_STORE ) {
-			// Clean the config cache so we go the right values
-			$this->_cacheTypeList->cleanType ( Config::TYPE_IDENTIFIER );
 			// Ask the config reader to get the value in the store scope
 			return $this->_configReader->getValue ( $path, $scope );
 		}
@@ -153,6 +144,20 @@
 			$enabled = $this->_getStoreValue ( "system/full_page_cache/caching_application" );
 			// Return true if it is set to varnish
 			return $enabled == CacheConfig::VARNISH;
+		}
+
+		/**
+		 * This method simply takes in a boolean value that represents the enable/disable state of this
+		 * module. It then saves it into the configuration. Note that config cache is not invalidated in
+		 * this method.
+		 * @param       boolean             status              What to set the enable setting to
+		 * @return      void
+		 */
+		public function setEnable ( $status ) {
+			// Translate the status into a status state
+			$value = $status ? EnableDisable::ENABLED : EnableDisable::DISABLED;
+			// Simply save it into the store config
+			$this->_configWriter->save ( "jetrails_varnish/general_configuration/status", $value );
 		}
 
 		/**

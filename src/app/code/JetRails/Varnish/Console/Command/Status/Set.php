@@ -2,7 +2,9 @@
 
 	namespace JetRails\Varnish\Console\Command\Status;
 
+
 	use JetRails\Varnish\Console\Command\AbstractCommand;
+	use Magento\Framework\App\Cache\Type\Config as ConfigType;
 	use Magento\PageCache\Model\Config;
 	use Symfony\Component\Console\Input\InputArgument;
 	use Symfony\Component\Console\Input\InputInterface;
@@ -53,6 +55,9 @@
 					// Set the state value in the store config
 					$stateValue = $state ? Config::VARNISH : Config::BUILT_IN;
 					$this->_data->setCachingApplication ( $stateValue );
+					$this->_data->setEnable ( $stateValue === Config::VARNISH );
+					// Clean the config cache so we get the right values when querying for them
+					$this->_cacheTypeList->cleanType ( ConfigType::TYPE_IDENTIFIER );
 					// Construct the message and respond to caller
 					$message = $state ? "Varnish" : "Built-in";
 					$message = "<options=underscore>" . $message . " Cache</>";

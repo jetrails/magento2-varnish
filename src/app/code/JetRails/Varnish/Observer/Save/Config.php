@@ -3,6 +3,8 @@
 	namespace JetRails\Varnish\Observer\Save;
 
 	use JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable;
+	use Magento\Framework\App\Cache\Type\Config as ConfigType;
+	use Magento\Framework\App\Cache\TypeListInterface;
 	use Magento\Framework\App\Config\ScopeConfigInterface;
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\Event\Observer;
@@ -29,10 +31,12 @@
 		 * These internal data members include instances of helper classes that are injected into
 		 * the class using dependency injection on runtime.
 		 * @var         ManagerInterface        _message        Instance of ManagerInterface
+		 * @var         TypeListInterface       _cacheTypeList  Instance of the TypeListInterface
 		 * @var         ScopeConfigInterface    _configReader   Instance of ScopeConfigInterface
 		 * @var         WriterInterface         _configWriter   Instance of WriterInterface
 		 */
 		protected $_message;
+		protected $_cacheTypeList;
 		protected $_configReader;
 		protected $_configWriter;
 
@@ -40,16 +44,19 @@
 		 * This constructor is overloaded from the parent class in order to use dependency injection
 		 * to get the dependency classes that we need for this module's command actions to execute.
 		 * @param       ManagerInterface        message         Instance of ManagerInterface
+		 * @param       TypeListInterface       cacheTypeList   Instance of the TypeListInterface
 		 * @param       ScopeConfigInterface    configReader    Instance of ScopeConfigInterface
 		 * @param       WriterInterface         configWriter    Instance of WriterInterface
 		 */
 		public function __construct (
 			ManagerInterface $message,
+			TypeListInterface $cacheTypeList,
 			ScopeConfigInterface $configReader,
 			WriterInterface $configWriter
 		) {
 			// Save the injected class instances
 			$this->_message = $message;
+			$this->_cacheTypeList = $cacheTypeList;
 			$this->_configReader = $configReader;
 			$this->_configWriter = $configWriter;
 		}
@@ -181,6 +188,8 @@
 				"system/full_page_cache/caching_application",
 				$status == EnableDisable::ENABLED ? CacheConfig::VARNISH : CacheConfig::BUILT_IN
 			);
+			// Clean the config cache so we get the right values when querying for them
+			$this->_cacheTypeList->cleanType ( ConfigType::TYPE_IDENTIFIER );
 		}
 
 	}

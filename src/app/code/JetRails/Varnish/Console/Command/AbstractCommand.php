@@ -2,9 +2,11 @@
 
 	namespace JetRails\Varnish\Console\Command;
 
+
 	use JetRails\Varnish\Helper\Data;
 	use JetRails\Varnish\Helper\Purger;
 	use JetRails\Varnish\Logger\Logger;
+	use Magento\Framework\App\Cache\TypeListInterface;
 	use Symfony\Component\Console\Command\Command;
 	use Symfony\Component\Console\Input\InputInterface;
 	use Symfony\Component\Console\Output\OutputInterface;
@@ -27,15 +29,18 @@
 		 * These internal data members include instances of helper classes that are injected into
 		 * the class using dependency injection on runtime.  Also a boolean variable is included
 		 * that defines if the action should be run if the feature is disabled in the store config.
+		 * @var         TypeListInterface   _cacheTypeList      Instance of the TypeListInterface class
 		 * @var         Data                _data               Instance of the Data class
 		 * @var         Logger              _logger             Instance of the Logger class
 		 * @var         Purger              _purger             Instance of the Purger class
 		 * @var         Boolean             _runIfDisabled      Execute method if feature isn't on?
 		 */
+		protected $_cacheTypeList;
 		protected $_data;
 		protected $_logger;
 		protected $_purger;
 		protected $_runIfDisabled = true;
+
 
 		/**
 		 * This constructor is overloaded from the parent class in order to use dependency injection
@@ -43,11 +48,18 @@
 		 * @param       Data                data                Instance of the Data class
 		 * @param       Logger              logger              Instance of the Logger class
 		 * @param       Purger              purger              Instance of the Purger class
+		 * @param       TypeListInterface   cacheTypeList       Instance of the TypeListInterface class
 		 */
-		public function __construct ( Data $data, Logger $logger, Purger $purger ) {
+		public function __construct (
+			Data $data,
+			Logger $logger,
+			Purger $purger,
+			TypeListInterface $cacheTypeList
+		) {
 			// Call the parent constructor
 			parent::__construct ();
 			// Save injected classes internally
+			$this->_cacheTypeList = $cacheTypeList;
 			$this->_data = $data;
 			$this->_logger = $logger;
 			$this->_purger = $purger;
