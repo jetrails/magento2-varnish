@@ -15,3 +15,6 @@
 
 ## Version 1.1.3
 -	Fixed GH-7, issue of invalidating config cache too often
+
+## Version 1.1.4
+-	Fixed GH-8, issue with not using rewrites for auto-purge

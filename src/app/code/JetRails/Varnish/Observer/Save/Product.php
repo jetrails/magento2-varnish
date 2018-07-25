@@ -13,7 +13,7 @@
 	/**
 	 * Product.php - This observer is triggered when the product save event is fired.  It then finds
 	 * the url of the product and sends a URL purge request to the configured varnish servers.
-	 * @version         1.1.3
+	 * @version         1.1.4
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®

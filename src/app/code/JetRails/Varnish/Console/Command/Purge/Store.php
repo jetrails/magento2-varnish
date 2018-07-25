@@ -12,7 +12,7 @@
 	 * servers that start with the store view's base url.  If no argument is passed, then a list of
 	 * store views along with their base url, id, and name is displayed in the payload of the
 	 * response.
-	 * @version         1.1.3
+	 * @version         1.1.4
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®

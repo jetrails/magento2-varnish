@@ -2,7 +2,7 @@
 > Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend
 
 ![MIT License](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=for-the-badge)
-![Version 1.1.3](https://img.shields.io/badge/Version-1.1.3-lightgrey.svg?style=for-the-badge)
+![Version 1.1.4](https://img.shields.io/badge/Version-1.1.4-lightgrey.svg?style=for-the-badge)
 ![Stability Beta](https://img.shields.io/badge/Stability-Beta-lightgrey.svg?style=for-the-badge)
 
 <p align="center" >
