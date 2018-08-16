@@ -26,7 +26,7 @@ module.exports = function ( grunt ) {
 		// Initialize the rsync staging options
 		var _rsync_staging = {
 			src:        "src/*",
-			dest:       "staging/"
+			dest:       "public_html"
 		};
 		// Save it into grunt config
 		grunt.config.set ( "rsync.staging.options", _rsync_staging );
