@@ -13,6 +13,7 @@
 			<automatic_cache_purge>
 				<product_save>1</product_save>
 				<cms_page_save>1</cms_page_save>
+				<category_save>1</category_save>
 			</automatic_cache_purge>
 			<cache_exclusion_patterns>
 				<excluded_urls></excluded_urls>

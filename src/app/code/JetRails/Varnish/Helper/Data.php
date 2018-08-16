@@ -206,6 +206,18 @@
 		}
 
 		/**
+		 * This method tells the caller if we enabled the feature where we purge the category URL
+		 * after making changes to the CMS page (saving).
+		 * @return      Boolean                                 Purge after category save?
+		 */
+		public function shouldPurgeAfterCategorySave () {
+			// Get the value from the store configuration
+			$value = $this->_getStoreValue ("jetrails_varnish/automatic_cache_purge/category_save");
+			// Return true if it is on
+			return $value == YesNo::YES;
+		}
+
+		/**
 		 * This method returns an array of store views.  Each array element contains an object that
 		 * describes the store view.  The information that is contained is the store view id, store
 		 * view name, and store view base URL.

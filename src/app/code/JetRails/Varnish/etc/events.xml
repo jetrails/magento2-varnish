@@ -33,4 +33,10 @@
 			instance="JetRails\Varnish\Observer\Save\Page"
 		/>
 	</event>
+	<event name="catalog_category_save_after" >
+		<observer
+			name="jetrails_varnish_save_category"
+			instance="JetRails\Varnish\Observer\Save\Category"
+		/>
+	</event>
 </config>
