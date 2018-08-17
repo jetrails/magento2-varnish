@@ -1,27 +1,32 @@
 div.varnish-cache-management {
-	padding-bottom:                                                             15px;
+	padding-bottom: 15px;
 }
 
 div.varnish-cache-management > form {
-	margin-bottom:                                                              10px;
+	margin-bottom: 10px;
 }
 
 div.varnish-cache-management > form > span {
-	position:                                                                   relative;
-	display:                                                                    inline;
-	float:                                                                      left;
-	width:                                                                      125px;
-	line-height:                                                                33px;
-	margin:                                                                     0;
+	position: relative;
+	display: inline;
+	float: left;
+	width: 125px;
+	line-height: 33px;
+	margin: 0;
 }
 
 div.varnish-cache-management > form > input[type=text] {
-	min-width:                                                                  300px;
-	margin-right:                                                               20px;
-	padding:                                                                    5px 10px;
+	min-width: 300px;
+	margin-right: 20px;
+	padding: 5px 10px;
+}
+
+div.varnish-cache-management > form > select.add-left-space {
+	margin-left: 125px;
+	margin-top: 10px;
 }
 
 div.varnish-cache-management > form > select {
-	min-width:                                                                  300px;
-	margin-right:                                                               20px;
+	min-width: 300px;
+	margin-right: 20px;
 }

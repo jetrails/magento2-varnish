@@ -5,6 +5,7 @@
 	use JetRails\Varnish\Console\Command\AbstractCommand;
 	use Symfony\Component\Console\Input\InputArgument;
 	use Symfony\Component\Console\Input\InputInterface;
+	use Symfony\Component\Console\Input\InputOption;
 
 	/**
 	 * Url.php - This class inherits from the AbstractCommand.  This command takes in a url and asks
@@ -35,7 +36,8 @@
 			// Register the command and set the arguments
 			$this->setName ("varnish:purge:url")
 			->setDescription ("Purge specific url from varnish cache")
-			->addArgument ( "url", InputArgument::REQUIRED, "What URL do you want to purge?" );
+			->addArgument ( "url", InputArgument::REQUIRED, "What URL do you want to purge?" )
+			->addOption ( "substring", null, InputOption::VALUE_NONE, "Purge all URLs that contain the given URL" );
 		}
 
 		/**
@@ -51,12 +53,14 @@
 			$url = $this->_purger->validateUrl ( $url );
 			// If an object was returned, then it was a valid url
 			if ( gettype ( $url ) == "object" ) {
+				// Check to see if purge type is substring
+				$purgeType = $input->getOption ("substring") ? "purgeStore" : "purgeUrl";
 				// Initialize the accounting variables and payload array
 				$total = 0;
 				$success = 0;
 				$payload = [];
 				// Ask to purge and iterate over responses
-				foreach ( $this->_purger->purgeUrl ( $url ) as $response ) {
+				foreach ( $this->_purger->{ $purgeType } ( $url ) as $response ) {
 					// Log what we are trying to do
 					$message = [
 						"status" => $response->status,

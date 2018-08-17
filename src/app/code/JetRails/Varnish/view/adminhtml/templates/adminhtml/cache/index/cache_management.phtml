@@ -12,6 +12,11 @@
 		<span>Purge By URL:</span>
 		<input type="text" placeholder="URL" name="url" />
 		<button type="submit" ><span>Purge</span></button>
+		<br>
+		<select name="type" class="admin__control-select add-left-space" >
+			<option value="exact" selected="selected" >Exact Match</option>
+			<option value="substring" >Sub-String</option>
+		</select>
 	</form>
 	<form method="post" action="<?= $block->getUrl ('varnish/purge/store') ?>" >
 		<span>Purge By Store:</span>

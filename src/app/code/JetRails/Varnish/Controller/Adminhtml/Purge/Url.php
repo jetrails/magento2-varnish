@@ -66,10 +66,12 @@
 				// Load passed url parameter and validate it
 				$url = $this->getRequest ()->getParam ("url");
 				$url = $this->_purger->validateUrl ( $url );
+				// Set they purge type based on passed value
+				$isSubString = $this->getRequest ()->getParam ("type") === "substring";
 				// If an object was returned, then it was a valid url
 				if ( gettype ( $url ) == "object" ) {
 					// Ask to purge and iterate over responses
-					foreach ( $this->_purger->purgeUrl ( $url ) as $response ) {
+					foreach ( $this->_purger->{ $isSubString ? "purgeStore" : "purgeUrl" } ( $url ) as $response ) {
 						// Log what we are trying to do
 						$message = [
 							"status" => $response->status,
