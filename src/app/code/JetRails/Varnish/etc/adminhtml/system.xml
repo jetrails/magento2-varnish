@@ -99,7 +99,7 @@
 					showInStore="1" >
 					<label>Product Save</label>
 					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo</source_model>
-					<comment>Automatically purge cache for product url and associated categories whenever product is saved.</comment>
+					<comment>Automatically purge cache for product url and associated categories whenever product is saved/deleted.</comment>
 				</field>
 				<field
 					id="cms_page_save"
@@ -111,7 +111,7 @@
 					showInStore="1" >
 					<label>CMS Page Save</label>
 					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo</source_model>
-					<comment>Automatically purge cache for CMS page whenever page is updated.</comment>
+					<comment>Automatically purge cache for CMS page whenever page is saved.</comment>
 				</field>
 				<field
 					id="category_save"
@@ -123,7 +123,7 @@
 					showInStore="1" >
 					<label>Category Save</label>
 					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\YesNo</source_model>
-					<comment>Automatically purge cache for category pages whenever category updated.</comment>
+					<comment>Automatically purge cache for category pages whenever category is saved/deleted.</comment>
 				</field>
 			</group>
 			<group

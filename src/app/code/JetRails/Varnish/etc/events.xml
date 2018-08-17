@@ -21,22 +21,34 @@
 			instance="JetRails\Varnish\Observer\Save\Cache"
 		/>
 	</event>
-	<event name="catalog_product_save_after" >
+	<event name="catalog_product_save_before" >
 		<observer
-			name="jetrails_varnish_save_product"
-			instance="JetRails\Varnish\Observer\Save\Product"
+			name="jetrails_varnish_autopurge_product_save"
+			instance="JetRails\Varnish\Observer\AutoPurge\Product"
+		/>
+	</event>
+	<event name="catalog_product_delete_before" >
+		<observer
+			name="jetrails_varnish_autopurge_product_delete"
+			instance="JetRails\Varnish\Observer\AutoPurge\Product"
 		/>
 	</event>
 	<event name="cms_page_prepare_save" >
 		<observer
-			name="jetrails_varnish_save_page"
-			instance="JetRails\Varnish\Observer\Save\Page"
+			name="jetrails_varnish_autopurge_page_save"
+			instance="JetRails\Varnish\Observer\AutoPurge\Page"
 		/>
 	</event>
-	<event name="catalog_category_save_after" >
+	<event name="catalog_category_save_before" >
 		<observer
-			name="jetrails_varnish_save_category"
-			instance="JetRails\Varnish\Observer\Save\Category"
+			name="jetrails_varnish_autopurge_category_save"
+			instance="JetRails\Varnish\Observer\AutoPurge\Category"
+		/>
+	</event>
+	<event name="catalog_category_delete_before" >
+		<observer
+			name="jetrails_varnish_autopurge_category_delete"
+			instance="JetRails\Varnish\Observer\AutoPurge\Category"
 		/>
 	</event>
 </config>

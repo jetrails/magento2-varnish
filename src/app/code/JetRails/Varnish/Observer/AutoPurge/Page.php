@@ -1,6 +1,6 @@
 <?php
 
-	namespace JetRails\Varnish\Observer\Save;
+	namespace JetRails\Varnish\Observer\AutoPurge;
 
 	use JetRails\Varnish\Observer\AutoPurge;
 	use Magento\Framework\Event\Observer;
@@ -29,7 +29,9 @@
 			if ( $this->_data->isEnabled () && $this->_data->shouldPurgeAfterCmsPageSave () ) {
 				// Get id and purge all urls related to route
 				$pid = $observer->getPage ()->getId ();
-				$this->_purgeUsingRoute ("cms/page/view/page_id/$pid");
+				if ( $pid !== null ) {
+					$this->_purgeUsingRoute ("cms/page/view/page_id/$pid");
+				}
 			}
 		}
 
