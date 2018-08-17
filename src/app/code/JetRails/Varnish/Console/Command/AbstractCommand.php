@@ -2,7 +2,6 @@
 
 	namespace JetRails\Varnish\Console\Command;
 
-
 	use JetRails\Varnish\Helper\Data;
 	use JetRails\Varnish\Helper\Purger;
 	use JetRails\Varnish\Logger\Logger;
@@ -16,7 +15,7 @@
 	 * is meant to be a buffer between that class and the commands that are implemented in this
 	 * module.  Instead of using the execute command, the child classes overload the runCommand
 	 * method.
-	 * @version         1.1.4
+	 * @version         1.1.5
 	 * @package         JetRails® Varnish
 	 * @category        Status
 	 * @author          Rafael Grigorian - JetRails®

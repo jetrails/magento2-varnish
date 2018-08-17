@@ -11,12 +11,10 @@
 	use Magento\Store\Model\StoreManagerInterface;
 
 	/**
-	 * AutoPurge.php -
-	 *
-	 *
-	 *
-	 *
-	 * @version         1.1.4
+	 * AutoPurge.php - This abstract class is in place to contain some necessary methods that
+	 * in all sub classes. These classes must implement the execute method since this class
+	 * extends from the Magento Action class.
+	 * @version         1.1.5
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
@@ -65,6 +63,14 @@
 			$this->_storeManager = $storeManager;
 		}
 
+		/**
+		 * This method takes in a target url to purge and it traverses through all the configured
+		 * varnish servers and asks them to purge said url. An optional flag is passed to purge
+		 * all urls that contain the given string.
+		 * @var         Boolean             purgeChildren       Purge all URLS that contain target?
+		 * @param       String              target              The URL to purge
+		 * @return      void
+		 */
 		protected function _purgeOnAllServers ( $target, $purgeChildren = false ) {
 			$noErrors = true;
 			$url = $this->_purger->validateUrl ( $target );
@@ -92,6 +98,12 @@
 			return $noErrors;
 		}
 
+		/**
+		 * This method takes in a route and it looks through the rewrites table for all urls that lead
+		 * to said url.
+		 * @param       String              route               The route to look for in rewrites table
+		 * @return      void
+		 */
 		protected function _purgeUsingRoute ( $route ) {
 			// Get the base url for the current store
 			$baseUrl = $this->_storeManager->getStore ()->getBaseUrl ();
@@ -115,6 +127,11 @@
 			}
 		}
 
+		/**
+		 * This method is abstract because this class implements the Action class.
+		 * @param       Observer            observer            Observer object passed on dispatch
+		 * @return      void
+		 */
 		public abstract function execute ( Observer $observer );
 
 	}

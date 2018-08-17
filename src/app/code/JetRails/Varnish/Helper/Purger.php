@@ -12,7 +12,7 @@
 	 * Purger.php - This class is encapsulated with purge specific methods in order to use them on
 	 * the backend controllers and the console commands.  These methods specifically purge single
 	 * URLs, store views, and even purge all cache from a list of given varnish servers.
-	 * @version         1.1.4
+	 * @version         1.1.5
 	 * @package         JetRails® Varnish
 	 * @category        Helper
 	 * @author          Rafael Grigorian - JetRails®
@@ -24,12 +24,9 @@
 		/**
 		 * These internal data members include instances of helper classes that are injected into
 		 * the class using dependency injection on runtime.
-		 * @var         Data                _data               Instance of the Data helper class
-		 * @var         Data                _storeManager       Instance of the StoreManager
-		 *
-		 *
-		 *
-		 *
+		 * @var         Data                  _data              Instance of the Data helper class
+		 * @var         StoreManagerInterface _storeManager      Instance of the StoreManager
+		 * @var         UrlFinderInterface    _urlFinder         Instance of the UrlFinder
 		 */
 		protected $_data;
 		protected $_storeManager;

@@ -18,3 +18,9 @@
 
 ## Version 1.1.4
 -	Fixed GH-8, issue with not using rewrites for auto-purge
+
+## Version 1.1.5
+-	Fixed GH-10, added auto-purge for categories
+-	Fixed GH-11, when product is saved, categories are purged as well
+-	Fixed GH-12, add 'substring' option for purge url functionality
+-	Fixed GH-13, auto purge no works when deleting products/categories

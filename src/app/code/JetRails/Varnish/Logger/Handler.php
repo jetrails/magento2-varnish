@@ -8,7 +8,7 @@
 	/**
 	 * Handler.php - This class is used by Magento to define a custom log file.  These injections
 	 * for runtime reflection of this custom logging class is defined within the di.xml file.
-	 * @version         1.1.4
+	 * @version         1.1.5
 	 * @package         JetRails® Varnish
 	 * @category        Logger
 	 * @author          Rafael Grigorian - JetRails®
