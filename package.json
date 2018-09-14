@@ -1,26 +1,21 @@
 {
-	"name": "Varnish",
 	"version": "1.1.5",
+	"name": "magento2-varnish",
 	"description": "Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend",
+	"author": "Rafael Grigorian",
+	"company": "JetRails®",
+	"license": "MIT",
+	"namespace": "JetRails_Varnish",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/jetrails/varnish.git"
+		"url": "https://github.com/jetrails/magento2-varnish.git"
 	},
-	"company": "JetRails®",
-	"author": "Rafael Grigorian",
-	"license": "MIT",
-	"copyright": "JetRails®, all rights reserved",
-	"bugs": {
-		"url": "https://github.com/jetrails/varnish/issues"
-	},
-	"homepage": "https://github.com/jetrails/varnish#readme",
 	"devDependencies": {
-		"grunt": "^1.0.3",
-		"grunt-contrib-clean": "^1.1.0",
-		"grunt-contrib-compress": "^1.4.3",
-		"grunt-contrib-watch": "^1.0.0",
-		"grunt-mkdir": "^1.0.0",
-		"grunt-replace": "^1.0.1",
-		"grunt-rsync": "^2.0.1"
+		"fs-extra": "^7.0.0",
+		"gulp": "^3.9.1",
+		"gulp-gzip": "^1.4.2",
+		"gulp-magepack": "^1.0.3",
+		"gulp-replace": "^1.0.0",
+		"gulp-tar": "^2.1.0"
 	}
 }
