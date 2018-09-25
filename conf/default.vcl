@@ -1,3 +1,16 @@
+#
+#        __       _      _             _ _
+#        \ \     (_)    | |           (_) |
+#         \ \     _  ___| |_ _ __ __ _ _| |___
+#          > >   | |/ _ \ __| '__/ _` | | / __|
+#         / /    | |  __/ |_| | | (_| | | \__ \
+#        /_/     | |\___|\__|_|  \__,_|_|_|___/
+#               _/ |                             ______
+#              |__/                             |______|
+#
+# This config is deployed and managed through ansible. Do not modify without authorization.
+#
+# Source: /etc/ansible/roles/global/templates/varnish/default-m2.j2 on Sep 25, 2018 by Jarett
 vcl 4.0;
 
 import std;
