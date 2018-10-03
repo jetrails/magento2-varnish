@@ -98,15 +98,17 @@
 			return $noErrors;
 		}
 
+
 		/**
 		 * This method takes in a route and it looks through the rewrites table for all urls that lead
-		 * to said url.
+		 * to said url. It uses a passed store object to determine the base url to use.
 		 * @param       String              route               The route to look for in rewrites table
+		 * @param       Object              store               The store to use for base url
 		 * @return      void
 		 */
-		protected function _purgeUsingRoute ( $route ) {
+		protected function _purgeUsingStoreObject ( $route, $store ) {
 			// Get the base url for the current store
-			$baseUrl = $this->_storeManager->getStore ()->getBaseUrl ();
+			$baseUrl = $store->getBaseUrl ();
 			// Get the category id and retrieve all rewrites recursively and acyclicly.
 			$rewrites = $this->_purger->getUrlRewrites ( $route );
 			// Loop through all rewrites
@@ -124,6 +126,25 @@
 					$message = "Successfully purged varnish cache for $targetHtml on $serverHtml";
 					$this->_messageManager->addSuccess ( $message );
 				}
+			}
+		}
+
+		/**
+		 * This method takes in a route and determines if the current scope is the "All Stores Scope".
+		 * If it is, then all store views are purged, otherwise just the current one is purged.
+		 * @param       String              route               The route to look for in rewrites table
+		 * @return      void
+		 */
+		protected function _purgeUsingRoute ( $route ) {
+			if ( $this->_storeManager->getStore ()->getId () === "0" ) {
+				$stores = $this->_storeManager->getStores ();
+				foreach ( $stores as $store ) {
+					$this->_purgeUsingStoreObject ( $route, $store );
+				}
+			}
+			else {
+				$store = $this->_storeManager->getStore ();
+				$this->_purgeUsingStoreObject ( $route, $store );
 			}
 		}
 
