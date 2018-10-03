@@ -7,7 +7,7 @@
 	/**
 	 * EnableDisable.php - These options include enable and disable with enable having an integer
 	 * value of 1 and disable having an integer value of 0.
-	 * @version         1.1.5
+	 * @version         1.1.6
 	 * @package         JetRails® Varnish
 	 * @category        Options
 	 * @author          Rafael Grigorian - JetRails®

@@ -15,7 +15,7 @@
 	 * is meant to be a buffer between that class and the commands that are implemented in this
 	 * module.  Instead of using the execute command, the child classes overload the runCommand
 	 * method.
-	 * @version         1.1.5
+	 * @version         1.1.6
 	 * @package         JetRails® Varnish
 	 * @category        Status
 	 * @author          Rafael Grigorian - JetRails®

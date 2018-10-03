@@ -24,3 +24,7 @@
 -	Fixed GH-11, when product is saved, categories are purged as well
 -	Fixed GH-12, add 'substring' option for purge url functionality
 -	Fixed GH-13, auto purge no works when deleting products/categories
+
+## Version 1.1.6
+-	Fixed GH-15, added module version and combines auto-purge messages
+-	Fixed GH-18, Auto-purge loops through store views on "all store view" scope

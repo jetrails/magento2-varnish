@@ -6,7 +6,7 @@
 	<default>
 		<jetrails_varnish>
 			<general_configuration>
-				<version>1.1.5</version>
+				<version>1.1.6</version>
 				<status>0</status>
 				<debug>0</debug>
 				<servers>127.0.0.1:80</servers>

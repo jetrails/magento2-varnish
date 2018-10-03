@@ -1,6 +1,5 @@
 const gulp = require ("gulp")
 const gzip = require ("gulp-gzip")
-const magepack = require ("gulp-magepack")
 const replace = require ("gulp-replace")
 const tar = require ("gulp-tar")
 const fs = require ("fs")
@@ -66,7 +65,6 @@ gulp.task ( "package", [ "clean", "bump", "build" ], ( callback ) => {
 		"version": PACKAGE_VERSION
 	}
 	gulp.src ( BUILD_DIR + "/**/*" )
-		.pipe ( magepack ( options ) )
 		.pipe ( tar (`${PACKAGE_NAMESPACE}-${PACKAGE_VERSION}`) )
 		.pipe ( gzip ({ extension: "tgz" }) )
 		.pipe ( gulp.dest ( PACKAGE_DIR ) )
