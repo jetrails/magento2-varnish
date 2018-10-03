@@ -32,12 +32,14 @@
 		 * @var         ManagerInterface    _messageManager     Instance of the ManagerInterface
 		 * @var         Purger              _purger             Instance of the Purger helper class
 		 * @var         StoreManager        _storeManager       Instance of the StoreManager
+		 * @var         Array               _messages           Saved messages for dumping together
 		 */
 		protected $_data;
 		protected $_logger;
 		protected $_messageManager;
 		protected $_purger;
 		protected $_storeManager;
+		protected $_messages;
 
 		/**
 		 * This constructor is overloaded from the parent class in order to use dependency injection
@@ -61,6 +63,7 @@
 			$this->_messageManager = $messageManager;
 			$this->_purger = $purger;
 			$this->_storeManager = $storeManager;
+			$this->_messages = [];
 		}
 
 		/**
@@ -98,7 +101,6 @@
 			return $noErrors;
 		}
 
-
 		/**
 		 * This method takes in a route and it looks through the rewrites table for all urls that lead
 		 * to said url. It uses a passed store object to determine the base url to use.
@@ -121,11 +123,23 @@
 				$success &= $this->_purgeOnAllServers ( rtrim ( $target, "/" ) . "?", true );
 				if ( $success ) {
 					// Add success response message
-					$targetHtml = "<font color='#79A22E' ><b>$target</b></font>";
-					$serverHtml = "<font color='#79A22E' ><b>all varnish servers</b></font>";
-					$message = "Successfully purged varnish cache for $targetHtml on $serverHtml";
-					$this->_messageManager->addSuccess ( $message );
+					array_push ( $this->_messages, $target );
 				}
+			}
+		}
+
+		/**
+		 * This method takes in some header text and appends all the saved messages to it. It then
+		 * uses the message manager to send the message together.
+		 * @param       String              header              The header to append to the message\
+		 * @return      void
+		 */
+		protected function _dumpCombinedMessages ( $header ) {
+			if ( count ( $this->_messages ) > 0 ) {
+				$header = "<font color='#79A22E' ><b>$header</b></font>";
+				array_unshift ( $this->_messages, $header );
+				$this->_messageManager->addSuccess ( implode ( "</br>", $this->_messages ) );
+				$this->_messages = [];
 			}
 		}
 

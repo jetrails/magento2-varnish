@@ -31,6 +31,7 @@
 				$pid = $observer->getPage ()->getId ();
 				if ( $pid !== null ) {
 					$this->_purgeUsingRoute ("cms/page/view/page_id/$pid");
+					$this->_dumpCombinedMessages ("Purged varnish cache on all configured servers:");
 				}
 			}
 		}

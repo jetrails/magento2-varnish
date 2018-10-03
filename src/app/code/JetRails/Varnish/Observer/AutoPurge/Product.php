@@ -35,6 +35,7 @@
 					foreach ( $observer->getProduct ()->getCategoryIds () as $cid ) {
 						$this->_purgeUsingRoute ("catalog/category/view/id/$cid");
 					}
+					$this->_dumpCombinedMessages ("Purged varnish cache on all configured servers:");
 				}
 			}
 		}

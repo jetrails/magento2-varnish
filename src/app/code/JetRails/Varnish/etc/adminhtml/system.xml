@@ -29,6 +29,17 @@
 				<label>General Configuration</label>
 				<attribute type="expanded" >1</attribute>
 				<field
+					id="version"
+					translate="label"
+					type="label"
+					sortOrder="0"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Version</label>
+					<comment>Currently installed extension version</comment>
+				</field>
+				<field
 					id="status"
 					translate="label"
 					type="select"
