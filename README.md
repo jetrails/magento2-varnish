@@ -1,5 +1,5 @@
 # Magento 2 - Varnish
-> Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend
+> Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend.
 
 ![](https://img.shields.io/badge/License-MIT-lightgrey.svg?style=for-the-badge)
 ![](https://img.shields.io/badge/Version-1.1.6-lightgrey.svg?style=for-the-badge)
@@ -15,7 +15,7 @@ This module helps manage varnish cache for your Magento 2 store.  It supports a 
 
 ## Documentation
 
-A user guide can be found in the [docs](docs) folder. The information there goes over all the features that the extension offers. It also takes you through the installation and configuration process of setting this extension up.
+The user manual can be found [here](https://learn.jetrails.com/article/magento-2-varnish-extension). The information there goes over all the features that the extension offers. It also takes you through the installation and configuration process of setting this extension up.
 
 ## Build System
 
