@@ -15,7 +15,7 @@
 	 * is meant to be a buffer between that class and the commands that are implemented in this
 	 * module.  Instead of using the execute command, the child classes overload the runCommand
 	 * method.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Status
 	 * @author          Rafael Grigorian - JetRails®
@@ -107,14 +107,15 @@
 			$this->_printLabel ( $output, "Powered By", "The JetRails Team" );
 			$this->_printLabel ( $output, "Email Us", "support@jetrails.com" );
 			$this->_printLabel ( $output, "Call Us", "+1 (888) 554-9990" );
+			$this->_printLabel ( $output, "Disclaimer", "Varnish is a registered trademark of Varnish Software AB and its affiliates." );
 			$output->writeln ("");
 			// Check to see if we should run the command if feature is disabled
 			if ( !$this->_runIfDisabled && !$this->_data->isEnabled () ) {
 				// Define the return parameters
 				$status   = "unsuccessful";
-				$message  = "Cache application must be set to <options=underscore>Varnish Cache</>";
+				$message  = "Cache application must be set to <options=underscore>Varnish Cache™</>";
 				$payload  = "<fg=red>varnish:status:set enable</>";
-				$payload .= "Run '$payload' to set varnish cache as caching application";
+				$payload .= "Run '$payload' to set Varnish Cache™ as caching application";
 				// Set the response object to be the above parameters
 				$response = ( object ) [
 					"status" => $status,

@@ -12,7 +12,7 @@
 	 * servers that start with the store view's base url.  If no argument is passed, then a list of
 	 * store views along with their base url, id, and name is displayed in the payload of the
 	 * response.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
@@ -53,7 +53,7 @@
 		protected function configure () {
 			// Register the command and set the arguments
 			$this->setName ("varnish:purge:store")
-			->setDescription ("Purge varnish cache based on store view")
+			->setDescription ("Purge Varnish Cache™ based on store view")
 			->addArgument ( "store", InputArgument::OPTIONAL, "Store view id to purge" );
 		}
 

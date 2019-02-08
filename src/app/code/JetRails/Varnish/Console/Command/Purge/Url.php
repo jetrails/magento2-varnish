@@ -10,7 +10,7 @@
 	/**
 	 * Url.php - This class inherits from the AbstractCommand.  This command takes in a url and asks
 	 * all the saved varnish servers a request to purge the passed url from cache.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
@@ -35,7 +35,7 @@
 		protected function configure () {
 			// Register the command and set the arguments
 			$this->setName ("varnish:purge:url")
-			->setDescription ("Purge specific url from varnish cache")
+			->setDescription ("Purge specific url from Varnish Cache™")
 			->addArgument ( "url", InputArgument::REQUIRED, "What URL do you want to purge?" )
 			->addOption ( "substring", null, InputOption::VALUE_NONE, "Purge all URLs that contain the given URL" );
 		}

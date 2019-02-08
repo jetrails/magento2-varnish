@@ -13,7 +13,7 @@
 	 * All.php - This class is a controller action and when it is triggered, it is responsible for
 	 * looping through all the saved varnish cache servers and purging all the cache for all the
 	 * urls that are stored with those varnish cache servers.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
@@ -90,7 +90,7 @@
 			else {
 				// Cache application is not Varnish, warn user
 				$this->messageManager->addError (
-					"Cache application must be set to <b>Varnish Cache</b>, set it by configuring" .
+					"Cache application must be set to <b>Varnish Cache™</b>, set it by configuring" .
 					" <b>Stores → Advanced → Developer → System → Full Page Cache → Caching Application</b>"
 				);
 			}

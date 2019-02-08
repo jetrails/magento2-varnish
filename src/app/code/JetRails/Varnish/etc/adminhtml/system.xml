@@ -15,7 +15,7 @@
 			showInDefault="1"
 			showInWebsite="1"
 			showInStore="1" >
-			<label>Varnish Cache</label>
+			<label>Varnish Cache™</label>
 			<tab>jetrails_tab</tab>
 			<resource>JetRails_Varnish::config</resource>
 			<group
@@ -61,7 +61,7 @@
 					showInStore="1" >
 					<label>Debug Mode</label>
 					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable</source_model>
-					<comment>Response headers will say if there was a hit or miss in varnish cache</comment>
+					<comment>Response headers will say if there was a hit or miss in Varnish Cache™</comment>
 				</field>
 				<field
 					id="servers"
@@ -71,7 +71,7 @@
 					showInDefault="1"
 					showInWebsite="1"
 					showInStore="1" >
-					<label>Varnish Servers</label>
+					<label>Varnish® Servers</label>
 					<comment><![CDATA[
 						New line separated values in form of
 						<b>HOST</b>:<b>PORT</b>
@@ -86,8 +86,19 @@
 					showInDefault="1"
 					showInWebsite="1"
 					showInStore="1" >
-					<label>Link To Purge Varnish Cache</label>
+					<label>Link To Purge Varnish Cache™</label>
 					<frontend_model>JetRails\Varnish\Block\Adminhtml\System\Config\Form\Link</frontend_model>
+				</field>
+				<field
+					id="disclaimer"
+					translate="label"
+					type="label"
+					sortOrder="60"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Disclaimer</label>
+					<comment>Varnish is a registered trademark of Varnish Software AB and its affiliates.</comment>
 				</field>
 			</group>
 			<group

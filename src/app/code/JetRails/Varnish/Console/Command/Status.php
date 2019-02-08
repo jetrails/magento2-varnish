@@ -9,7 +9,7 @@
 	 * Status.php - This class inherits from the AbstractCommand.  This command tells the user if
 	 * the module is enabled.  In the sense that the 'Caching Application' setting is set to
 	 * 'Varnish Cache', and not 'Built-in Cache'.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Command
 	 * @author          Rafael Grigorian - JetRails®
@@ -39,8 +39,8 @@
 		protected function runCommand ( InputInterface $input ) {
 			// Check to see if varnish caching is enabled and prepare message
 			$status = $this->_data->isEnabled ();
-			$message = $status ? "Varnish" : "Built-in";
-			$message = "<options=underscore>$message Cache</>";
+			$message = $status ? "Varnish Cache™" : "Built-in Cache";
+			$message = "<options=underscore>$message</>";
 			$message = "Caching application is set to $message";
 			// Return the message and status to caller
 			return [ "status" => $status, "message" => $message ];

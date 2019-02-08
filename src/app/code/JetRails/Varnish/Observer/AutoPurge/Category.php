@@ -9,7 +9,7 @@
 	 * Category.php - This observer is triggered when the category save event is fired.  It then
 	 * finds the url of the category and sends a URL purge request to the configured varnish
 	 * servers.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®

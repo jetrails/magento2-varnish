@@ -13,7 +13,7 @@
 	 * Store.php - This class is a controller action and when it is triggered, it is responsible for
 	 * purging all the cache in all the configured cache servers that match (start with) the base
 	 * url of the store view.  The store view id is passed as a parameter
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
@@ -103,7 +103,7 @@
 			else {
 				// Cache application is not Varnish, warn user
 				$this->messageManager->addError (
-					"Cache application must be set to <b>Varnish Cache</b>, set it by configuring" .
+					"Cache application must be set to <b>Varnish Cache™</b>, set it by configuring" .
 					" <b>Stores → Advanced → Developer → System → Full Page Cache → Caching Application</b>"
 				);
 			}

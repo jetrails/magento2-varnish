@@ -9,7 +9,7 @@
 	 * method in essence is the same as the info method because it logs with the same severity, but
 	 * it also takes in additional blame oriented data in order to propagate blame to the caller as
 	 * well as the action that was taken.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Logger
 	 * @author          Rafael Grigorian - JetRails®

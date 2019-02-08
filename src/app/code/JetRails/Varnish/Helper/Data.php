@@ -16,7 +16,7 @@
 	 * Data.php - This helper class is responsible for data retrieval and configuration.  It can use
 	 * the store config and the Magento session information to return data about the user and about
 	 * the module configuration on the store scope.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Helper
 	 * @author          Rafael Grigorian - JetRails®
@@ -24,7 +24,6 @@
 	 * @license         MIT https://opensource.org/licenses/MIT
 	 */
 	class Data extends AbstractHelper {
-
 
 		/**
 		 * These internal data members include instances of helper classes that are injected into

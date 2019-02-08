@@ -27,4 +27,7 @@
 
 ## Version 1.1.6
 -	Fixed GH-15, added module version and combines auto-purge messages
--	Fixed GH-18, Auto-purge loops through store views on "all store view" scope
+-	Fixed GH-18, auto-purge loops through store views on "all store view" scope
+
+## Version 1.1.7
+-	Fixed GH-20, Varnish trademark compliance

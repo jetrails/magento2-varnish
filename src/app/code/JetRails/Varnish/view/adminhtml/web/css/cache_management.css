@@ -15,6 +15,12 @@ div.varnish-cache-management > form > span {
 	margin: 0;
 }
 
+div.varnish-cache-management > span.disclaimer {
+	font-size: 10px;
+	margin-top: 30px;
+	display: block;
+}
+
 div.varnish-cache-management > form > input[type=text] {
 	min-width: 300px;
 	margin-right: 20px;

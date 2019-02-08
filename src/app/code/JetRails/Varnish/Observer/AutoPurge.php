@@ -14,7 +14,7 @@
 	 * AutoPurge.php - This abstract class is in place to contain some necessary methods that
 	 * in all sub classes. These classes must implement the execute method since this class
 	 * extends from the Magento Action class.
-	 * @version         1.1.6
+	 * @version         1.1.7
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
