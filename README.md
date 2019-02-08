@@ -23,8 +23,8 @@ All JetRails® modules use __Grunt__ as a build system.  Grunt is a package that
 
 | Task       | Description                                                                                                                                                                                     |
 |------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `version`  | Updates the version number in all __php__ and __xml__ files with the one defined in __package.json__.                                                                                           |
-| `release`  | This command first runs __init__ and then __resolve__.  It then compresses the source and dependencies and outputs the archive in __dist__.  This command gets the repo ready for a git commit. |
+| `bump`  | Updates the version number in all __php__ and __xml__ files with the one defined in __package.json__.                                                                                           |
+| `package`  | This command first runs __init__ and then __resolve__.  It then compresses the source and dependencies and outputs the archive in __dist__.  This command gets the repo ready for a git commit. |
 | `deploy`   | Will upload dependencies and source code to a staging server.  Credentials to this server can be configured in the __package.json__ file under the _staging_ attribute.                         |
 | `watch`    | Will watch the __src__ folder for any changes. Once a change occurs it will run the __deploy__ task.                                                                               |
 |            | The default task is aliased to run the __release__ task.                                                                                                                                        |
