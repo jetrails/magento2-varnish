@@ -37,6 +37,12 @@ Insert plugin purge logic
         }
 ```
 
+True IP
+
+```
+    set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
+```
+
 ## vcl_backend_response
 
 Add plugin "no-cache" logic

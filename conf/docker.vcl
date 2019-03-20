@@ -122,7 +122,7 @@ sub vcl_recv {
         #unset req.http.X-Forwarded-Proto;
         #unset req.http.Cookie;
     }
-
+    set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
     return (hash);
 }
 
