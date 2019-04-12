@@ -12,7 +12,7 @@
 	/**
 	 * Url.php - This class is a controller action and when it is triggered, it is responsible for
 	 * purging all the cache in all the configured cache servers that exactly match the passed url.
-	 * @version         1.1.7
+	 * @version         1.1.8
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®

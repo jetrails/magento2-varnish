@@ -31,3 +31,6 @@
 
 ## Version 1.1.7
 -	Fixed GH-20, Varnish trademark compliance
+
+## Version 1.1.8
+-	Fixed GH-21, form key fix for Magento 2.3

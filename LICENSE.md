@@ -1,5 +1,5 @@
 # The MIT License (MIT)
-Copyright 2018 JetRails®
+Copyright 2018—present JetRails®
 
 * * *
 
