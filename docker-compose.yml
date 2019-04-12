@@ -12,7 +12,7 @@ networks:
                 - subnet: "192.168.7.0/28"
 services:
     php-fpm:
-        image: jetrails/magento-alpine:php-fpm-7.1
+        image: jetrails/magento-alpine:php-fpm-7.2
         restart: unless-stopped
         volumes:
             - app-sync:/var/www/html:rw
@@ -26,7 +26,7 @@ services:
             - mysql
             - redis
     php-cli:
-        image: jetrails/magento-alpine:php-cli-7.1
+        image: jetrails/magento-alpine:php-cli-7.2
         volumes:
             - app-sync:/var/www/html:rw
         networks:
@@ -37,7 +37,7 @@ services:
             - mysql
             - redis
     php-cron:
-        image: jetrails/magento-alpine:php-cron-7.1
+        image: jetrails/magento-alpine:php-cron-7.2
         restart: unless-stopped
         volumes:
             - app-sync:/var/www/html:rw

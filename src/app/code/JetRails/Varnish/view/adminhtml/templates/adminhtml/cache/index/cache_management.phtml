@@ -9,6 +9,7 @@
 <div class="varnish-cache-management" >
 	<h2>Varnish Cache™ Management</h2>
 	<form method="post" action="<?= $block->getUrl ('varnish/purge/url') ?>" >
+		<?php echo $block->getBlockHtml ("formkey") ?>
 		<span>Purge By URL:</span>
 		<input type="text" placeholder="URL" name="url" />
 		<button type="submit" ><span>Purge</span></button>
@@ -19,6 +20,7 @@
 		</select>
 	</form>
 	<form method="post" action="<?= $block->getUrl ('varnish/purge/store') ?>" >
+		<?php echo $block->getBlockHtml ("formkey") ?>
 		<span>Purge By Store:</span>
 		<select name="id" class="admin__control-select" >
 			<?php foreach ( $data->getStoreViews () as $storeView ): ?>
@@ -28,6 +30,7 @@
 		<button type="submit" ><span>Purge</span></button>
 	</form>
 	<form method="post" action="<?= $block->getUrl ('varnish/purge/all') ?>" >
+		<?php echo $block->getBlockHtml ("formkey") ?>
 		<span style="margin-right: 324px;" >Purge All:</span>
 		<button type="submit" ><span>Purge</span></button>
 	</form>
