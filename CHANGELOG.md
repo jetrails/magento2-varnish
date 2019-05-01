@@ -34,3 +34,6 @@
 
 ## Version 1.1.8
 -	Fixed GH-21, form key fix for Magento 2.3
+
+## Version 1.1.9
+-	Fixed GH-22, auto-purge failed when REST API triggered save
