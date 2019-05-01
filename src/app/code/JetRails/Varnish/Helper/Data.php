@@ -8,6 +8,7 @@
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\App\Helper\AbstractHelper;
 	use Magento\Framework\App\ObjectManager;
+	use Magento\Framework\App\Request\Http;
 	use Magento\PageCache\Model\Config as CacheConfig;
 	use Magento\Store\Model\ScopeInterface;
 	use Magento\Store\Model\StoreManagerInterface;
@@ -31,10 +32,12 @@
 		 * @var         ScopeConfigInterface   _configReader   Instance of the ScopeConfigInterface
 		 * @var         StoreManagerInterface  _configWriter   Instance of the StoreManagerInterface
 		 * @var         WriterInterface        _storeManager   Instance of the WriterInterface
+		 * @var         Http                   _http           Instance of the Http
 		 */
 		protected $_configReader;
 		protected $_configWriter;
 		protected $_storeManager;
+		protected $_http;
 
 		/**
 		 * This constructor is overloaded from the parent class in order to use dependency injection
@@ -46,12 +49,14 @@
 		public function __construct (
 			ScopeConfigInterface $configReader,
 			StoreManagerInterface $storeManager,
-			WriterInterface $configWriter
+			WriterInterface $configWriter,
+			Http $http
 		) {
 			// Save the injected class instances
 			$this->_configReader = $configReader;
 			$this->_storeManager = $storeManager;
 			$this->_configWriter = $configWriter;
+			$this->_http = $http;
 		}
 
 		/**
@@ -75,7 +80,7 @@
 		 */
 		private function _getClientBrowser () {
 			// Initialize the user agent and set the default values
-			$agent = $_SERVER ["HTTP_USER_AGENT"];
+			$agent = isset ( $_SERVER ["HTTP_USER_AGENT"] ) ? $_SERVER ["HTTP_USER_AGENT"] : "";
 			$type = "Unknown";
 			$os = "Unknown";
 			// Extract the operating system
@@ -103,15 +108,26 @@
 		 * @return      Object                                  User information in object
 		 */
 		public function getLoggedInUserInfo () {
+			// We use object manager here because with DI in CLI there is no session
+			$objectManager = ObjectManager::getInstance ();
 			// Check to see if caller is using CLI
 			if ( php_sapi_name () === "cli" ) {
 				// If it is then gather some information and return it
 				return ( object ) [ "interface" => "console", "username" => get_current_user () ];
 			}
+			// Check to see if request is being made via token authorization (with rest api)
+			else if ( $this->_http->getHeader ("Authorization") ) {
+				// Instantiate objects
+				$remoteAddress = "Magento\Framework\HTTP\PhpEnvironment\RemoteAddress";
+				$remoteAddress = $objectManager->get ( $remoteAddress );
+				return ( object ) [
+					"interface" => "api",
+					"ip" => $remoteAddress->getRemoteAddress ()
+				];
+			}
 			// Otherwise this is a request that has a session attached to it
 			else {
-				// We use object manager here because with DI in CLI there is no session
-				$objectManager = ObjectManager::getInstance ();
+				// Instantiate objects
 				$session = "Magento\Backend\Model\Auth\Session";
 				$session = $objectManager->create ( $session );
 				$remoteAddress = "Magento\Framework\HTTP\PhpEnvironment\RemoteAddress";
@@ -121,9 +137,9 @@
 				$clientBrowser = $this->_getClientBrowser ();
 				return ( object ) [
 					"interface" => "backend",
-					"id" => $user->getId (),
-					"username" => $user->getUserName (),
-					"email" => $user->getEmail (),
+					"id" => $user ? $user->getId () : "n/a",
+					"username" => $user ? $user->getUserName () : "n/a",
+					"email" => $user ? $user->getEmail () : "n/a",
 					"ip" => $remoteAddress->getRemoteAddress (),
 					"browser" => $clientBrowser->browser,
 					"system" => $clientBrowser->os
