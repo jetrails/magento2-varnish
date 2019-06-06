@@ -4,7 +4,7 @@
 	"description": "Magento 2 extension which interfaces with the Varnish® caching application in order to manage it through the Magento backend.",
 	"author": "Rafael Grigorian",
 	"company": "JetRails®",
-	"license": "MIT",
+	"license": "SEE LICENSE IN LICENSE.md",
 	"namespace": "JetRails_Varnish",
 	"repository": {
 		"type": "git",

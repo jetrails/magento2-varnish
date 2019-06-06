@@ -19,7 +19,7 @@
 	 * @category        Observer
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
-	 * @license         MIT https://opensource.org/licenses/MIT
+	 * @license         JetRails EULA (SEE LICENSE IN LICENSE.md)
 	 */
 	class Excluder implements ObserverInterface {
 

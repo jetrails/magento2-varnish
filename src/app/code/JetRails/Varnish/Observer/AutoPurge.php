@@ -19,7 +19,7 @@
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
-	 * @license         MIT https://opensource.org/licenses/MIT
+	 * @license         JetRails EULA (SEE LICENSE IN LICENSE.md)
 	 */
 	abstract class AutoPurge implements ObserverInterface {
 
