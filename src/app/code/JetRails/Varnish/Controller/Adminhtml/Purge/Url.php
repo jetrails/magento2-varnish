@@ -17,7 +17,7 @@
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
-	 * @license         JetRails EULA (SEE LICENSE IN LICENSE.md)
+	 * @license         The JetRails License (SEE LICENSE IN LICENSE.md)
 	 */
 	class Url extends Action {
 

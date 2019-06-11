@@ -20,7 +20,7 @@
 	 * @category        Status
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
-	 * @license         JetRails EULA (SEE LICENSE IN LICENSE.md)
+	 * @license         The JetRails License (SEE LICENSE IN LICENSE.md)
 	 */
 	abstract class AbstractCommand extends Command {
 

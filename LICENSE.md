@@ -1,4 +1,4 @@
-# JetRails EULA
+# The JetRails License
 
 Copyright 2019 ADF Inc. dba JetRails
 
