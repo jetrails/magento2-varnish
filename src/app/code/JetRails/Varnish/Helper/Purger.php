@@ -51,6 +51,45 @@
 		}
 
 		/**
+		 * This method simply traverses all the configured Varnish servers and attempts to connect with
+		 * them. If they are ALL healthy then an empty array is returned.
+		 * @return      array                                   Collection of errors
+		 */
+		public function isConfiguredServersHealthy () {
+			// Collection of messages
+			$responses = [];
+			// Traverse through all the configured servers
+			foreach ( $this->_data->getVarnishServersWithPorts () as $varnishServer ) {
+				// Initialize a curl object
+				$handle = curl_init ( $varnishServer->host );
+				// Set curl options
+				curl_setopt ( $handle, CURLOPT_PORT, $varnishServer->port );
+				curl_setopt ( $handle, CURLOPT_FOLLOWLOCATION, true );
+				curl_setopt ( $handle, CURLOPT_RETURNTRANSFER, false );
+				curl_setopt ( $handle, CURLOPT_AUTOREFERER, true );
+				curl_setopt ( $handle, CURLOPT_HEADER, true );
+				curl_setopt ( $handle, CURLOPT_CONNECTTIMEOUT, 3 );
+				curl_setopt ( $handle, CURLOPT_TIMEOUT, 3 );
+				curl_setopt ( $handle, CURLOPT_MAXREDIRS, 3 );
+				curl_setopt ( $handle, CURLOPT_CUSTOMREQUEST, "HEAD" );
+				// Execute curl request and save response code
+				$response = curl_exec ( $handle );
+				$responseCode = curl_getinfo ( $handle, CURLINFO_HTTP_CODE );
+				// Close curl request using handle and return response code
+				curl_close ( $handle );
+				// Return unhealthy if unreachable
+				if ( $responseCode === 0 ) {
+					array_push (
+						$responses,
+						$varnishServer->host . ":" . $varnishServer->port
+					);
+				}
+			}
+			// Return error responses
+			return $responses;
+		}
+
+		/**
 		 * This is a helper method that helps resolve url rewrites. It looks for all url rewrites with a
 		 * given target path. It then uses this target path to find all request paths that lead to said
 		 * target path. This search is done recursively, so if the rewrite is not direct and instead there
@@ -98,9 +137,9 @@
 				curl_setopt ( $handle, CURLOPT_RETURNTRANSFER, true );
 				curl_setopt ( $handle, CURLOPT_AUTOREFERER, true );
 				curl_setopt ( $handle, CURLOPT_HEADER, true );
-				curl_setopt ( $handle, CURLOPT_CONNECTTIMEOUT, 120 );
-				curl_setopt ( $handle, CURLOPT_TIMEOUT, 120 );
-				curl_setopt ( $handle, CURLOPT_MAXREDIRS, 10 );
+				curl_setopt ( $handle, CURLOPT_CONNECTTIMEOUT, 10 );
+				curl_setopt ( $handle, CURLOPT_TIMEOUT, 10 );
+				curl_setopt ( $handle, CURLOPT_MAXREDIRS, 3 );
 				curl_setopt ( $handle, CURLOPT_CUSTOMREQUEST, "PURGE" );
 				curl_setopt ( $handle, CURLOPT_HTTPHEADER, $additionalHeaders );
 				// Execute curl request and save response code

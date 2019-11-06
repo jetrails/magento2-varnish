@@ -27,6 +27,17 @@
 		public function execute ( Observer $observer ) {
 			// Check to see if event is enabled
 			if ( $this->_data->isEnabled () && $this->_data->shouldPurgeAfterProductSave () ) {
+				// Check to see that all varnish servers are reachable
+				$unhealthyVarnishServers = $this->_purger->isConfiguredServersHealthy ();
+				if ( count ( $unhealthyVarnishServers ) > 0 ) {
+					$this->_messageManager->addError (
+						"<font color='#E22626' ><b>" .
+						"Unreachable Varnish Server(s): " .
+						"</b></font>" .
+						implode ( $unhealthyVarnishServers, "," )
+					);
+					return;
+				}
 				// Get id and purge all urls related to route
 				$pid = $observer->getProduct ()->getId ();
 				if ( $pid !== null ) {
