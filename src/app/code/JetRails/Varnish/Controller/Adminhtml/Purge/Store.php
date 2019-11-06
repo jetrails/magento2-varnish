@@ -13,7 +13,7 @@
 	 * Store.php - This class is a controller action and when it is triggered, it is responsible for
 	 * purging all the cache in all the configured cache servers that match (start with) the base
 	 * url of the store view.  The store view id is passed as a parameter
-	 * @version         1.1.9
+	 * @version         1.1.10
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®

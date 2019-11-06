@@ -8,7 +8,7 @@
 	/**
 	 * All.php - This class inherits from the AbstractCommand.  This command contacts all the
 	 * configured varnish cache servers and asks them to flush all the cache for all urls.
-	 * @version         1.1.9
+	 * @version         1.1.10
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®

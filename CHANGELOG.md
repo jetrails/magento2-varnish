@@ -37,3 +37,6 @@
 
 ## Version 1.1.9
 -	Fixed GH-22, auto-purge failed when REST API triggered save
+
+## Version 1.1.10
+-	Fixed GH-26, Auto-purge hangs when invalid varnish server is used
