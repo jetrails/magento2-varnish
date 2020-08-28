@@ -9,8 +9,6 @@
 #              |__/                             |______|
 #
 # This config is deployed and managed through ansible. Do not modify without authorization.
-#
-# Source: /etc/ansible/roles/global/templates/varnish/default-m2.j2 on Sep 25, 2018 by Jarett
 vcl 4.0;
 
 import std;
@@ -18,13 +16,20 @@ import std;
 # For SSL offloading, pass the following header in your proxy server or load balancer: 'X-Forwarded-Proto: https'
 
 backend default {
-    .host = "127.0.0.1";
+    .host = "nginx.docker.internal";
     .port = "8080";
+    # .first_byte_timeout = 600s;
+    # .probe = {
+    #     .url = "/pub/health_check.php";
+    #     .timeout = 2s;
+    #     .interval = 5s;
+    #     .window = 10;
+    #     .threshold = 5;
+    # }
 }
 
 acl purge {
-    "127.0.0.1";
-    "localhost";
+    "192.168.7.0"/28;
 }
 
 sub vcl_recv {
@@ -116,15 +121,16 @@ sub vcl_recv {
         } elsif (req.http.Accept-Encoding ~ "deflate" && req.http.user-agent !~ "MSIE") {
             set req.http.Accept-Encoding = "deflate";
         } else {
-            # unkown algorithm
+            # unknown algorithm
             unset req.http.Accept-Encoding;
         }
     }
 
-    # Remove Google gclid parameters to minimize the cache objects
-    set req.url = regsuball(req.url,"\?gclid=[^&]+$",""); # strips when QS = "?gclid=AAA"
-    set req.url = regsuball(req.url,"\?gclid=[^&]+&","?"); # strips when QS = "?gclid=AAA&foo=bar"
-    set req.url = regsuball(req.url,"&gclid=[^&]+",""); # strips when QS = "?foo=bar&gclid=AAA" or QS = "?foo=bar&gclid=AAA&bar=baz"
+    # Remove all marketing get parameters to minimize the cache objects
+    if (req.url ~ "(\?|&)(gclid|cx|ie|cof|siteurl|zanpid|origin|fbclid|mc_[a-z]+|utm_[a-z]+|_bta_[a-z]+)=") {
+        set req.url = regsuball(req.url, "(gclid|cx|ie|cof|siteurl|zanpid|origin|fbclid|mc_[a-z]+|utm_[a-z]+|_bta_[a-z]+)=[-_A-z0-9+()%.]+&?", "");
+        set req.url = regsub(req.url, "[?|&]+$", "");
+    }
 
     # Static files caching
     if (req.url ~ "^/(pub/)?(media|static)/") {
@@ -136,7 +142,14 @@ sub vcl_recv {
         #unset req.http.X-Forwarded-Proto;
         #unset req.http.Cookie;
     }
+
+     # Authenticated GraphQL requests should not be cached by default
+    if (req.url ~ "/graphql" && req.http.Authorization ~ "^Bearer") {
+        return (pass);
+    }
+    # JetRails_Varnish Start
     set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
+    # JetRails_Varnish End
     return (hash);
 }
 
@@ -152,11 +165,24 @@ sub vcl_hash {
         hash_data(server.ip);
     }
 
+    if (req.url ~ "/graphql") {
+        call process_graphql_headers;
+    }
+
     # To make sure http users don't see ssl warning
     if (req.http.X-Forwarded-Proto) {
         hash_data(req.http.X-Forwarded-Proto);
     }
 
+}
+
+sub process_graphql_headers {
+    if (req.http.Store) {
+        hash_data(req.http.Store);
+    }
+    if (req.http.Content-Currency) {
+        hash_data(req.http.Content-Currency);
+    }
 }
 
 sub vcl_backend_response {
@@ -195,7 +221,6 @@ sub vcl_backend_response {
     }
 
     # validate if we need to cache it and prevent from setting cookie
-    # images, css and js are cacheable by default so we have to remove cookie also
     if (beresp.ttl > 0s && (bereq.method == "GET" || bereq.method == "HEAD")) {
         unset beresp.http.set-cookie;
     }
