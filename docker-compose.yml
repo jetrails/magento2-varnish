@@ -12,7 +12,7 @@ networks:
                 - subnet: "192.168.7.0/28"
 services:
     php-fpm:
-        image: jetrails/magento-alpine:php-fpm-7.2
+        image: jetrails/magento-alpine:php-fpm-7.4
         restart: unless-stopped
         volumes:
             - app-sync:/var/www/html:rw
@@ -24,9 +24,8 @@ services:
             - VERBOSE=true
         links:
             - mysql
-            - redis
     php-cli:
-        image: jetrails/magento-alpine:php-cli-7.2
+        image: jetrails/magento-alpine:php-cli-7.4
         volumes:
             - app-sync:/var/www/html:rw
         networks:
@@ -35,9 +34,8 @@ services:
                     - php-cli.docker.internal
         links:
             - mysql
-            - redis
     php-cron:
-        image: jetrails/magento-alpine:php-cron-7.2
+        image: jetrails/magento-alpine:php-cron-7.4
         restart: unless-stopped
         volumes:
             - app-sync:/var/www/html:rw
@@ -49,7 +47,6 @@ services:
             - VERBOSE=false
         links:
             - mysql
-            - redis
     nginx:
         image: jetrails/magento-alpine:nginx
         restart: unless-stopped
@@ -67,7 +64,7 @@ services:
         ports:
             - "443:443"
     mysql:
-        image: jetrails/magento-alpine:mysql
+        image: jetrails/magento-alpine:mysql-8
         restart: unless-stopped
         volumes:
             - database:/var/lib/mysql
@@ -83,10 +80,10 @@ services:
             - MYSQL_USER_PASSWORD=magento
             - MYSQL_DATABASE=magento
     varnish:
-        image: jetrails/magento-alpine:varnish
+        image: jetrails/magento-alpine:varnish-6
         restart: unless-stopped
         volumes:
-            - ./conf/docker.vcl:/etc/varnish/default.vcl
+            - ./conf/docker-6.vcl:/etc/varnish/default.vcl
         environment:
             - VERBOSE=false
         networks:
@@ -97,12 +94,19 @@ services:
             - nginx
         ports:
             - "80:80"
-    redis:
-        image: jetrails/magento-alpine:redis
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
         restart: unless-stopped
-        networks:
-            default:
-                aliases:
-                    - redis.docker.internal
+        ports:
+        -   "9200:9200"
+        -   "9300:9300"
         environment:
-            - VERBOSE=false
+        -   bootstrap.memory_lock=true
+        -   discovery.type=single-node
+        -   "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+        -   cluster.routing.allocation.disk.threshold_enabled=false
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        user: "elasticsearch"
