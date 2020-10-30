@@ -159,6 +159,72 @@
 		}
 
 		/**
+		 * This method takes in a line separated list of patterns. It then validates each one. If they
+		 * are valid then they are saved in the store config.  Otherwise an error message is attached
+		 * to the caller's session.
+		 * @param       Array               patterns            List of patterns to validate
+		 * @return      String                                  Valid entries
+		 */
+		private function _validateWildcards ( $patterns ) {
+			// Clean the value first
+			$patterns = explode ( "\n", trim ( $patterns ) );
+			$patterns = array_filter ( $patterns, function ( $i ) { return trim ( $i ) != ""; } );
+			// Loop through each entry
+			$patterns = array_map ( function ( $pattern ) {
+				// Trim the line
+				$pattern = trim ( $pattern );
+				if ( $pattern [ 0 ] == "/" ) {
+					$regexp = str_replace (
+						[ "\*\*", "\*" ],
+						[ ".*", "[^\/]*" ],
+						preg_quote ( $pattern, "/" )
+					);
+					if ( @preg_match ( "/^$regexp\$/m", null ) !== false ) {
+						return $pattern;
+					}
+				}
+				// Add a warning and return nothing
+				return $this->_message->addWarning (
+					"Ignoring invalid wildcard pattern: <font color='#EB5202' ><b>$pattern</b></font>"
+				) ? "" : "";
+			}, $patterns );
+			// Remove all the empty rows
+			$patterns = array_filter ( $patterns, function ( $i ) { return trim ( $i ) != ""; } );
+			// Combine back into single string and return the new value
+			return implode ( "\n", $patterns );
+		}
+
+		/**
+		 * This method takes in a line separated list of patterns. It then validates each one. If they
+		 * are valid then they are saved in the store config.  Otherwise an error message is attached
+		 * to the caller's session.
+		 * @param       Array               patterns            List of patterns to validate
+		 * @return      String                                  Valid entries
+		 */
+		private function _validateRegExps ( $patterns ) {
+			// Clean the value first
+			$patterns = explode ( "\n", trim ( $patterns ) );
+			$patterns = array_filter ( $patterns, function ( $i ) { return trim ( $i ) != ""; } );
+			// Loop through each entry
+			$patterns = array_map ( function ( $pattern ) {
+				// Trim the line
+				$pattern = trim ( $pattern );
+				if ( @preg_match ( $pattern, null ) === false ) {
+					// Add a warning and return nothing
+					return $this->_message->addWarning (
+						"Ignoring invalid regular expression pattern: <font color='#EB5202' ><b>$pattern</b></font>"
+					) ? "" : "";
+				}
+				// Otherwise return valid pattern
+				return $pattern;
+			}, $patterns );
+			// Remove all the empty rows
+			$patterns = array_filter ( $patterns, function ( $i ) { return trim ( $i ) != ""; } );
+			// Combine back into single string and return the new value
+			return implode ( "\n", $patterns );
+		}
+
+		/**
 		 * This method is required because this class implements the ObserverInterface class.  This
 		 * method gets executed when the registered event is fired for this class.  The event that
 		 * this method will file for can be found in the events.xml file.
@@ -174,14 +240,20 @@
 			$servers = $this->_configReader->getValue ( "$groupGC/servers", $storeScope );
 			$routes = $this->_configReader->getValue ( "$groupCEP/excluded_routes", $storeScope );
 			$urls = $this->_configReader->getValue ( "$groupCEP/excluded_url_paths", $storeScope );
+			$wildcards = $this->_configReader->getValue ( "$groupCEP/excluded_wildcard_patterns", $storeScope );
+			$regExps = $this->_configReader->getValue ( "$groupCEP/excluded_regexp_patterns", $storeScope );
 			// Define new values after validating
 			$validatedServers = $this->_validateServers ( $servers );
 			$validatedRoutes = $this->_validateRoutes ( $routes );
 			$validatedUrls = $this->_validateUrls ( $urls );
+			$validatedWildcards = $this->_validateWildcards ( $wildcards );
+			$validatedRegExps = $this->_validateRegExps ( $regExps );
 			// Save the values back into database
 			$this->_configWriter->save ( "$groupGC/servers", $validatedServers );
 			$this->_configWriter->save ( "$groupCEP/excluded_routes", $validatedRoutes );
 			$this->_configWriter->save ( "$groupCEP/excluded_url_paths", $validatedUrls );
+			$this->_configWriter->save ( "$groupCEP/excluded_wildcard_patterns", $validatedWildcards );
+			$this->_configWriter->save ( "$groupCEP/excluded_regexp_patterns", $validatedRegExps );
 			// Change caching type based on status
 			$status = $this->_configReader->getValue ( "$groupGC/status", $storeScope );
 			$this->_configWriter->save (
