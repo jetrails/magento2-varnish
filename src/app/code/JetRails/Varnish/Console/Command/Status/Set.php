@@ -12,7 +12,7 @@
 	 * Set.php - This class inherits from the AbstractCommand.  This command takes in an additional
 	 * argument, either enable or disable, and sets the caching application to 'Varnish Cache' or
 	 * 'Built-in Cache' respectfully.
-	 * @version         1.1.10
+	 * @version         2.0.0
 	 * @package         JetRails® Varnish
 	 * @category        Status
 	 * @author          Rafael Grigorian - JetRails®

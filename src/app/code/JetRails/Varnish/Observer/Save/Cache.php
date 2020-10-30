@@ -16,7 +16,7 @@
 	 * Cache.php - This observer event is triggered whenever the caching application is changed in
 	 * the system configuration page under the Advanced menu. Based on the caching application,
 	 * the varnish module will be disabled or enabled.
-	 * @version         1.1.10
+	 * @version         2.0.0
 	 * @package         JetRails® Varnish
 	 * @category        Save
 	 * @author          Rafael Grigorian - JetRails®
