@@ -268,7 +268,7 @@ sub vcl_deliver {
     }
     else {
         unset resp.http.JetRails-No-Cache-Blame-Url; // Legacy
-        unset resp.http.JetRails-No-Cache-Blame-Path
+        unset resp.http.JetRails-No-Cache-Blame-Path;
         unset resp.http.JetRails-No-Cache-Blame-Route;
         unset resp.http.JetRails-No-Cache-Blame-Wildcard;
         unset resp.http.JetRails-No-Cache-Blame-RegExp;
