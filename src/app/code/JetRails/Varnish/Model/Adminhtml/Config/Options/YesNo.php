@@ -7,7 +7,7 @@
 	/**
 	 * YesNo.php - These options include yes and no.  Yes has an integer value of 1 and no has an
 	 * integer value of 0.
-	 * @version         1.1.10
+	 * @version         1.1.11
 	 * @package         JetRails® Varnish
 	 * @category        Options
 	 * @author          Rafael Grigorian - JetRails®

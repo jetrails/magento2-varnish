@@ -13,7 +13,7 @@
 	 * All.php - This class is a controller action and when it is triggered, it is responsible for
 	 * looping through all the saved varnish cache servers and purging all the cache for all the
 	 * urls that are stored with those varnish cache servers.
-	 * @version         1.1.10
+	 * @version         1.1.11
 	 * @package         JetRails® Varnish
 	 * @category        Purge
 	 * @author          Rafael Grigorian - JetRails®
