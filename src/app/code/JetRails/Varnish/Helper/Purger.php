@@ -67,7 +67,7 @@
 				curl_setopt ( $handle, CURLOPT_FOLLOWLOCATION, true );
 				curl_setopt ( $handle, CURLOPT_RETURNTRANSFER, false );
 				curl_setopt ( $handle, CURLOPT_AUTOREFERER, true );
-				curl_setopt ( $handle, CURLOPT_HEADER, true );
+				curl_setopt ( $handle, CURLOPT_HEADER, false );
 				curl_setopt ( $handle, CURLOPT_CONNECTTIMEOUT, 3 );
 				curl_setopt ( $handle, CURLOPT_TIMEOUT, 3 );
 				curl_setopt ( $handle, CURLOPT_MAXREDIRS, 3 );
