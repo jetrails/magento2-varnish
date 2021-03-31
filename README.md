@@ -19,15 +19,24 @@ The user manual can be found [here](https://learn.jetrails.com/article/magento-2
 
 ## Build System
 
-All JetRails® modules use __Grunt__ as a build system.  Grunt is a package that can be easily downloaded using __NPM__.  Once this repository is cloned, run `npm install grunt -g` followed by `npm install` to install Grunt and all Grunt modules used within this build system.  Please refer to the following table for a description of some useful grunt build commands. A typical grunt command takes the following form: `grunt task:argument`.
+A simple [Makefile](./Makefile) is used for this purpose. It is very easy to use and to get a full list of commands and their descriptions, then run the following command:
 
-| Task       | Description                                                                                                                                                                                     |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `bump`  | Updates the version number in all __php__ and __xml__ files with the one defined in __package.json__.                                                                                           |
-| `package`  | This command first runs __init__ and then __resolve__.  It then compresses the source and dependencies and outputs the archive in __dist__.  This command gets the repo ready for a git commit. |
-| `deploy`   | Will upload dependencies and source code to a staging server.  Credentials to this server can be configured in the __package.json__ file under the _staging_ attribute.                         |
-| `watch`    | Will watch the __src__ folder for any changes. Once a change occurs it will run the __deploy__ task.                                                                               |
-|            | The default task is aliased to run the __release__ task.                                                                                                                                        |
+```shell
+$ make help
+```
+
+Here are some of the more useful use-cases:
+
+```shell
+# Replace version number with latest git tag value
+$ make bump
+# Replace version with specified value
+$ make VERSION=1.0.0 bump
+# Package with version being latest git tag value
+$ make package
+# Package with version being manually specified
+$ make VERSION=1.0.0 package
+```
 
 ## Docker Environment
 
