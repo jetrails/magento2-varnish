@@ -48,11 +48,15 @@ True IP
 Add plugin "no-cache" logic
 
 ```
-    if ( beresp.http.JetRails-No-Cache-Blame-Route ||
-         beresp.http.JetRails-No-Cache-Blame-Url ||
-         beresp.http.JetRails-No-Cache-Blame-Module
+    if ( beresp.http.JetRails-No-Cache-Blame-Path ||
+         beresp.http.JetRails-No-Cache-Blame-Route ||
+         beresp.http.JetRails-No-Cache-Blame-Wildcard ||
+         beresp.http.JetRails-No-Cache-Blame-RegExp ||
+         beresp.http.JetRails-No-Cache-Blame-Url // Legacy
     ) {
-        return ( deliver );
+        set beresp.uncacheable = true;
+        set beresp.ttl = 0s;
+        return (deliver);
     }
 ```
 
@@ -63,18 +67,20 @@ Add logic for marking headers for debug mode
 ```
     if ( resp.http.JetRails-Debug ) {
         if ( obj.hits > 0 ) {
-            set resp.http.JetRails-Debug-Cache = "HIT";
+            set resp.http.JetRails-Hit-Miss = "HIT";
         }
         else {
-            set resp.http.JetRails-Debug-Cache = "MISS";
+            set resp.http.JetRails-Hit-Miss = "MISS";
         }
         set resp.http.X-Cache-Expires = resp.http.Expires;
     }
     else {
-        unset resp.http.JetRails-No-Cache-Blame-Route;
-        unset resp.http.JetRails-No-Cache-Blame-Url;
-        unset resp.http.JetRails-Debug-Cache;
-        unset resp.http.Age;
+         unset resp.http.JetRails-No-Cache-Blame-Url; // Legacy
+         unset resp.http.JetRails-No-Cache-Blame-Path;
+         unset resp.http.JetRails-No-Cache-Blame-Route;
+         unset resp.http.JetRails-No-Cache-Blame-Wildcard;
+         unset resp.http.JetRails-No-Cache-Blame-RegExp;
+         unset resp.http.Age;
     }
 ```
 
@@ -82,6 +88,7 @@ Setting and unsetting response headers
 
 ```
     unset resp.http.JetRails-Debug;
+    unset resp.http.JetRails-Version;
     unset resp.http.X-Magento-Cache-Debug;
     unset resp.http.X-Magento-Debug;
     unset resp.http.X-Magento-Tags;

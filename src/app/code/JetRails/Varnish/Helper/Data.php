@@ -299,4 +299,41 @@
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
 
+		/**
+		 * This method returns an array of validated wildcard patterns that we define in the
+		 * store config section of the web store.
+		 * @return      Array                               List of excluded patterns
+		 */
+		public function getExcludedWildcardPatterns () {
+			// Get the values from the store configuration
+			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_wildcard_patterns";
+			$routes = explode ( "\n", $this->_getStoreValue ( $path ) );
+			// Filter out all the empty lines
+			return array_filter ( $routes, function ( $i ) { return $i != ""; });
+		}
+
+		/**
+		 * This method returns an array of validated regexp patterns that we define in the
+		 * store config section of the web store.
+		 * @return      Array                               List of excluded patterns
+		 */
+		public function getExcludedRegExpPatterns () {
+			// Get the values from the store configuration
+			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_regexp_patterns";
+			$routes = explode ( "\n", $this->_getStoreValue ( $path ) );
+			// Filter out all the empty lines
+			return array_filter ( $routes, function ( $i ) { return $i != ""; });
+		}
+
+		/**
+		 * This method returns an the modules version. This is used to pass the version to
+		 * the VCL file.
+		 * @return      String                             List of excluded patterns
+		 */
+		public function getModuleVersion () {
+			// Get the values from the store configuration
+			$path = "jetrails_varnish/general_configuration/version";
+			return $this->_getStoreValue ( $path );
+		}
+
 	}

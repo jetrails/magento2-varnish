@@ -19,6 +19,8 @@
 			<cache_exclusion_patterns>
 				<excluded_urls></excluded_urls>
 				<excluded_routes></excluded_routes>
+				<excluded_wildcard_patterns></excluded_wildcard_patterns>
+				<excluded_regexp_patterns></excluded_regexp_patterns>
 			</cache_exclusion_patterns>
 		</jetrails_varnish>
 	</default>

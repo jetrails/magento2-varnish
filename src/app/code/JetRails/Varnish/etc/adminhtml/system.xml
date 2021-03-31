@@ -61,7 +61,10 @@
 					showInStore="1" >
 					<label>Debug Mode</label>
 					<source_model>JetRails\Varnish\Model\Adminhtml\Config\Options\EnableDisable</source_model>
-					<comment>Response headers will say if there was a hit or miss in Varnish Cache™</comment>
+					<comment><![CDATA[
+						Response headers will say if there was a hit or miss in Varnish Cache™
+						<br><b>Debug Header:</b> <code>JetRails-Hit-Miss</code>
+					]]></comment>
 				</field>
 				<field
 					id="servers"
@@ -75,7 +78,7 @@
 					<comment><![CDATA[
 						New line separated values in form of
 						<b>HOST</b>:<b>PORT</b>
-						<br>e.g. 127.0.0.1:80
+						<br><b>Example:</b> <code>127.0.0.1:80</code>
 					]]></comment>
 				</field>
 				<field
@@ -166,10 +169,11 @@
 					showInDefault="1"
 					showInWebsite="1"
 					showInStore="1" >
-					<label>Excluded URL Paths</label>
+					<label>Excluded Paths</label>
 					<comment><![CDATA[
-						New line separated, url path must start with <b>/</b> and trailing <b>/</b> will be ignored
-						<br>e.g. /contact_us
+						New line separated, URL path must start with <b>/</b> and trailing <b>/</b> will be ignored
+						<br><b>Debug Header:</b> <code>JetRails-No-Cache-Blame-Path</code>
+						<br><b>Example:</b> <code>/cart</code>
 					]]></comment>
 				</field>
 				<field
@@ -183,7 +187,41 @@
 					<label>Excluded Routes</label>
 					<comment><![CDATA[
 						New line separated, left associative
-						<br>e.g. route/module/controller/action
+						<br><b>Debug Header:</b> <code>JetRails-No-Cache-Blame-Route</code>
+						<br><b>Example:</b> <code>route/module/controller/action</code>
+						<br><b>Example:</b> <code>route/module/controller</code>
+						<br><b>Example:</b> <code>route/module</code>
+						<br><b>Example:</b> <code>route</code>
+					]]></comment>
+				</field>
+				<field
+					id="excluded_wildcard_patterns"
+					translate="label"
+					type="textarea"
+					sortOrder="30"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Excluded Paths (Wildcard Pattern)</label>
+					<comment><![CDATA[
+						New line separated, wildcard patterns must start with <b>/</b> and must match full path,
+						<br><b>Debug Header:</b> <code>JetRails-No-Cache-Blame-Wildcard</code>
+						<br><b>Example:</b> <code>/product/**/color-*/*</code>
+					]]></comment>
+				</field>
+				<field
+					id="excluded_regexp_patterns"
+					translate="label"
+					type="textarea"
+					sortOrder="40"
+					showInDefault="1"
+					showInWebsite="1"
+					showInStore="1" >
+					<label>Excluded Url (RegExp Pattern)</label>
+					<comment><![CDATA[
+						New line separated, regular expression patterns match against the full URL. Use anchors (^$) exhaustively, since the risk of overmatching without them is high.
+						<br><b>Debug Header:</b> <code>JetRails-No-Cache-Blame-RegExp</code>
+						<br><b>Example:</b> <code>/[?&]no-cache$/im</code>
 					]]></comment>
 				</field>
 			</group>

@@ -31,7 +31,7 @@
 			// Register the command and set the arguments
 			$this->setName ("varnish:status:set")
 			->setDescription ("Set what caching application is being used")
-			->addArgument ( "state", InputArgument::REQUIRED, "Should we enable Varnish Cache™?" );
+			->addArgument ( "state", InputArgument::REQUIRED, "Should we enable Varnish Cache™? ['enable','disable']" );
 		}
 
 		/**
@@ -68,7 +68,7 @@
 				return [ "status" => false, "message" => $message ];
 			}
 			// Respond to caller stating what arguments are valid
-			$message = "Invalid argument, pass either enable or disable as an argument";
+			$message = "Invalid argument, pass either 'enable' or 'disable' as an argument";
 			return [ "status" => false, "message" => $message ];
 		}
 
