@@ -113,6 +113,12 @@
 			$baseUrl = $store->getBaseUrl ();
 			// Get the category id and retrieve all rewrites recursively and acyclicly.
 			$rewrites = $this->_purger->getUrlRewrites ( $route );
+			// Add home page if the default page matches
+			$homeFront = $this->_data->getConfigValue ( "web/default/front", null, $store->getId () );
+			$homePage = $this->_data->getConfigValue ( "web/default/cms_home_page", null, $store->getId () );
+			if ( in_array ( $homePage, $rewrites ) ) {
+				$rewrites[] = trim( $homeFront, "/" );
+			}
 			// Loop through all rewrites
 			foreach ( $rewrites as $rewrite ) {
 				// Purge all relative urls from varnish servers

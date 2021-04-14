@@ -65,11 +65,15 @@
 		 * By default the store config scope is the store scope.
 		 * @param       String              path                The path of the store config data
 		 * @param       ScopeInterface      scope               What scope from the store config
+		 * @param       Integer             storeId             Store id to use when looking up value
 		 * @return      String                                  The value of the variable
 		 */
-		private function _getStoreValue ( $path, $scope = ScopeInterface::SCOPE_STORE ) {
+		public function getConfigValue ( $path, $scope = ScopeInterface::SCOPE_STORE, $storeId = null ) {
+			if ( $scope === null ) {
+				$scope = ScopeInterface::SCOPE_STORE;
+			}
 			// Ask the config reader to get the value in the store scope
-			return $this->_configReader->getValue ( $path, $scope );
+			return $this->_configReader->getValue ( $path, $scope, $storeId );
 		}
 
 		/**
@@ -156,7 +160,7 @@
 		 */
 		public function isEnabled () {
 			// Get the value of the caching application and save it
-			$enabled = $this->_getStoreValue ( "system/full_page_cache/caching_application" );
+			$enabled = $this->getConfigValue ( "system/full_page_cache/caching_application" );
 			// Return true if it is set to varnish
 			return $enabled == CacheConfig::VARNISH;
 		}
@@ -191,7 +195,7 @@
 		 */
 		public function isDebugMode () {
 			// Get the value of the debug mode from the store
-			$debug = $this->_getStoreValue ("jetrails_varnish/general_configuration/debug");
+			$debug = $this->getConfigValue ("jetrails_varnish/general_configuration/debug");
 			// Return true debug mode is true
 			return $debug == EnableDisable::ENABLED;
 		}
@@ -203,7 +207,7 @@
 		 */
 		public function shouldPurgeAfterProductSave () {
 			// Get the value from the store configuration
-			$value = $this->_getStoreValue ("jetrails_varnish/automatic_cache_purge/product_save");
+			$value = $this->getConfigValue ("jetrails_varnish/automatic_cache_purge/product_save");
 			// Return true if it is on
 			return $value == YesNo::YES;
 		}
@@ -215,7 +219,7 @@
 		 */
 		public function shouldPurgeAfterCmsPageSave () {
 			// Get the value from the store configuration
-			$value = $this->_getStoreValue ("jetrails_varnish/automatic_cache_purge/cms_page_save");
+			$value = $this->getConfigValue ("jetrails_varnish/automatic_cache_purge/cms_page_save");
 			// Return true if it is on
 			return $value == YesNo::YES;
 		}
@@ -227,7 +231,7 @@
 		 */
 		public function shouldPurgeAfterCategorySave () {
 			// Get the value from the store configuration
-			$value = $this->_getStoreValue ("jetrails_varnish/automatic_cache_purge/category_save");
+			$value = $this->getConfigValue ("jetrails_varnish/automatic_cache_purge/category_save");
 			// Return true if it is on
 			return $value == YesNo::YES;
 		}
@@ -257,7 +261,7 @@
 		public function getVarnishServersWithPorts () {
 			// Get the values from the store configuration
 			$path = "jetrails_varnish/general_configuration/servers";
-			$lines = explode ( "\n", $this->_getStoreValue ( $path ) );
+			$lines = explode ( "\n", $this->getConfigValue ( $path ) );
 			// Remove all the empty lines
 			$lines = array_filter ( $lines, function ( $i ) { return $i != ""; });
 			// Only get unique items only
@@ -281,7 +285,7 @@
 		public function getExcludedUrls () {
 			// Get the values from the store configuration
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_url_paths";
-			$urls = explode ( "\n", $this->_getStoreValue ( $path ) );
+			$urls = explode ( "\n", $this->getConfigValue ( $path ) );
 			// Filter out all the empty lines
 			return array_filter ( $urls, function ( $i ) { return $i != ""; });
 		}
@@ -294,7 +298,7 @@
 		public function getExcludedRoutes () {
 			// Get the values from the store configuration
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_routes";
-			$routes = explode ( "\n", $this->_getStoreValue ( $path ) );
+			$routes = explode ( "\n", $this->getConfigValue ( $path ) );
 			// Filter out all the empty lines
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
@@ -307,7 +311,7 @@
 		public function getExcludedWildcardPatterns () {
 			// Get the values from the store configuration
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_wildcard_patterns";
-			$routes = explode ( "\n", $this->_getStoreValue ( $path ) );
+			$routes = explode ( "\n", $this->getConfigValue ( $path ) );
 			// Filter out all the empty lines
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
@@ -320,7 +324,7 @@
 		public function getExcludedRegExpPatterns () {
 			// Get the values from the store configuration
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_regexp_patterns";
-			$routes = explode ( "\n", $this->_getStoreValue ( $path ) );
+			$routes = explode ( "\n", $this->getConfigValue ( $path ) );
 			// Filter out all the empty lines
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
@@ -333,7 +337,7 @@
 		public function getModuleVersion () {
 			// Get the values from the store configuration
 			$path = "jetrails_varnish/general_configuration/version";
-			return $this->_getStoreValue ( $path );
+			return $this->getConfigValue ( $path );
 		}
 
 	}

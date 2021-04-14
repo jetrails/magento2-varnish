@@ -1,4 +1,8 @@
+# Files
 .DS_Store
+*.tar.gz
+
+# Directories
 /.docker-sync/
 /node_modules/
 /public_html/
