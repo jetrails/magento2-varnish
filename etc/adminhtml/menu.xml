@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+
+<config
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd" >
+	<menu>
+		<update
+			id="JetRails_Plugins::jetrails"
+			title="JetRails"
+			module="JetRails_Varnish"
+			resource="JetRails_Plugins::jetrails"
+			sortOrder="79"
+		/>
+		<add
+			id="JetRails_Varnish::varnish"
+			title="Varnish Cache"
+			module="JetRails_Varnish"
+			parent="JetRails_Plugins::jetrails"
+			resource="JetRails_Varnish::varnish"
+			sortOrder="0"
+		/>
+		<add
+			id="JetRails_Varnish::purge_cache"
+			title="Purge Cache"
+			module="JetRails_Varnish"
+			parent="JetRails_Varnish::varnish"
+			resource="JetRails_Varnish::purge_cache"
+			action="varnish/purgecache/view"
+			sortOrder="0"
+		/>
+		<add
+			id="JetRails_Varnish::exclusion_rules"
+			title="Exclusion Rules"
+			module="JetRails_Varnish"
+			parent="JetRails_Varnish::varnish"
+			resource="JetRails_Varnish::exclusion_rules"
+			action="varnish/exclusionrules/view"
+			sortOrder="1"
+		/>
+		<add
+			id="JetRailas_Varnish::configuration"
+			title="Configuration"
+			module="JetRails_Varnish"
+			parent="JetRails_Varnish::varnish"
+			resource="JetRails_Varnish::configuration"
+			action="varnish/configuration/view"
+			sortOrder="2"
+		/>
+	</menu>
+</config>

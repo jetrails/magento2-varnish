@@ -11,7 +11,7 @@
 
 ## About
 
-This module helps manage varnish Cache™ for your Magento 2 store.  It supports a multiple varnish server configuration.  Purge requests can be sent to all these servers in order to purge a specific URL, a whole store view, or simply to purge all the cache that is contained in said varnish server. Additionally, the purge process can be executed automatically on product or CMS page save. Cache exclusion rules can be set to not cache paths or Magento routes. Finally, there exists a _debug_ mode that will display if Varnish FPC was used in loading the page and which exclusion rules should be blamed if the page is excluded.
+This module helps manage varnish Cache™ for your Magento 2 store. It supports a multiple varnish server configuration. Purge requests can be sent to all these servers in order to purge a specific URL, a specific Magento tag, custom ban rule, or simply to purge all the cache that is contained in said varnish server. Cache exclusion rules can be set to not cache paths or Magento routes. Finally, there exists a _debug_ mode that will display if Varnish FPC was used in loading the page and which exclusion rules should be blamed if the page is excluded.
 
 ## Documentation
 
@@ -38,9 +38,9 @@ $ make package
 $ make VERSION=1.0.0 package
 ```
 
-## Docker Environment
+## Development Environment
 
-This project comes with a [docker-compose.yml](docker-compose.yml) file as well as a [docker-sync.yml](docker-sync.yml) file, which can be used to spin up a Magento 2 environment. In order to use docker, please make sure you have **Docker**, **Docker Compose**, and **Docker Sync** installed. For information about configuring this docker environment, please refer to it's Github repository which can be found [here](https://github.com/jetrails/docker-magento-alpine).
+Run `make dev-create` to create a docker development environment using the [magento-cloud-docker](https://github.com/magento/magento-cloud-docker) project. Run `make dev-down` spin the environment down, `make dev-up` to spin it back up, and `make dev-nuke` to completely remove everything that is ephemeral.
 
 ## Legal Disclaimer
 

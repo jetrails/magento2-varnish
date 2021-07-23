@@ -1,0 +1,59 @@
+<section class="varnish dark-bg" >
+	<div class="cards" >
+		<div class="card visible" >
+			<form class="methods" method="post" action="<?= $block->getUrl ('varnish/purgecache/url') ?>" >
+				<fieldset class="method-container" >
+					<h3>Purge Cache Via URL</h3>
+					<p>
+						Supply a URL consisting of a domain name and path.
+						A request will be sent to all Varnish server(s) to purge all urls that match your input.
+						URL scheme, query parameters, and fragments are ignored and will be purged as long as the domain name and path matches.
+					</p>
+					<?php echo $block->getBlockHtml ("formkey") ?>
+					<input type="text" placeholder="example.com/foo/bar" name="url" />
+					<button type="submit" ><span>Purge</span></button>
+				</fieldset>
+			</form>
+		</div>
+		<div class="card visible" >
+			<form class="methods" method="post" action="<?= $block->getUrl ('varnish/purgecache/tag') ?>" >
+				<fieldset class="method-container" >
+					<h3>Purge Cache Via Tag</h3>
+					<p>
+						Supply a Magento defined caching tag to purge.
+						This caching tag can be found under the <b>X-Magento-Tags</b> header.
+					</p>
+					<?php echo $block->getBlockHtml ("formkey") ?>
+					<input type="text" placeholder="cms_p_1" name="tag" />
+					<button type="submit" ><span>Purge</span></button>
+				</fieldset>
+			</form>
+		</div>
+		<div class="card visible" >
+			<form class="methods" method="post" action="<?= $block->getUrl ('varnish/purgecache/advanced') ?>" >
+				<fieldset class="method-container" >
+					<h3>Purge Cache Using Custom Rule</h3>
+					<p>
+						You can easily interact directly with your Varnish server(s) and supply a custom matching rule to use to purge your cache.
+						Please only use this if you know what you are doing. Miss-use of this form may result in accidentally flushing all cache.
+					</p>
+					<?php echo $block->getBlockHtml ("formkey") ?>
+					<input type="text" placeholder="req.method == 'GET' && req.http.host == 'example.com' && req.http.url ~ .*" name="rule" />
+					<button type="submit" ><span>Purge</span></button>
+				</fieldset>
+			</form>
+		</div>
+		<div class="card visible" >
+			<form class="methods" method="post" action="<?= $block->getUrl ('varnish/purgecache/all') ?>" >
+				<fieldset class="method-container" >
+					<h3>Purge All Cache</h3>
+					<p>
+						Clear all cache on all configured Varnish server(s). This will completely wipe all stored cache for everything stored on your Varnish server(s).
+					</p>
+					<?php echo $block->getBlockHtml ("formkey") ?>
+					<button type="submit" class="primary" ><span>Purge</span></button>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,157 @@
+<section class="varnish dark-bg" >
+	<form method="post" action="<?= $block->getUrl ('varnish/exclusionrules/save') ?>" >
+		<div class="button-container" >
+			<?php echo $block->getBlockHtml ("formkey") ?>
+			<button type="submit" class="primary" ><span>Save Config</span></button>
+		</div>
+		<div class="cards one-col" >
+			<div class="card visible" >
+				<div class="methods" >
+					<fieldset class="method-container" >
+						<h3>Excluded Routes</h3>
+						<p>New line separated values. The following formats are valid: <code>[route]/[module]/[controller]/[action]</code>, <code>[route]/[module]/[controller]</code>, <code>[route]/[module]</code>, and <code>[route]</code>.</p>
+						<textarea name="excluded_routes" ><?= implode ( "\n", $block->helper->getExcludedRoutes () ) ?></textarea>
+						<div class="tray-labels" >
+							<div data-tray="debug-headers" >Debug Headers <span>&blacktriangleright;</span></div>
+							<div data-tray="examples" >Examples <span>&blacktriangleright;</span></div>
+						</div>
+						<div class="tray" data-tray="examples" >
+							<table>
+								<tr>
+									<th>cms/cms/page/view</th>
+									<td>Only exclude the <code>view</code> action</td>
+								</tr>
+								<tr>
+									<th>cms/cms/page</th>
+									<td>Exclude all actions under the <code>page</code> controller</td>
+								</tr>
+								<tr>
+									<th>cms/cms</th>
+									<td>Exclude everything under the cms route and cms module</td>
+								</tr>
+								<tr>
+									<th>cms</th>
+									<td>Exclude everything under the <code>cms</code> route</td>
+								</tr>
+							</table>
+						</div>
+						<div class="tray" data-tray="debug-headers" >
+							<table>
+								<tr>
+									<th>JR-Current-Route</th>
+									<td>Displays current page's route, i.e. <code>cms/cms/page/view</code>.</td>
+								</tr>
+								<tr>
+									<th>JR-Exclude-Type</th>
+									<td>If route rule is responsible for exclusion, value will be <code>route</code>.</td>
+								</tr>
+								<tr>
+									<th>JR-Exclude-Rule</th>
+									<td>If route rule is responsible for exclusion, value will be responsible rule.</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="card visible" >
+				<div class="methods" >
+					<fieldset class="method-container" >
+						<h3>Excluded Paths (Wildcard Pattern)</h3>
+						<p>New line separated values. Wildcard patterns must start with a <code>/</code> and must match the full path. Using two <code>**</code> will match across multiple slash seperated segments, while using one will match up until the first slash seperated segment.</p>
+						<textarea name="excluded_wildcard_patterns" ><?= implode ( "\n", $block->helper->getExcludedWildcardPatterns () ) ?></textarea>
+						<div class="tray-labels" >
+							<div data-tray="debug-headers" >Debug Headers <span>&blacktriangleright;</span></div>
+							<div data-tray="examples" >Examples <span>&blacktriangleright;</span></div>
+						</div>
+						<div class="tray" data-tray="examples" >
+							<table>
+								<tr>
+									<th>/**</th>
+									<td>This will everything since it matches across all segments</td>
+								</tr>
+								<tr>
+									<th>/*/*</th>
+									<td>Matches any path with two segments, i.e. <code>/product/t-shirt</code></td>
+								</tr>
+								<tr>
+									<th>/product/*/small</th>
+									<td>This will match a path that has 3 segments and starts with <code>/product/</code> and ends with <code>/small</code></td>
+								</tr>
+								<tr>
+									<th>/product/**/small</th>
+									<td>This will match a path that starts with <code>/product/</code> and ends with <code>/small</code> regardless of how many segments are in between</td>
+								</tr>
+								<tr>
+									<th>/product/**/color-*/*</th>
+									<td>This will match any path that starts with <code>/product/</code> and has a segment that starts with <code>color-</code></td>
+								</tr>
+							</table>
+						</div>
+						<div class="tray" data-tray="debug-headers" >
+							<table>
+								<tr>
+									<th>JR-Current-Path</th>
+									<td>Displays current page's url path, i.e. <code>/product/t-shirt/color-red/small</code>.</td>
+								</tr>
+								<tr>
+									<th>JR-Exclude-Type</th>
+									<td>If route rule is responsible for exclusion, value will be <code>wildcard</code>.</td>
+								</tr>
+								<tr>
+									<th>JR-Exclude-Rule</th>
+									<td>If route rule is responsible for exclusion, value will be responsible rule.</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="card visible" >
+				<div class="methods" >
+					<fieldset class="method-container" >
+						<h3>Excluded URLs (RegExp Pattern)</h3>
+						<p>New line separated values. Regular expression patterns match against the full URL. Use anchors (<code>^</code> & <code>$</code>) exhaustively, since the risk of overmatching without them is high.</p>
+						<textarea name="excluded_regexp_patterns" ><?= implode ( "\n", $block->helper->getExcludedRegExpPatterns () ) ?></textarea>
+						<div class="tray-labels" >
+							<div data-tray="debug-headers" >Debug Headers <span>&blacktriangleright;</span></div>
+							<div data-tray="examples" >Examples <span>&blacktriangleright;</span></div>
+						</div>
+						<div class="tray" data-tray="examples" >
+							<table>
+								<tr>
+									<th>/.*/im</th>
+									<td>Matches everything</td>
+								</tr>
+								<tr>
+									<th>/[?&amp;]no-cache$/im</th>
+									<td>Having the <code>no-cache</code> query parameter in the url will cause a cache bypass</td>
+								</tr>
+								<tr>
+									<th>/brand-name/i</th>
+									<td>Any part of the URL that has <code>brand-name</code> within it</td>
+								</tr>
+							</table>
+						</div>
+						<div class="tray" data-tray="debug-headers" >
+							<table>
+								<tr>
+									<th>JR-Current-URL</th>
+									<td>Displays current page's url path, i.e. <code>https://example.com/foo/bar?a=b</code>.</td>
+								</tr>
+								<tr>
+									<th>JR-Exclude-Type</th>
+									<td>If route rule is responsible for exclusion, value will be <code>regexp</code></td>
+								</tr>
+								<tr>
+									<th>JR-Exclude-Rule</th>
+									<td>If route rule is responsible for exclusion, value will be responsible rule.</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</form>
+</section>

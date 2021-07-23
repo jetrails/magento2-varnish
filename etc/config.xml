@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<config
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd" >
+	<default>
+		<jetrails_varnish>
+			<general_configuration>
+				<debug>1</debug>
+			</general_configuration>
+			<cache_exclusion_patterns>
+				<excluded_routes></excluded_routes>
+				<excluded_wildcard_patterns></excluded_wildcard_patterns>
+				<excluded_regexp_patterns></excluded_regexp_patterns>
+			</cache_exclusion_patterns>
+		</jetrails_varnish>
+	</default>
+</config>

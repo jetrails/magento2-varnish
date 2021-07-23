@@ -1,0 +1,350 @@
+section.varnish.dark-bg {
+	background: #f8f8f8;
+	border: solid 1px #e3e3e3;
+	margin: 35px 0;
+}
+
+section.varnish .progress-container {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	flex-wrap: wrap;
+
+	display: none;
+
+}
+
+section.varnish code {
+	background: #e2e2e2;
+	border-radius: 3px;
+	padding: 2px 4px;
+	margin: 0;
+	font-weight: bold;
+	font-family: monospace;
+}
+
+section.varnish pre > code {
+	background: initial;
+	padding: initial;
+	font-weight: initial;
+}
+
+section.varnish .progress-bar {
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	top: calc(50% - 2px);
+	left: 0;
+	display: table-column-group;
+	content: "";
+	background: #e85d22;
+}
+
+section.varnish .progress-node {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	border-radius: 50%;
+	background: #AAA6A0;
+	z-index: 1;
+	transition: background 500ms;
+}
+
+section.varnish .progress-node.done {
+	background: #E85D22;
+}
+
+section.varnish .progress-node.done img {
+	filter: invert(1);
+}
+
+section.varnish .button-container {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 15px;
+}
+
+section.varnish .button {
+	background: #AAA6A0;
+	padding: 5px 5px;
+	font-weight: 800;
+	color: rgba(0, 0, 0, 1);
+	min-width: 120px;
+	text-transform: uppercase;
+	border-radius: 2px;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 250ms;
+	opacity: 0.5;
+}
+
+section.varnish .button.active {
+	cursor: pointer;
+	opacity: 1;
+}
+
+section.varnish .button.active:hover {
+	background: #E85D22;
+	color: #FFFFFF;
+}
+
+section.varnish .button span:first-child {
+	padding-left: 10px;
+}
+
+section.varnish .button span:last-child {
+	padding-right: 10px;
+}
+
+section.varnish .title {
+	flex: 1;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 800;
+}
+
+section.varnish .sections {
+	margin-top: 30px;
+	max-width: 1000px;
+	margin: auto;
+}
+
+section.varnish .section {
+	width: 100%;
+}
+
+section.varnish .cards {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	row-gap: 30px;
+	column-gap: 30px;
+	padding: 30px;
+}
+
+@media only screen and (max-width: 1024px) {
+	section.varnish .cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+section.varnish .cards.one-col {
+	grid-template-columns: 1fr;
+}
+
+section.varnish .cards.one-col .card {
+	width: 100%;
+	max-width: 1000px;
+	margin: auto;
+}
+
+section.varnish .button-container {
+	text-align: right;
+	padding: 30px;
+	font-size: 19px;
+	background: #f8f8f8;
+	margin: 0 0 30px 0;
+	border-bottom: solid 1px #e3e3e3;
+}
+
+section.varnish .button-container button {
+	font-size: 17px;
+}
+
+section.varnish .card {
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	border-radius: 3px;
+	overflow: hidden;
+	display: none;
+}
+
+section.varnish .card.visible {
+	display: block;
+}
+
+section.varnish .card .methods {
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	border: none;
+	background: #FFF;
+	min-width: initial;
+}
+
+section.varnish .card .method-container {
+	margin: 0;
+	border: none;
+	background: #FFF;
+	padding: 30px;
+	min-width: initial;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: stretch;
+	flex-direction: column;
+	max-width: 1000px;
+}
+
+section.varnish .card .method-container .tray-labels {
+	display: flex;
+	width: 100%;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	border-top: solid 1px #DDDDDD;
+	margin-top: 25px;
+}
+
+section.varnish .card .method-container .tray-labels > div {
+	color: #1c78d3;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 13px;
+	margin: 25px 0 0 5px;
+	padding: 5px 10px;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background-color 250ms;
+}
+
+section.varnish .card .method-container .tray-labels > div:hover,
+section.varnish .card .method-container .tray-labels > div.active {
+	background: #e8f5ff;
+}
+
+section.varnish .card .method-container .tray {
+	display: none;
+	padding: 25px 0 0 0;
+	/* font-family: monospace; */
+}
+
+section.varnish table {
+	width: 100%;
+}
+
+section.varnish table th {
+	font-weight: bold;
+	text-align: left;
+	white-space: nowrap;
+}
+
+section.varnish table th,
+section.varnish table td {
+	padding: 5px;
+	border: solid 1px #AAA6A0;
+}
+
+section.varnish .card .method-container > * {
+	width: 100%;
+}
+
+section.varnish .card .method-container > input[type="text"] {
+	padding: 10px;
+	font-family: monospace;
+	height: 40px;
+}
+
+section.varnish .card .method-container > button {
+	margin-top: 20px;
+	height: 40px;
+}
+
+section.varnish .card .method-container > h3 {
+	margin: 0;
+	padding-bottom: 20px;
+}
+
+section.varnish .card .method-container > p {
+	margin: 0;
+	padding-bottom: 20px;
+	flex: 1;
+}
+
+section.varnish .footer {
+	margin-top: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	opacity: 0.7;
+}
+
+section.varnish .methods {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+section.varnish .methods > p {
+	margin: 25px 0;
+}
+
+section.varnish .method-container {
+	min-width: 700px;
+	width: 100%;
+	box-sizing: border-box;
+	border: solid 2px #AAA6A0;
+	margin: 10px 0;
+	position: relative;
+	padding-top: 32px;
+	padding-left: 10px;
+	padding-bottom: 0;
+	background: #AAA6A024;
+	line-height: 1.75em;
+}
+
+section.varnish .method-container pre {
+	background: #ADA9A326;
+	padding: 10px;
+	border-radius: 2px;
+	font-weight: 800;
+}
+
+section.varnish .method-container legend {
+	background: #AAA6A0;
+	color: #000000;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 5px;
+	font-size: 10px;
+	font-weight: 800;
+	text-transform: uppercase;
+}
+
+section.varnish .method-container.current-value {
+	width: 100%;
+	border-color: #E85D22;
+	background: #e85d2230;
+}
+
+section.varnish .method-container.current-value legend {
+	background: #E85D22;
+	color: #FFFFFF;
+}
+
+section.varnish ul {
+	margin: 0;
+	list-style: circle;
+	padding-left: 18px;
+}
+
+section.varnish li {
+	font-family: monospace;
+}
+
+section.varnish fieldset textarea {
+	border: solid 1px #AAA6A0;
+	background: #FFFFFF;
+	padding: 10px;
+	resize: none;
+	width: 50%;
+	min-height: 250px;
+}

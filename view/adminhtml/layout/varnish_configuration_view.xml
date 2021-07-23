@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<page
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" >
+	<head>
+		<title>Varnish Cache — Configuration</title>
+		<css src="JetRails_Varnish::css/styles.css" />
+		<link src="JetRails_Varnish::js/functions.js" />
+	</head>
+	<body>
+		<referenceContainer name="content" >
+			<block
+				class="JetRails\Varnish\Block\Adminhtml\Template"
+				template="JetRails_Varnish::configuration.phtml"
+			/>
+			<block
+				class="JetRails\Varnish\Block\Adminhtml\Template"
+				template="JetRails_Varnish::footer.phtml"
+			/>
+		</referenceContainer>
+	</body>
+</page>

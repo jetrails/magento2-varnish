@@ -16,11 +16,8 @@
 			"url": "https://composer.magerepo.com/"
 		}
 	],
-	"require": {
-		"magento/magento-composer-installer": "*"
-	},
 	"autoload": {
-		"psr-4": { "JetRails\\Varnish\\": "src/app/code/JetRails/Varnish" },
-		"files": [ "src/app/code/JetRails/Varnish/registration.php" ]
+		"psr-4": { "JetRails\\Varnish\\": "" },
+		"files": [ "registration.php" ]
 	}
 }

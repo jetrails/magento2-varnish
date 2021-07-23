@@ -3,8 +3,6 @@
 *.tar.gz
 
 # Directories
-/.docker-sync/
-/node_modules/
-/public_html/
-/build/
 /dist/
+/private/
+/public_html/

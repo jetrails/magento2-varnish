@@ -1,0 +1,187 @@
+<?php
+
+	$stage = 0;
+	$enabled = $block->helper->isEnabled ();
+	$debug = $block->helper->isDebugMode ();
+	$servers = $block->helper->getVarnishServerConfigInfo ();
+	$edited = $block->config->get ("http_cache_hosts") != null;
+	$installed = count ( array_filter ( $servers, function ( $server ) { return $server->version == "Not Detected"; } ) ) == 0;
+	if ( $enabled ) {
+		$stage = 1;
+		if ( $edited ) {
+			$stage = 2;
+			if ( $installed ) {
+				$stage = 3;
+			}
+		}
+	}
+
+?>
+
+<section class="varnish dark-bg" >
+	<div class="button-container steps" data-stage="<?= $stage ?>" >
+		<div class="button active previous" >
+			<img src="<?= $block->getViewFileUrl ('JetRails_Varnish/images/previous.svg') ?>" />
+			<span>Previous</span>
+		</div>
+		<div class="title" ></div>
+		<div class="button active next" >
+			<span>Next</span>
+			<img src="<?= $block->getViewFileUrl ('JetRails_Varnish/images/next.svg') ?>" />
+		</div>
+	</div>
+	<div class="cards one-col" >
+		<div class="card" data-section="Change Caching Application" >
+			<div class="methods" >
+				<fieldset class="method-container" >
+					<h3>Set Caching Application</h3>
+					<p>The current caching application is set to <code><?= $enabled ? "Varnish Cache" : "Built-In Cache" ?></code>.</p>
+					<p>
+						On this step, we change the default caching application from Magento's Built-In Cache to Varnish Cache.
+						This change can be made through the <b>Command-Line</b> or <b>Magento Admin Dashboard</b>.
+					</p>
+					<div class="tray-labels" >
+						<div data-tray="cli" >Command-Line<span>&blacktriangleright;</span></div>
+						<div data-tray="dashboard" >Admin-Dashboard<span>&blacktriangleright;</span></div>
+					</div>
+					<div class="tray" data-tray="cli" >
+						<p>In order to set the caching application to <code>Varnish Cache</code>, run the following command:</p>
+						<pre><code>php bin/magento config:set system/full_page_cache/caching_application 2</code></pre>
+						<p>If you would like to set it back to <code>Built-In Cache</code>, run the following command:</p>
+						<pre><code>php bin/magento config:set system/full_page_cache/caching_application 1</code></pre>
+					</div>
+					<div class="tray" data-tray="dashboard" >
+						<p>
+							This can be done by navigating to <a href="<?= $block->getUrl ("adminhtml/system_config/edit/section/system") ?>" target="_blank" >Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System</a> &#10095; Full Page Cache &#10095; Caching Application.
+							Once there you can change the caching application from <b>Built-In Cache</b> to <b>Varnish Cache</b>.
+						</p>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="card" data-section="Configure Varnish Server(s)" >
+			<div class="methods" >
+				<fieldset class="method-container" >
+					<h3>Configure Varnish Server(s)</h3>
+					<p>
+						On this step, we will configure the available Varnish server(s).
+						This change can be made through the <b>Command-Line</b> or <b>Env Config File</b>.
+					</p>
+					<p>
+						<?php if ( $edited ): ?>
+							<ul>
+								<?php foreach ( $servers as $index => $server ): ?>
+									<li><?= $server->host . ":" . $server->port ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php else: ?>
+							<p>No Configured Server(s) Detected</p>
+						<?php endif; ?>
+					</p>
+					<div class="tray-labels" >
+						<div data-tray="cli" >Command-Line<span>&blacktriangleright;</span></div>
+						<div data-tray="config" >Config File<span>&blacktriangleright;</span></div>
+					</div>
+					<div class="tray" data-tray="cli" >
+						<p>In order to configure a set of Varnish server endpoints, run the following command:</p>
+						<pre><code>php bin/magento setup:config:set --http-cache-hosts=example.com:8080</code></pre>
+						<p>If there are multiple endpoints, you can comma separate the value as follows:</p>
+						<pre><code>php bin/magento setup:config:set --http-cache-hosts=foo.com:8080,bar.com:8080</code></pre>
+					</div>
+					<div class="tray" data-tray="config" >
+						<p>Varnish server endpoints can be configured via the <b>env.php</b> file located in <b>app/etc/env.php</b> with <b>http_cache_hosts</b> entry.</p>
+	<pre><code><&#63;php
+
+    return [
+        // ...
+        'http_cache_hosts' => [
+            [
+                'host' => 'example.com',
+                'port' => '8080'
+            ]
+        ],
+        // ...
+    ];
+
+&#63;></code></pre>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="card" data-section="Download Custom VCL" >
+			<div class="methods" >
+				<fieldset class="method-container" >
+					<h3>Install Varnish Config File</h3>
+					<table>
+						<tr>
+							<th>Varnish Server</th>
+							<th>Magento Version</th>
+							<th>Module Version</th>
+						</tr>
+						<?php if ( $edited ): ?>
+							<?php foreach ( $servers as $index => $server ): ?>
+								<tr>
+									<td><?= $server->host . ":" . $server->port ?></td>
+									<td>Version <?= $server->magento ?></td>
+									<td>Version <?= $server->version ?></td>
+								</tr>
+							<?php endforeach; ?>
+						<?php else: ?>
+							<tr>
+								<td colspan="3" >No Configured Server(s) Detected</td>
+							</tr>
+						<?php endif; ?>
+					</table>
+					<div class="tray-labels" >
+						<div data-tray="cli" >Command-Line<span>&blacktriangleright;</span></div>
+						<div data-tray="dashboard" >Admin-Dashboard<span>&blacktriangleright;</span></div>
+					</div>
+					<div class="tray" data-tray="cli" >
+						<p>
+							To customize the following command, please see the help menu by running
+							<code>php bin/magento varnish:vcl:generate -h</code>.
+							The following will output the VCL config to standard out:
+						</p>
+<pre><code>php bin/magento varnish:vcl:generate \
+    --export-version=6 \
+    --access-list="127.0.0.1" --access-list="192.168.0.0/24" \
+    --backend-host="localhost" \
+    --backend-port=8080 \
+    --grace-period=300</code></pre>
+					</div>
+					<div class="tray" data-tray="dashboard" >		
+						<p>
+							This can be done by navigating to <a href="<?= $block->getUrl ("adminhtml/system_config/edit/section/system") ?>" target="_blank" >Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System</a> &#10095; <b>Full Page Cache</b> &#10095; <b>Varnish Configuration</b>.
+							Once there you can configure your desired backend and download the VCL under <b>Export Configuration</b>.
+						</p>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="card" data-section="Debug Varnish Cache" >
+			<div class="methods" >
+				<fieldset class="method-container" >
+					<h3>Debug Mode</h3>
+					<p>Currently debug mode is <b><?= $debug ? "Enabled" : "Disabled" ?></b>.</p>
+					<p>
+						When Debug Mode is enabled, extra HTTP parameter will be sent in the response header of every page.
+						These parameters will be prefixed with <code>JR-</code>.
+						In addition to exclusion rule debug headers being present, the following will also be present:
+						<ul>
+							<li><code>JR-Hit-Miss</code>, will either be <b>HIT</b> or <b>MISS</b></li>
+							<li><code>JR-Hit-Count</code>, will display the number of hits in cache</li>
+							<li><code>JR-Current-Url</code>, will display the current page's full URL that is used with exclusion rules</li>
+							<li><code>JR-Current-Path</code>, will display the current page's URL path that is used with exclusion rules</li>
+							<li><code>JR-Current-Route</code>, will display the current page's route that is used with exclusion rules</li>
+						</ul>
+					</p>
+					<form method="post" action="<?= $block->getUrl ('varnish/configuration/save') ?>" >
+						<?php echo $block->getBlockHtml ("formkey") ?>
+						<input type="hidden" name="debug" value="<?= $debug ? "disable" : "enable" ?>" />
+						<button type="submit" ><span><?= $debug ? "Disable" : "Enable" ?></span></button>
+					</form>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</section>
