@@ -1,8 +1,10 @@
 # Files
 .DS_Store
 *.tar.gz
+composer.lock
 
 # Directories
 /dist/
 /private/
 /public_html/
+/vendor/
