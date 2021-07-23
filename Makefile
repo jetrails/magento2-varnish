@@ -10,7 +10,7 @@ MODULE_FILES_EXTRA=composer.json LICENSE.md
 
 bump: ## Bump version in source files based on latest git tag
 	VERSION=$(VERSION); find Block Console Controller Model etc Helper Logger Observer view registration.php -type f -iname "*.php" -exec sed -E -i '' "s/([\t ]+\*[\t ]+@version[\t ]+)(.*)/\1$$VERSION/g" {} +
-	VERSION=$(VERSION); sed -E -i '' "s/(Version-)(.+)(-orange)/\1$$VERSION\3/g" ./README.md
+	VERSION=$(VERSION); sed -E -i '' "s/(Version-)(.+)(-lightgrey)/\1$$VERSION\3/g" ./README.md
 	VERSION=$(VERSION); sed -E -i '' "s/(\"version\": \")(.+)(\")/\1$$VERSION\3/g" ./composer.json
 	VERSION=$(VERSION); sed -E -i '' "s/(<version>)(.+)(<\/version>)/\1$$VERSION\3/g" ./etc/config.xml
 	VERSION=$(VERSION); sed -E -i '' "s/setup_version=\"([^\"]+)\"/setup_version=\"$$VERSION\"/g" ./etc/module.xml

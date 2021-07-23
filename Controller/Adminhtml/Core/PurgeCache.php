@@ -11,7 +11,7 @@
 	use Magento\Framework\Controller\ResultFactory;
 
 	/**
-	 * @version         1.1.11
+	 * @version         2.0.0
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
