@@ -66,18 +66,16 @@
 		abstract protected function _run ();
 
 		public function execute () {
+			$redirect = $this->resultFactory->create ( ResultFactory::TYPE_REDIRECT );
 			if ( $this->_data->isEnabled () ) {
 				$this->_run ();
 				$this->_consumeMessages ();
+				return $redirect->setPath ("varnish/pagecache/view");
 			}
-			else {
-				$this->messageManager->addError (
-					"Cache application must be set to <b>Varnish Cache™</b>, set it by configuring" .
-					" <b>Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System &#10095; Full Page Cache &#10095; Caching Application</b>"
-				);
-			}
-			$redirect = $this->resultFactory->create ( ResultFactory::TYPE_REDIRECT );
-			return $redirect->setPath ("varnish/purgecache/view");
+			$this->messageManager->addError (
+				"Before using the <b>Purge Cache</b> feature, <b>Varnish Cache™</b>, must be set-up."
+			);
+			return $redirect->setPath ("varnish/configuration/view");
 		}
 
 	}

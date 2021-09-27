@@ -25,9 +25,9 @@
 			Context $context,
 			WriterInterface $configWriter,
 			TypeListInterface $cacheTypeList,
-			array $data = []
+			array $dataArray = []
 		) {
-			parent::__construct ( $context, $data );
+			parent::__construct ( $context, $dataArray );
 			$this->_configWriter = $configWriter;
 			$this->_cacheTypeList = $cacheTypeList;
 		}

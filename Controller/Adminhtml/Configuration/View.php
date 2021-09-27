@@ -20,9 +20,9 @@
 		public function __construct (
 			Context $context,
 			PageFactory $resultPageFactory,
-			array $data = []
+			array $dataArray = []
 		) {
-			parent::__construct ( $context, $data );
+			parent::__construct ( $context, $dataArray );
 			$this->_resultPageFactory = $resultPageFactory;
 		}
 
