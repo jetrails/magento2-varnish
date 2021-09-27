@@ -13,6 +13,7 @@
 			<block
 				class="JetRails\Varnish\Block\Adminhtml\Template"
 				template="JetRails_Varnish::exclusion_rules.phtml"
+				cacheable="false"
 			/>
 			<block
 				class="JetRails\Varnish\Block\Adminhtml\Template"
