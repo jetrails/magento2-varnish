@@ -19,22 +19,11 @@
 ?>
 
 <section class="varnish dark-bg" >
-	<div class="button-container steps" data-stage="<?= $stage ?>" >
-		<div class="button active previous" >
-			<img src="<?= $block->getViewFileUrl ('JetRails_Varnish/images/previous.svg') ?>" />
-			<span>Previous</span>
-		</div>
-		<div class="title" ></div>
-		<div class="button active next" >
-			<span>Next</span>
-			<img src="<?= $block->getViewFileUrl ('JetRails_Varnish/images/next.svg') ?>" />
-		</div>
-	</div>
 	<div class="cards one-col" >
-		<div class="card" data-section="Change Caching Application" >
+		<div class="card <?= $enabled ? "done" : "" ?>" data-section="Change Caching Application" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Set Caching Application</h3>
+					<h3>Set Caching Application<span><?= $enabled ? "Complete" : "Pending" ?></span></h3>
 					<p>The current caching application is set to <code><?= $enabled ? "Varnish Cache" : "Built-In Cache" ?></code>.</p>
 					<p>
 						On this step, we change the default caching application from Magento's Built-In Cache to Varnish Cache.
@@ -59,25 +48,32 @@
 				</fieldset>
 			</div>
 		</div>
-		<div class="card" data-section="Configure Varnish Server(s)" >
+		<div class="card <?= $edited ? "done" : "" ?>" data-section="Configure Varnish Server(s)" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Configure Varnish Server(s)</h3>
+					<h3>Configure Varnish Server(s)<span><?= $edited ? "Complete" : "Pending" ?></span></h3>
 					<p>
 						On this step, we will configure the available Varnish server(s).
 						This change can be made through the <b>Command-Line</b> or <b>Env Config File</b>.
 					</p>
-					<p>
+					<table>
+						<tr>
+							<th width="50%" >Host</th>
+							<th width="50%" >Port</th>
+						</tr>
 						<?php if ( $edited ): ?>
-							<ul>
-								<?php foreach ( $servers as $index => $server ): ?>
-									<li><?= $server->host . ":" . $server->port ?></li>
-								<?php endforeach; ?>
-							</ul>
+							<?php foreach ( $servers as $index => $server ): ?>
+								<tr>
+									<td><?= $server->host  ?></td>
+									<td><?= $server->port  ?></td>
+								</tr>
+							<?php endforeach; ?>
 						<?php else: ?>
-							<p>No Configured Server(s) Detected</p>
+							<tr>
+								<td colspan="3" >No Configured Server(s) Detected</td>
+							</tr>
 						<?php endif; ?>
-					</p>
+					</table>
 					<div class="tray-labels" >
 						<div data-tray="cli" >Command-Line<span>&blacktriangleright;</span></div>
 						<div data-tray="config" >Config File<span>&blacktriangleright;</span></div>
@@ -108,22 +104,22 @@
 				</fieldset>
 			</div>
 		</div>
-		<div class="card" data-section="Download Custom VCL" >
+		<div class="card <?= $installed ? "done" : "" ?>" data-section="Download Custom VCL" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Install Varnish Config File</h3>
+					<h3>Install Varnish Config File<span><?= $installed ? "Complete" : "Pending" ?></span></h3>
 					<table>
 						<tr>
-							<th>Varnish Server</th>
-							<th>Magento Version</th>
-							<th>Module Version</th>
+							<th width="33.33%" >Varnish Server</th>
+							<th width="33.33%" >Magento Version</th>
+							<th width="33.33%" >Module Version</th>
 						</tr>
 						<?php if ( $edited ): ?>
 							<?php foreach ( $servers as $index => $server ): ?>
 								<tr>
 									<td><?= $server->host . ":" . $server->port ?></td>
-									<td>Version <?= $server->magento ?></td>
-									<td>Version <?= $server->version ?></td>
+									<td><?= $server->magento ?></td>
+									<td><?= $server->version ?></td>
 								</tr>
 							<?php endforeach; ?>
 						<?php else: ?>
@@ -149,7 +145,7 @@
     --backend-port=8080 \
     --grace-period=300</code></pre>
 					</div>
-					<div class="tray" data-tray="dashboard" >		
+					<div class="tray" data-tray="dashboard" >
 						<p>
 							This can be done by navigating to <a href="<?= $block->getUrl ("adminhtml/system_config/edit/section/system") ?>" target="_blank" >Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System</a> &#10095; <b>Full Page Cache</b> &#10095; <b>Varnish Configuration</b>.
 							Once there you can configure your desired backend and download the VCL under <b>Export Configuration</b>.
@@ -158,7 +154,7 @@
 				</fieldset>
 			</div>
 		</div>
-		<div class="card" data-section="Debug Varnish Cache" >
+		<div class="card done" data-section="Debug Varnish Cache" >
 			<div class="methods" >
 				<fieldset class="method-container" >
 					<h3>Debug Mode</h3>
