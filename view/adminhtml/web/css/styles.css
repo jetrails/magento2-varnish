@@ -15,7 +15,7 @@ section.varnish .progress-container {
 }
 
 section.varnish code {
-	background: #F3F2F1;
+	background: #ADA9A326;
 	border-radius: 3px;
 	padding: 2px 4px;
 	margin: 0;
@@ -206,16 +206,39 @@ section.varnish .card .method-container .tray-labels > div {
 	border-radius: 3px;
 	cursor: pointer;
 	transition: background-color 250ms;
+	border: solid 1px transparent;
+	border-bottom: none;
+	box-sizing: border-box;
 }
 
-section.varnish .card .method-container .tray-labels > div:hover,
+section.varnish .card .method-container .tray-labels > div > span {
+	margin-left: 5px;
+	width: 8px;
+	display: inline-block;
+}
+
+section.varnish .card .method-container .tray-labels > div:hover {
+	background: #E8F5FF;
+}
+
 section.varnish .card .method-container .tray-labels > div.active {
-	background: #e8f5ff;
+	background: #E8F5FF;
+	border: solid 1px #E6E6E6;
+	border-bottom: none;
+	border-radius: 3px 3px 0 0;
 }
 
 section.varnish .card .method-container .tray {
 	display: none;
-	padding: 25px 0 0 0;
+	margin: 0px -20px -20px;
+	width: calc(100% + 40px);
+	padding: 20px;
+	border-top: solid 1px #E6E6E6;
+}
+
+section.varnish .card .method-container .tray img {
+	margin-top: 15px;
+	border: solid 1px #E6E6E6;
 }
 
 section.varnish table {
@@ -226,7 +249,7 @@ section.varnish table th {
 	font-weight: bold;
 	text-align: left;
 	white-space: nowrap;
-	background: #F3F2F1;
+	background: #ADA9A326;
 }
 
 section.varnish table th,
@@ -269,7 +292,7 @@ section.varnish .card .method-container > h3 > span {
 	border: solid 1px #00000030;
 	box-sizing: border-box;
 	color: #000000CC;
-	background: url("../images/close.svg"), #F3F2F1;
+	background: url("../images/close.svg"), #ADA9A326;
 	background-repeat: no-repeat;
 	background-position: 5px center;
 	background-size: 16px;

@@ -26,7 +26,7 @@
 					<h3>Set Caching Application<span><?= $enabled ? "Complete" : "Pending" ?></span></h3>
 					<p>The current caching application is set to <code><?= $enabled ? "Varnish Cache" : "Built-In Cache" ?></code>.</p>
 					<p>
-						On this step, we change the default caching application from Magento's Built-In Cache to Varnish Cache.
+						The default caching application needs to be changed from Magento's Built-In Cache to Varnish Cache.
 						This change can be made through the <b>Command-Line</b> or <b>Magento Admin Dashboard</b>.
 					</p>
 					<div class="tray-labels" >
@@ -44,6 +44,7 @@
 							This can be done by navigating to <a href="<?= $block->getUrl ("adminhtml/system_config/edit/section/system") ?>" target="_blank" >Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System</a> &#10095; Full Page Cache &#10095; Caching Application.
 							Once there you can change the caching application from <b>Built-In Cache</b> to <b>Varnish Cache</b>.
 						</p>
+						<img src="<?= $block->getViewFileUrl ("JetRails_Varnish::images/step-1.gif") ?>" />
 					</div>
 				</fieldset>
 			</div>
@@ -53,7 +54,7 @@
 				<fieldset class="method-container" >
 					<h3>Configure Varnish Server(s)<span><?= $edited ? "Complete" : "Pending" ?></span></h3>
 					<p>
-						On this step, we will configure the available Varnish server(s).
+						We need to configure our Varnish server(s).
 						This change can be made through the <b>Command-Line</b> or <b>Env Config File</b>.
 					</p>
 					<table>
@@ -107,7 +108,10 @@
 		<div class="card <?= $installed ? "done" : "" ?>" data-section="Download Custom VCL" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Install Varnish Config File<span><?= $installed ? "Complete" : "Pending" ?></span></h3>
+					<h3>Install Varnish Configuration File<span><?= $installed ? "Complete" : "Pending" ?></span></h3>
+					<p>
+						Each configured Varnish server needs to have their configuration file (usually found in <code>/etc/varnish/default.vcl</code>) updated. Once updated, the Varnish service on said server needs to be restarted so our configuration changes can be put into place. Generating the configuration contents can be done via <b>Command-Line</b> or <b>Admin-Dashboard</b>.
+					</p>
 					<table>
 						<tr>
 							<th width="33.33%" >Varnish Server</th>
@@ -148,8 +152,9 @@
 					<div class="tray" data-tray="dashboard" >
 						<p>
 							This can be done by navigating to <a href="<?= $block->getUrl ("adminhtml/system_config/edit/section/system") ?>" target="_blank" >Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System</a> &#10095; <b>Full Page Cache</b> &#10095; <b>Varnish Configuration</b>.
-							Once there you can configure your desired backend and download the VCL under <b>Export Configuration</b>.
+							Once there you can configure your desired backend and download the configuration file by clicking <b>Export Configuration</b>.
 						</p>
+						<img src="<?= $block->getViewFileUrl ("JetRails_Varnish::images/step-3.gif") ?>" />
 					</div>
 				</fieldset>
 			</div>
@@ -161,21 +166,29 @@
 					<p>Currently debug mode is <b><?= $debug ? "Enabled" : "Disabled" ?></b>.</p>
 					<p>
 						When Debug Mode is enabled, extra HTTP parameter will be sent in the response header of every page.
-						These parameters will be prefixed with <code>JR-</code>.
-						In addition to exclusion rule debug headers being present, the following will also be present:
-						<ul>
-							<li><code>JR-Hit-Miss</code>, will either be <b>HIT</b> or <b>MISS</b></li>
-							<li><code>JR-Hit-Count</code>, will display the number of hits in cache</li>
-							<li><code>JR-Current-Url</code>, will display the current page's full URL that is used with exclusion rules</li>
-							<li><code>JR-Current-Path</code>, will display the current page's URL path that is used with exclusion rules</li>
-							<li><code>JR-Current-Route</code>, will display the current page's route that is used with exclusion rules</li>
-						</ul>
+						These parameters will be prefixed with <code>JR-</code>. You can see these response headers by opening the dev-console in your favorite browser.
 					</p>
 					<form method="post" action="<?= $block->getUrl ('varnish/configuration/save') ?>" >
 						<?php echo $block->getBlockHtml ("formkey") ?>
 						<input type="hidden" name="debug" value="<?= $debug ? "disable" : "enable" ?>" />
 						<button type="submit" ><span><?= $debug ? "Disable" : "Enable" ?></span></button>
 					</form>
+					<div class="tray-labels" >
+						<div data-tray="more-info" >More-Info<span>&blacktriangleright;</span></div>
+					</div>
+					<div class="tray" data-tray="more-info" >
+						<p>
+							In addition to exclusion rule debug headers being present, the following will also be present:
+							<ul>
+								<li><code>JR-Hit-Miss</code>, will either be <b>HIT</b> or <b>MISS</b></li>
+								<li><code>JR-Hit-Count</code>, will display the number of hits in cache</li>
+								<li><code>JR-Current-Url</code>, will display the current page's full URL that is used with exclusion rules</li>
+								<li><code>JR-Current-Path</code>, will display the current page's URL path that is used with exclusion rules</li>
+								<li><code>JR-Current-Route</code>, will display the current page's route that is used with exclusion rules</li>
+							</ul>
+						</p>
+						<img src="<?= $block->getViewFileUrl ("JetRails_Varnish::images/dev-console.gif") ?>" />
+					</div>
 				</fieldset>
 			</div>
 		</div>
