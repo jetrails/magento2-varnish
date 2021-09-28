@@ -6,7 +6,7 @@
 	use Symfony\Component\Console\Input\InputInterface;
 
 	/**
-	 * @version         2.0.1
+	 * @version         2.0.2
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
