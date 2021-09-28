@@ -70,7 +70,7 @@
 			if ( $this->_data->isEnabled () ) {
 				$this->_run ();
 				$this->_consumeMessages ();
-				return $redirect->setPath ("varnish/pagecache/view");
+				return $redirect->setPath ("varnish/purgecache/view");
 			}
 			$this->messageManager->addError (
 				"Before using the <b>Purge Cache</b> feature, <b>Varnish Cache™</b>, must be set-up."
