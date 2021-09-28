@@ -2,7 +2,7 @@
 #
 # >jetrails_
 #
-# Config file was generated on Magento_Community@2.4.2 and JetRails_Varnish@2.0.0.
+# Config file was generated on Magento_Community@2.4.2 and JetRails_Varnish@2.0.1.
 # Do not alter this VCL directly since it is subject to overwrite.
 #
 
@@ -32,7 +32,7 @@ acl purge {
 
 sub vcl_recv {
     if (req.method == "GET" && client.ip ~ purge && req.url == "/jetrails/varnish-config/versions") {
-        return (synth(200, "Magento 2.4.2 / Module 2.0.0"));
+        return (synth(200, "Magento 2.4.2 / Module 2.0.1"));
     }
     set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
     if (req.restarts > 0) {

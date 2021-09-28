@@ -2,7 +2,7 @@
 	"name": "jetrails/magento2-varnish",
 	"description": "Magento 2 extension which interfaces with the Varnish caching application in order to manage it through the Magento backend",
 	"type": "magento2-module",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"license": "SEE LICENSE IN LICENSE.md",
 	"authors": [
 		{

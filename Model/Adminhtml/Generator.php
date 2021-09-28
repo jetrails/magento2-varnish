@@ -8,7 +8,7 @@
 	use Magento\PageCache\Model\VclTemplateLocatorInterface;
 
 	/**
-	 * @version         2.0.0
+	 * @version         2.0.1
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
