@@ -37,6 +37,9 @@ nuke: clean ## Remove generated & deployment data
 shell: ## Attach a shell to deploy container
 	docker-compose -f public_html/docker-compose.yml run deploy bash
 
+restart-varnish: ## Restart varnish container (updated vcl file)
+	docker-compose -f public_html/docker-compose.yml -f public_html/docker-compose.override.yml restart varnish
+
 dev-create: ## Create development environment
 	composer global config repositories.magento composer https://repo.magento.com/
 	composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.2 ./public_html

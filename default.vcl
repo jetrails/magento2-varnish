@@ -1,7 +1,8 @@
+
 #
 # >jetrails_
 #
-# Config file was generated on Magento_Community@2.4.2 and JetRails_Varnish@1.1.11.
+# Config file was generated on Magento_Community@2.4.2 and JetRails_Varnish@2.0.0.
 # Do not alter this VCL directly since it is subject to overwrite.
 #
 
@@ -15,14 +16,14 @@ import std;
 backend default {
     .host = "web";
     .port = "8080";
-#    .first_byte_timeout = 600s;
-#    .probe = {
-#        .url = "/pub/health_check.php";
-#        .timeout = 2s;
-#        .interval = 5s;
-#        .window = 10;
-#        .threshold = 5;
-#   }
+#   .first_byte_timeout = 600s;
+#   .probe = {
+#       .url = "/pub/health_check.php";
+#       .timeout = 2s;
+#       .interval = 5s;
+#       .window = 10;
+#       .threshold = 5;
+#  }
 }
 
 acl purge {
@@ -31,7 +32,7 @@ acl purge {
 
 sub vcl_recv {
     if (req.method == "GET" && client.ip ~ purge && req.url == "/jetrails/varnish-config/versions") {
-        return (synth(200, "Magento 2.4.2 / Module 1.1.11"));
+        return (synth(200, "Magento 2.4.2 / Module 2.0.0"));
     }
     set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
     if (req.restarts > 0) {
@@ -144,7 +145,7 @@ sub vcl_hash {
     if (req.http.X-Forwarded-Proto) {
         hash_data(req.http.X-Forwarded-Proto);
     }
-    
+
 
     if (req.url ~ "/graphql") {
         call process_graphql_headers;
