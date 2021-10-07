@@ -23,7 +23,7 @@
 		<div class="card <?= $enabled ? "done" : "" ?>" data-section="Change Caching Application" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Set Caching Application<span><?= $enabled ? "Complete" : "Pending" ?></span></h3>
+					<h3>Set Caching Application<span>Status: <?= $enabled ? "Completed" : "Pending" ?></span></h3>
 					<p>The current caching application is set to <code><?= $enabled ? "Varnish Cache" : "Built-In Cache" ?></code>.</p>
 					<p>
 						The default caching application needs to be changed from Magento's Built-In Cache to Varnish Cache.
@@ -52,7 +52,7 @@
 		<div class="card <?= $edited ? "done" : "" ?>" data-section="Configure Varnish Server(s)" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Configure Varnish Server(s)<span><?= $edited ? "Complete" : "Pending" ?></span></h3>
+					<h3>Configure Varnish Server(s)<span>Status: <?= $edited ? "Completed" : "Pending" ?></span></h3>
 					<p>
 						We need to configure our Varnish server(s).
 						This change can be made through the <b>Command-Line</b> or <b>Env Config File</b>.
@@ -108,7 +108,7 @@
 		<div class="card <?= $installed ? "done" : "" ?>" data-section="Download Custom VCL" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Install Varnish Configuration File<span><?= $installed ? "Complete" : "Pending" ?></span></h3>
+					<h3>Install Varnish Configuration File<span>Status: <?= $installed ? "Completed" : "Pending" ?></span></h3>
 					<p>
 						Each configured Varnish server needs to have their configuration file (usually found in <code>/etc/varnish/default.vcl</code>) updated. Once updated, the Varnish service on said server needs to be restarted so our configuration changes can be put into place. Generating the configuration contents can be done via <b>Command-Line</b> or <b>Admin-Dashboard</b>.
 					</p>
