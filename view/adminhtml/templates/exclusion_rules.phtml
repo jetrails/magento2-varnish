@@ -9,7 +9,7 @@
 				<div class="methods" >
 					<fieldset class="method-container" >
 						<h3>Excluded Routes</h3>
-						<p>New line separated values. The following formats are valid: <code>[route]/[module]/[controller]/[action]</code>, <code>[route]/[module]/[controller]</code>, <code>[route]/[module]</code>, and <code>[route]</code>.</p>
+						<p>Newline-separated values. The following formats are valid: <code>[route]/[module]/[controller]/[action]</code>, <code>[route]/[module]/[controller]</code>, <code>[route]/[module]</code>, and <code>[route]</code>.</p>
 						<textarea name="excluded_routes" ><?= implode ( "\n", $block->helper->getExcludedRoutes () ) ?></textarea>
 						<div class="tray-labels" >
 							<div data-tray="debug-headers" >Debug Headers <span>&blacktriangleright;</span></div>
@@ -58,7 +58,7 @@
 				<div class="methods" >
 					<fieldset class="method-container" >
 						<h3>Excluded Paths (Wildcard Pattern)</h3>
-						<p>New line separated values. Wildcard patterns must start with a <code>/</code> and must match the full path. Using two <code>**</code> will match across multiple slash seperated segments, while using one will match up until the first slash seperated segment.</p>
+						<p>Newline-separated values. Wildcard patterns must start with a <code>/</code> and must match the full path. Using two <code>**</code> will match across multiple slash-separated segments, while using one will match up until the first slash-separated segment.</p>
 						<textarea name="excluded_wildcard_patterns" ><?= implode ( "\n", $block->helper->getExcludedWildcardPatterns () ) ?></textarea>
 						<div class="tray-labels" >
 							<div data-tray="debug-headers" >Debug Headers <span>&blacktriangleright;</span></div>
@@ -111,7 +111,7 @@
 				<div class="methods" >
 					<fieldset class="method-container" >
 						<h3>Excluded URLs (RegExp Pattern)</h3>
-						<p>New line separated values. Regular expression patterns match against the full URL. Use anchors (<code>^</code> & <code>$</code>) exhaustively, since the risk of overmatching without them is high.</p>
+						<p>Newline-separated values. Regular expression patterns match against the full URL. Use anchors (<code>^</code> & <code>$</code>) exhaustively, since the risk of overmatching without them is high.</p>
 						<textarea name="excluded_regexp_patterns" ><?= implode ( "\n", $block->helper->getExcludedRegExpPatterns () ) ?></textarea>
 						<div class="tray-labels" >
 							<div data-tray="debug-headers" >Debug Headers <span>&blacktriangleright;</span></div>
