@@ -149,7 +149,7 @@
 				$servers [] = (object) [
 					"host" => $server->host,
 					"port" => $server->port,
-					"magento" => $responseCode == 200 && preg_match ( "/Magento (\d+\.\d+\.\d+)/", $response, $match )
+					"magento" => $responseCode == 200 && preg_match ( "/Magento (\d+\.\d+\.\d+(?:-p\d)?)/", $response, $match )
 						? array_pop ( $match )
 						: "Not Detected",
 					"version" => $responseCode == 200 && preg_match ( "/Module (\d+\.\d+\.\d+)/", $response, $match )
