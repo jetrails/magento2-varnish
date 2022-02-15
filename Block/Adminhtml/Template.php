@@ -5,6 +5,7 @@
 	use Magento\Framework\View\Element\Template as BaseTemplate;
 	use Magento\Framework\View\Element\Template\Context;
 	use Magento\Framework\App\DeploymentConfig;
+	use Magento\Framework\App\ProductMetadataInterface;
 	use JetRails\Varnish\Helper\Data as Helper;
 
 	/**
@@ -23,11 +24,13 @@
 			Context $context,
 			Helper $helper,
 			DeploymentConfig $config,
+			ProductMetadataInterface $metadata,
 			array $data = []
 		) {
 			parent::__construct ( $context, $data );
 			$this->helper = $helper;
 			$this->config = $config;
+			$this->metadata = $metadata;
 		}
 
 	}

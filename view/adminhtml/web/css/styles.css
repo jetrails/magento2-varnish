@@ -241,6 +241,24 @@ section.varnish .card .method-container .tray img {
 	border: solid 1px #E6E6E6;
 }
 
+section.varnish .tag {
+	background-color: #F3F2F1;
+	border-radius: 3px;
+	padding: 1px 4px;
+	position: relative;
+}
+
+section.varnish .tag.no-match::after {
+	position: absolute;
+	top: -2px;
+	right: -5px;
+	height: 8px;
+	width: 8px;
+	content: "";
+	background-color: #DC5549;
+	border-radius: 5px;
+}
+
 section.varnish table {
 	width: 100%;
 }

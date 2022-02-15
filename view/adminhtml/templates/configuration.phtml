@@ -115,15 +115,23 @@
 					<table>
 						<tr>
 							<th width="33.33%" >Varnish Server</th>
-							<th width="33.33%" >Magento Version</th>
-							<th width="33.33%" >Module Version</th>
+							<th width="33.33%" >Generated VCL With Magento Version</th>
+							<th width="33.33%" >Generated VCL With Module Version</th>
+							<th width="33.33%" >Update Needed</th>
 						</tr>
 						<?php if ( $edited ): ?>
 							<?php foreach ( $servers as $index => $server ): ?>
 								<tr>
 									<td><?= $server->host . ":" . $server->port ?></td>
-									<td><?= $server->magento ?></td>
-									<td><?= $server->version ?></td>
+									<td><span class="tag <?= $server->magento == $block->metadata->getVersion () ? "match" : "no-match" ?>" ><?= $server->magento ?></span></td>
+									<td><span class="tag <?= $server->version == $block->helper->getModuleVersion () ? "match" : "no-match" ?>" ><?= $server->version ?></span></td>
+									<td>
+									<?=
+										$server->magento == $block->metadata->getVersion () &&
+										$server->version == $block->helper->getModuleVersion ()
+										? "No" : "Yes"
+									?>
+									</td>
 								</tr>
 							<?php endforeach; ?>
 						<?php else: ?>
