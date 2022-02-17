@@ -10,10 +10,11 @@
 	<type name="Magento\Framework\Console\CommandList" >
 		<arguments>
 			<argument name="commands" xsi:type="array" >
-				<item name="varnish:purge:url"        xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Url</item>
-				<item name="varnish:purge:tag"        xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Tag</item>
-				<item name="varnish:purge:all"        xsi:type="object" >JetRails\Varnish\Console\Command\Purge\All</item>
-				<item name="varnish:purge:advanced"   xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Advanced</item>
+				<item name="varnish:purge:url"           xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Url</item>
+				<item name="varnish:purge:tag"           xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Tag</item>
+				<item name="varnish:purge:all"           xsi:type="object" >JetRails\Varnish\Console\Command\Purge\All</item>
+				<item name="varnish:purge:advanced"      xsi:type="object" >JetRails\Varnish\Console\Command\Purge\Advanced</item>
+				<item name="varnish:vcl:generate-custom" xsi:type="object" >JetRails\Varnish\Console\Command\Vcl\GenerateCustom</item>
 			</argument>
 		</arguments>
 	</type>

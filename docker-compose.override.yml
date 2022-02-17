@@ -2,3 +2,4 @@ services:
     varnish:
         volumes:
         -   "./default.vcl:/etc/varnish/default.vcl:delegated"
+        -   "./default.custom.vcl:/etc/varnish/default.custom.vcl:delegated"

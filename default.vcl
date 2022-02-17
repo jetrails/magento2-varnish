@@ -1,28 +1,34 @@
-#
-# >jetrails_
-#
-# Config file was generated on Magento_Community@2.4.2 and JetRails_Varnish@2.0.2.
-# Do not alter this VCL directly since it is subject to overwrite.
-#
+/**
+ * >jetrails_
+ *
+ * Do not alter this file directly since it is subject to overwrite. If you are
+ * looking to customize the config, please look into the 'default.custom.vcl'
+ * file which this config uses to implement it's hooking system.
+ *
+ * Generated on Magento Community 2.4.2 with JetRails_Varnish@2.0.2
+ */
 
 # VCL version 5.0 is not supported so it should be 4.0 even though actually used Varnish version is 6
 vcl 4.0;
 
 import std;
+
+include "default.custom.vcl";
+
 # The minimal Varnish version is 6.0
 # For SSL offloading, pass the following header in your proxy server or load balancer: 'X-Forwarded-Proto: https'
 
 backend default {
     .host = "web";
     .port = "8080";
-#   .first_byte_timeout = 600s;
-#   .probe = {
-#       .url = "/pub/health_check.php";
-#       .timeout = 2s;
-#       .interval = 5s;
-#       .window = 10;
-#       .threshold = 5;
-#  }
+#     .first_byte_timeout = 600s;
+#     .probe = {
+#         .url = "/pub/health_check.php";
+#         .timeout = 2s;
+#         .interval = 5s;
+#         .window = 10;
+#         .threshold = 5;
+#    }
 }
 
 acl purge {
@@ -30,6 +36,7 @@ acl purge {
 }
 
 sub vcl_recv {
+    call custom_recv_start;
     if (req.method == "GET" && client.ip ~ purge && req.url == "/jetrails/varnish-config/versions") {
         return (synth(200, "Magento 2.4.2 / Module 2.0.2"));
     }
@@ -133,9 +140,11 @@ sub vcl_recv {
     }
 
     return (hash);
+    call custom_recv_end;
 }
 
 sub vcl_hash {
+    call custom_hash_start;
     if (req.http.cookie ~ "X-Magento-Vary=") {
         hash_data(regsub(req.http.cookie, "^.*?X-Magento-Vary=([^;]+);*.*$", "\1"));
     }
@@ -149,18 +158,22 @@ sub vcl_hash {
     if (req.url ~ "/graphql") {
         call process_graphql_headers;
     }
+    call custom_hash_end;
 }
 
 sub process_graphql_headers {
+    call custom_process_graphql_headers_start;
     if (req.http.Store) {
         hash_data(req.http.Store);
     }
     if (req.http.Content-Currency) {
         hash_data(req.http.Content-Currency);
     }
+    call custom_process_graphql_headers_end;
 }
 
 sub vcl_backend_response {
+    call custom_backend_response_start;
     if ( beresp.http.JR-Exclude-By ) {
         set beresp.uncacheable = true;
         set beresp.ttl = 0s;
@@ -209,9 +222,11 @@ sub vcl_backend_response {
     }
 
     return (deliver);
+    call custom_backend_response_end;
 }
 
 sub vcl_deliver {
+    call custom_deliver_start;
     if ( resp.http.JR-Debug && resp.http.JR-Debug == "true" ) {
         if ( obj.hits > 0 ) {
             set resp.http.JR-Hit-Miss = "HIT";
@@ -257,9 +272,11 @@ sub vcl_deliver {
     unset resp.http.JR-Version;
     set resp.http.X-Powered-By = "Magic";
     set resp.http.Server = "JetRails";
+    call custom_deliver_end;
 }
 
 sub vcl_hit {
+    call custom_hit_start;
     if (obj.ttl >= 0s) {
         # Hit within TTL period
         return (deliver);
@@ -278,4 +295,5 @@ sub vcl_hit {
         set req.http.grace = "unlimited (unhealthy server)";
         return (deliver);
     }
+    call custom_hit_end;
 }

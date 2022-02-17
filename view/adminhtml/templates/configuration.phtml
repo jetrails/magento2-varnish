@@ -108,9 +108,17 @@
 		<div class="card <?= $installed ? "done" : "" ?>" data-section="Download Custom VCL" >
 			<div class="methods" >
 				<fieldset class="method-container" >
-					<h3>Install Varnish Configuration File<span>Status: <?= $installed ? "Completed" : "Pending" ?></span></h3>
+					<h3>Install Varnish Configuration Files<span>Status: <?= $installed ? "Completed" : "Pending" ?></span></h3>
 					<p>
-						Each configured Varnish server needs to have their configuration file (usually found in <code>/etc/varnish/default.vcl</code>) updated. Once updated, the Varnish service on said server needs to be restarted so our configuration changes can be put into place. Generating the configuration contents can be done via <b>Command-Line</b> or <b>Admin-Dashboard</b>.
+						Each configured Varnish server needs to have their configuration file (usually found in <code>/etc/varnish/default.vcl</code>) updated.
+						The <code>/etc/varnish/default.vcl</code> config file will hold most of the logic but we need to also download a companion config file and save it to <code>/etc/varnish/default.custom.vcl</code>.
+						By having two config files, the default VCL can be updated without having to port over any customizations that have been made back into it.
+						Instead the customizations are made in the companion config file only.
+						This is achievable by creating custom subroutines and strategically executing them in the default VCL, effectively creating a hooking system.
+					</p>
+					<p>
+						Once updated, the Varnish service on said server needs to be restarted so our configuration changes can be put into place.
+						Generating the configuration contents can be done via <b>Command-Line</b> or <b>Admin-Dashboard</b>.
 					</p>
 					<table>
 						<tr>
@@ -147,20 +155,24 @@
 					<div class="tray" data-tray="cli" >
 						<p>
 							To customize the following command, please see the help menu by running
-							<code>php bin/magento varnish:vcl:generate -h</code>.
-							The following will output the VCL config to standard out:
+							<code>php bin/magento varnish:vcl:generate -h</code> and <code>php bin/magento varnish:vcl:generate-custom -h</code>.
+							The following two commands will output the VCL configs and save them to their default file locations:
 						</p>
 <pre><code>php bin/magento varnish:vcl:generate \
     --export-version=6 \
     --access-list="127.0.0.1" --access-list="192.168.0.0/24" \
     --backend-host="localhost" \
     --backend-port=8080 \
-    --grace-period=300</code></pre>
+    --grace-period=300 \
+    --output-file=/etc/varnish/default.vcl</code></pre>
+<pre><code>php bin/magento varnish:vcl:generate-custom \
+    --export-version=6 \
+    --output-file=/etc/varnish/default.custom.vcl</code></pre>
 					</div>
 					<div class="tray" data-tray="dashboard" >
 						<p>
 							This can be done by navigating to <a href="<?= $block->getUrl ("adminhtml/system_config/edit/section/system") ?>" target="_blank" >Stores &#10095; Settings &#10095; Configuration &#10095; Advanced &#10095; System</a> &#10095; <b>Full Page Cache</b> &#10095; <b>Varnish Configuration</b>.
-							Once there you can configure your desired backend and download the configuration file by clicking <b>Export Configuration</b>.
+							Once there you can configure your desired backend and download the configuration files by clicking on one of the buttons that matches your Varnish Software's version under <b>Export Configuration</b> and <b>Export Custom Configuration</b>.
 						</p>
 						<img src="<?= $block->getViewFileUrl ("JetRails_Varnish::images/step-3.gif") ?>" />
 					</div>
