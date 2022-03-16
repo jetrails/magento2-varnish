@@ -11,7 +11,6 @@
 	use Magento\Store\Model\ScopeInterface;
 	use Magento\Store\Model\StoreManagerInterface;
 	use Magento\PageCache\Model\Cache\Server;
-	use Magento\Framework\Module\ModuleListInterface;
 
 	/**
 	 * @version         3.0.0
@@ -27,8 +26,8 @@
 		protected $_storeManager;
 		protected $_http;
 		protected $_server;
-		protected $_modules;
 
+		const MODULE_VERSION = "3.0.0";
 		const DEBUG_DISABLED = 1;
 		const DEBUG_ENABLED = 2;
 
@@ -37,15 +36,13 @@
 			StoreManagerInterface $storeManager,
 			WriterInterface $configWriter,
 			Http $http,
-			Server $server,
-			ModuleListInterface $modules
+			Server $server
 		) {
 			$this->_configReader = $configReader;
 			$this->_storeManager = $storeManager;
 			$this->_configWriter = $configWriter;
 			$this->_http = $http;
 			$this->_server = $server;
-			$this->_modules = $modules;
 		}
 
 		protected function _getConfigValue ( $path, $scope = ScopeInterface::SCOPE_STORE, $storeId = null ) {
@@ -116,7 +113,7 @@
 		}
 
 		public function getModuleVersion () {
-			return $this->_modules->getOne ("JetRails_Varnish") ["setup_version"];
+			return self::MODULE_VERSION;
 		}
 
 		public function getVarnishServersWithPorts () {

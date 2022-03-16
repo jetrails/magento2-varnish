@@ -15,6 +15,7 @@ bump: ## Bump version in source files based on latest git tag
 	VERSION=$(VERSION); sed -E -i '' "s/(<version>)(.+)(<\/version>)/\1$$VERSION\3/g" ./etc/config.xml
 	VERSION=$(VERSION); sed -E -i '' "s/setup_version=\"([^\"]+)\"/setup_version=\"$$VERSION\"/g" ./etc/module.xml
 	VERSION=$(VERSION); sed -E -i '' "s/schema_version=\"([^\"]+)\"/schema_version=\"$$VERSION\"/g" ./etc/module.xml
+	VERSION=$(VERSION); sed -E -i '' "s/const MODULE_VERSION = \"([^\"]+)\"/const MODULE_VERSION = \"$$VERSION\"/g" ./Helper/Data.php
 
 deploy: ## Deploy code to public_html directory
 	NAMESPACE_PATH=$(NAMESPACE_PATH); mkdir -p "./public_html/app/code/$$NAMESPACE_PATH"
