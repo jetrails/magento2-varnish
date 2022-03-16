@@ -5,7 +5,7 @@
 	use JetRails\Varnish\Controller\Adminhtml\Core\PurgeCache;
 
 	/**
-	 * @version         3.0.0
+	 * @version         3.0.1
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
