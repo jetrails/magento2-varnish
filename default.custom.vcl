@@ -1,6 +1,6 @@
 /**
  * >jetrails_
- *
+ * 
  * This file should be included within the default VCL file. It exists to help
  * customize the default VCL without having to modify the file itself. This way,
  * the default VCL can be updated without having to port over any customizations
@@ -9,11 +9,11 @@
  * hooking system. The available hooks can be found below in the form of
  * subroutines. Their names end in either '_start' or '_end', to find when these
  * subroutines are executed, refer to the default VCL file.
- *
+ * 
  * To keep things tidy, it is recommended that you include a description of the
  * issue that the given code snippet solves as well as any helpful references
  * that lead you to that solution.
- *
+ * 
  * Please Note: Native Varnish subroutines such as 'vcl_synth' can also be
  * defined here since they are not currently being used by Magento. These
  * subroutines will be used in the default VCL, but it is important to make sure

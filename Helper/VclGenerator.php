@@ -99,17 +99,6 @@
 			return $node;
 		}
 
-		public function insertForwardedFor ( $node ) {
-			if ( $node ["type"] == "sub" && $node ["identifier"] == "vcl_recv" ) {
-				$value = "    set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;" . $node ["value"];
-				$raw = "sub " . $node ["identifier"] . " {\n" . $value . "\n}";
-				$node ["value"] = $value;
-				$node ["raw"] = $raw;
-				return $node;
-			}
-			return $node;
-		}
-
 		public function insertDeliver ( $node ) {
 			if ( $node ["type"] == "sub" && $node ["identifier"] == "vcl_deliver" ) {
 				$prefixed = implode ( "\n", [
@@ -234,7 +223,6 @@
 				throw new Error ("Failed to customize config, please contact JetRails.");
 			}
 			$root = $this->insertHeaderComment ( $root );
-			$root = $this->parser->visit ( $root, [ $this, "insertForwardedFor" ] );
 			$root = $this->parser->visit ( $root, [ $this, "versionEndpoint" ] );
 			$root = $this->parser->visit ( $root, [ $this, "modifyRecv" ] );
 			$root = $this->parser->visit ( $root, [ $this, "insertBackendResponse" ] );

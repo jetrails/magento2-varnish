@@ -5,7 +5,7 @@
  * looking to customize the config, please look into the 'default.custom.vcl'
  * file which this config uses to implement it's hooking system.
  *
- * Generated on Magento Community 2.4.2 with JetRails_Varnish@3.0.0
+ * Generated on Magento Community 2.4.2 with JetRails_Varnish@3.0.1
  */
 
 # VCL version 5.0 is not supported so it should be 4.0 even though actually used Varnish version is 6
@@ -38,9 +38,9 @@ acl purge {
 sub vcl_recv {
     call custom_recv_start;
     if (req.method == "GET" && client.ip ~ purge && req.url == "/jetrails/varnish-config/versions") {
-        return (synth(200, "Magento 2.4.2 / Module 3.0.0"));
+        return (synth(200, "Magento 2.4.2 / Module 3.0.1"));
     }
-    set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
+
     if (req.restarts > 0) {
         set req.hash_always_miss = true;
     }
@@ -153,7 +153,7 @@ sub vcl_hash {
     if (req.http.X-Forwarded-Proto) {
         hash_data(req.http.X-Forwarded-Proto);
     }
-
+    
 
     if (req.url ~ "/graphql") {
         call process_graphql_headers;
