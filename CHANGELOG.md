@@ -1,5 +1,9 @@
 # Changelog
 
+### `3.0.3`
+- Fix #62, Removed less file from default layout
+- Fix #63, PHP compatibility >=7.2
+
 ### `3.0.2`
 - Fix #61, Managing X-Forwarded-For moved to nginx instead of varnish
 

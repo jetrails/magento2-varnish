@@ -13,7 +13,7 @@
 	use Magento\PageCache\Model\Cache\Server;
 
 	/**
-	 * @version         3.0.2
+	 * @version         3.0.3
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
@@ -27,7 +27,7 @@
 		protected $_http;
 		protected $_server;
 
-		const MODULE_VERSION = "3.0.2";
+		const MODULE_VERSION = "3.0.3";
 		const DEBUG_DISABLED = 1;
 		const DEBUG_ENABLED = 2;
 

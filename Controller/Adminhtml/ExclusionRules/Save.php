@@ -13,7 +13,7 @@
 	use Magento\Framework\Message\ManagerInterface;
 
 	/**
-	 * @version         3.0.2
+	 * @version         3.0.3
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
