@@ -20,6 +20,9 @@
 		"psr-4": { "JetRails\\Varnish\\": "" },
 		"files": [ "registration.php" ]
 	},
+	"require-dev": {
+		"phpcompatibility/php-compatibility": "*"
+	},
 	"require": {
 		"php": ">=7.2"
 	}
