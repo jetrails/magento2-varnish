@@ -19,5 +19,8 @@
 	"autoload": {
 		"psr-4": { "JetRails\\Varnish\\": "" },
 		"files": [ "registration.php" ]
+	},
+	"require": {
+		"php": ">=7.2"
 	}
 }

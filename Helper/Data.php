@@ -159,19 +159,19 @@
 
 		public function getExcludedRoutes () {
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_routes";
-			$routes = explode ( "\n", $this->_getConfigValue ( $path ) );
+			$routes = explode ( "\n", $this->_getConfigValue ( $path ) ?? "" );
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
 
 		public function getExcludedWildcardPatterns () {
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_wildcard_patterns";
-			$routes = explode ( "\n", $this->_getConfigValue ( $path ) );
+			$routes = explode ( "\n", $this->_getConfigValue ( $path ) ?? "" );
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
 
 		public function getExcludedRegExpPatterns () {
 			$path = "jetrails_varnish/cache_exclusion_patterns/excluded_regexp_patterns";
-			$routes = explode ( "\n", $this->_getConfigValue ( $path ) );
+			$routes = explode ( "\n", $this->_getConfigValue ( $path ) ?? "" );
 			return array_filter ( $routes, function ( $i ) { return $i != ""; });
 		}
 

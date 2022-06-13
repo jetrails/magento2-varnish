@@ -175,12 +175,12 @@
 				$value = preg_replace (
 					"/if\s*\(\s*!req.http.X-Magento-Tags-Pattern\s+&&\s+!req.http.X-Pool\s*\)\s*{/m",
 					"if ( !req.http.X-Magento-Tags-Pattern && !req.http.X-Pool && !req.http.JR-Purge ) {",
-					$value,
+					$value
 				);
 				$value = preg_replace (
 					"/return\s*\(\s*synth\s*\(\s*400,\s*\"X-Magento-Tags-Pattern or X-Pool header required\"\s*\)\s*\);/m",
 					"return (synth(400, \"X-Magento-Tags-Pattern or X-Pool or JR-Purge header required\"));",
-					$value,
+					$value
 				);
 				$value = preg_replace (
 					"/return\s*\(\s*synth\s*\(\s*200,\s*\"Purged\"\s*\)\s*\);/m",
@@ -190,7 +190,7 @@
 						"        }",
 						"        return (synth(200, \"Purged\"));",
 					]),
-					$value,
+					$value
 				);
 				$raw = "backend " . $node ["identifier"] . " {" . $value . "}";
 				$node ["value"] = $value;

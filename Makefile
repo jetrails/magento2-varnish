@@ -43,9 +43,9 @@ restart-varnish: ## Restart varnish container (updated vcl file)
 
 dev-create: ## Create development environment
 	composer global config repositories.magento composer https://repo.magento.com/
-	composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.2 ./public_html
-	cd public_html && ln -s ../default.vcl ./default.vcl
-	cd public_html && ln -s ../default.custom.vcl ./default.custom.vcl
+	composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.4 ./public_html
+	cd public_html && ln -s ../docker-only.vcl ./default.vcl
+	cd public_html && ln -s ../docker-only.custom.vcl ./default.custom.vcl
 	cd public_html && ln -s ../.magento.docker.yml ./.magento.docker.yml
 	cd public_html && ln -s ../.magento.setup.params ./.magento.setup.params
 	cd public_html && ln -s ../docker-compose.override.yml ./docker-compose.override.yml
