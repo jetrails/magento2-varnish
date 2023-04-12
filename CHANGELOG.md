@@ -1,5 +1,9 @@
 # Changelog
 
+### `3.0.4`
+- Fix #65, Console need to return int for execute function
+- Fix #66, Moved development environment to use Bitnami containers
+
 ### `3.0.3`
 - Fix #62, Removed less file from default layout
 - Fix #63, PHP compatibility >=7.2

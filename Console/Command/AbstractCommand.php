@@ -13,7 +13,7 @@
 	use Symfony\Component\Console\Output\OutputInterface;
 
 	/**
-	 * @version         3.0.3
+	 * @version         3.0.4
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
