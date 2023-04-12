@@ -1,0 +1,46 @@
+version: "2"
+
+services:
+  varnish:
+    image: varnish:6
+    environment:
+      - VARNISH_HTTP_PORT=8080
+      - VARNISH_SIZE=1G
+    volumes:
+      - ./private/default.vcl:/etc/varnish/default.vcl
+  elasticsearch:
+    image: docker.io/bitnami/elasticsearch:7
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.3
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=magento2
+      - MARIADB_DATABASE=magento2
+  magento:
+    image: docker.io/bitnami/magento:2
+    ports:
+      - "80:8080"
+      - "443:8443"
+    environment:
+      - MAGENTO_HOST=localhost
+      - MAGENTO_DATABASE_HOST=mariadb
+      - MAGENTO_DATABASE_PORT_NUMBER=3306
+      - MAGENTO_DATABASE_USER=magento2
+      - MAGENTO_DATABASE_NAME=magento2
+      - MAGENTO_USERNAME=jetrails
+      - MAGENTO_PASSWORD=magento2
+      - MAGENTO_MODE=developer
+      - MAGENTO_ENABLE_HTTPS=yes
+      - MAGENTO_ENABLE_ADMIN_HTTPS=yes
+      - MAGENTO_ADMIN_URL_PREFIX=admin
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT_NUMBER=9200
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MAGENTO_ENABLE_HTTP_CACHE=yes
+      - MAGENTO_HTTP_CACHE_BACKEND_HOST=localhost
+      - MAGENTO_HTTP_CACHE_BACKEND_PORT_NUMBER=8080
+      - MAGENTO_HTTP_CACHE_SERVER_HOST=varnish
+      - MAGENTO_HTTP_CACHE_SERVER_PORT_NUMBER=8080
+    depends_on:
+      - mariadb
+      - elasticsearch

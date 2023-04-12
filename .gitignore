@@ -8,3 +8,4 @@ composer.lock
 /private/
 /public_html/
 /vendor/
+/build/
