@@ -7,6 +7,7 @@
 	use JetRails\Varnish\Helper\Validator;
 	use JetRails\Varnish\Logger\Logger;
 	use Magento\Framework\App\Cache\TypeListInterface;
+	use Magento\Framework\Console\Cli;
 	use Symfony\Component\Console\Command\Command;
 	use Symfony\Component\Console\Input\InputInterface;
 	use Symfony\Component\Console\Output\OutputInterface;
@@ -93,6 +94,7 @@
 				$output->writeln ( "\n" . implode ( "\n", $response->payload ) );
 			}
 			$output->writeln ("");
+			return Cli::RETURN_SUCCESS;
 		}
 
 		protected abstract function runCommand ( InputInterface $input );
