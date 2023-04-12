@@ -40,7 +40,38 @@ $ make VERSION=1.0.0 package
 
 ## Development Environment
 
-Run `make dev-create` to create a docker development environment using the [magento-cloud-docker](https://github.com/magento/magento-cloud-docker) project. Run `make dev-down` spin the environment down, `make dev-up` to spin it back up, and `make dev-nuke` to completely remove everything that is ephemeral.
+We use a super simple development environment that is ephemeral. You can spin it up by doing the following:
+
+```shell
+mkdir -p ./private/varnish
+cp conf/varnish/*.vcl ./private/varnish
+docker compose up -d
+docker compose logs -f
+docker compose down # destroy environment
+```
+
+You can deploy the module into the development environment by running the following:
+
+```shell
+make clean
+make build
+make deploy
+```
+
+You can then access the magento container by running the following:
+
+```shell
+docker compose exec magento bash
+```
+
+Once in the container you can run the standard commands to install the module:
+
+```shell
+magento setup:upgrade
+magento setup:di:compile
+```
+
+The Magento site is hosted on http://localhost and the backend can be reached at http://localhost/admin. Default user name is `jetrails` and default password is `magento2`.
 
 ## Legal Disclaimer
 
