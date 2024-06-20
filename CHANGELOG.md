@@ -1,5 +1,8 @@
 # Changelog
 
+### `3.0.5`
+- Fix #67, New version of magento includes additional parameter to generateVcl
+
 ### `3.0.4`
 - Fix #65, Console need to return int for execute function
 - Fix #66, Moved development environment to use Bitnami containers

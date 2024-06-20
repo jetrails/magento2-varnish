@@ -8,7 +8,7 @@
 	use Symfony\Component\Console\Input\InputOption;
 
 	/**
-	 * @version         3.0.4
+	 * @version         3.0.5
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
