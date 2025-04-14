@@ -10,7 +10,7 @@
 	use Magento\Framework\App\Cache\Type\Config;
 
 	/**
-	 * @version         3.0.5
+	 * @version         3.0.6
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
