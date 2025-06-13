@@ -13,6 +13,7 @@
 				<excluded_wildcard_patterns></excluded_wildcard_patterns>
 				<excluded_regexp_patterns></excluded_regexp_patterns>
 			</cache_exclusion_patterns>
+			<enable_xkey>0</enable_xkey>
 		</jetrails_varnish>
 	</default>
 </config>
