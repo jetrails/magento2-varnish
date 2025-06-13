@@ -25,11 +25,13 @@
 		private $magentoEdition;
 		private $magentoVersion;
 		private $moduleVersion;
+		protected $scopeConfig;
 
 		function __construct (
 			Data $data,
 			LazyVclParser $parser,
-			ProductMetadataInterface $metadata
+			ProductMetadataInterface $metadata,
+			ScopeConfigInterface $scopeConfig
 		) {
 			$this->data = $data;
 			$this->parser = $parser;
@@ -37,6 +39,7 @@
 			$this->magentoVersion = $this->metadata->getVersion ();
 			$this->magentoEdition = $this->metadata->getEdition ();
 			$this->moduleVersion = $this->data->getModuleVersion ();
+			$this->scopeConfig = $scopeConfig;
 		}
 
 		public function insertSubHooksInclude ( $root ) {
@@ -216,6 +219,67 @@
 			return $node;
 		}
 
+public function insertXkey($node) {
+    $isXkeyEnabled = $this->scopeConfig->getValue(
+        'system/full_page_cache/varnish/enable_xkey',
+        \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+    );
+    $isSoftPurgingUsed = $this->scopeConfig->getValue(
+        'system/full_page_cache/varnish/use_soft_purging',
+        \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+    );
+
+    if (!$isXkeyEnabled || !$isSoftPurgingUsed) {
+        return $node;
+    }
+
+    if ($node["type"] == "import" && strpos($node["raw"], "import std;") !== false) {
+        $importXkey = "import xkey;\n";
+        if (strpos($node["value"], $importXkey) === false) {
+            $node["value"] .= $importXkey;
+            $node["raw"] .= $importXkey;
+        }
+        return $node;
+    }
+
+    if ($node["type"] == "sub" && $node["identifier"] == "vcl_recv") {
+        $value = implode("\n", [
+            "    # Full Page Cache flush",
+            "    if (req.http.X-Magento-Tags-Pattern == \".*\") {",
+            "        ban(\"obj.http.X-Magento-Tags ~ \" + req.http.X-Magento-Tags-Pattern);",
+            "    } elseif (req.http.X-Magento-Tags-Pattern) {",
+            "        set req.http.X-Magento-Tags-Pattern = regsuball(req.http.X-Magento-Tags-Pattern, \"[^a-zA-Z0-9_-]+\", \" \");",
+            "        set req.http.X-Magento-Tags-Pattern = regsuball(req.http.X-Magento-Tags-Pattern, \"(^\\s*)|(\\s*$)\", \"\");",
+            "        set req.http.n-gone = xkey.softpurge(req.http.X-Magento-Tags-Pattern);",
+            "        return (synth(200, \"Invalidated \" + req.http.n-gone + \" objects\"));",
+            "    }",
+        ]);
+
+        $value = "\n$value\n" . $node["value"];
+        $raw = "sub " . $node["identifier"] . " {\n" . $value . "\n}";
+        $node["value"] = $value;
+        $node["raw"] = $raw;
+    }
+
+    if ($node["type"] == "sub" && $node["identifier"] == "vcl_backend_response") {
+        $value = implode("\n", [
+            "    set beresp.grace = 3h;",
+            "    if (beresp.http.X-Magento-Tags) {",
+            "        set beresp.http.Grace = beresp.grace;",
+            "        set beresp.http.xkey = regsuball(beresp.http.X-Magento-Tags, \",\", \" \");",
+            "        set beresp.http.X-Magento-Tags = \"fpc\";",
+            "    }",
+        ]);
+
+        $value = "\n$value\n" . $node["value"];
+        $raw = "sub " . $node["identifier"] . " {\n" . $value . "\n}";
+        $node["value"] = $value;
+        $node["raw"] = $raw;
+    }
+
+    return $node;
+}
+
 		function generateDefault ( $vcl ) {
 			$this->parser->setData ( $vcl );
 			$root = $this->parser->getAST ();
@@ -230,6 +294,7 @@
 			$root = $this->parser->visit ( $root, [ $this, "insertDeliver" ] );
 			$root = $this->parser->visit ( $root, [ $this, "insertSubHooks" ] );
 			$root = $this->insertSubHooksInclude ( $root );
+			$root = $this->parser->visit($root, [$this, "insertXkey"]);
 			return $this->parser->getString ( $root );
 		}
 

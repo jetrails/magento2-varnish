@@ -26,6 +26,22 @@
 							<field id="caching_application" >1</field>
 						</depends>
 					</field>
+					<field id="enable_xkey" translate="label" type="select" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Use Xkey vmod</label>
+						<comment><![CDATA[Varnish Xkey vmod is installed. See <a target="_blank" href="https://github.com/varnish/varnish-modules/blob/master/src/vmod_xkey.vcc">Varnish VMOD xkey</a>.]]></comment>
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						<depends>
+							<field id="caching_application">2</field>
+						</depends>
+					</field>
+					<field id="use_soft_purging" type="select" translate="label comment" sortOrder="36" showInDefault="1">
+						<label>Use soft purging</label>
+						<comment>Use soft purging instead of hard purging. This requires Xkey vmod to be installed</comment>
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						<depends>
+							<field id="system/full_page_cache/varnish/enable_xkey">1</field>
+						</depends>
+					</field>
 					<depends>
 						<field id="caching_application" >2</field>
 					</depends>
