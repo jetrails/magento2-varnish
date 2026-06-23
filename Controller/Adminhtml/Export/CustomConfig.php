@@ -44,11 +44,8 @@
 				case 6:
 					$content = $this->config->getVclFile ( Config::VARNISH_6_CONFIGURATION_PATH );
 					break;
-				case 5:
-					$content = $this->config->getVclFile ( Config::VARNISH_5_CONFIGURATION_PATH );
-					break;
 				default:
-					$content = $this->config->getVclFile ( Config::VARNISH_4_CONFIGURATION_PATH );
+					$content = $this->config->getVclFile ( Config::VARNISH_7_CONFIGURATION_PATH );
 					break;
 			}
 			$content = $this->generator->generateCustom ( $content );

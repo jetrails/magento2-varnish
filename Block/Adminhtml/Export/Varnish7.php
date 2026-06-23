@@ -11,10 +11,10 @@
 	 * @copyright       JetRails®, all rights reserved
 	 * @license         The JetRails License (SEE LICENSE IN LICENSE.md)
 	 */
-	class Varnish4 extends Export {
+	class Varnish7 extends Export {
 
 		public function getVarnishVersion () {
-			return 4;
+			return 7;
 		}
 
 	}
