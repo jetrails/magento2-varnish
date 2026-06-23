@@ -54,7 +54,7 @@
 				->setDefinition ( $this->getOptionList () );
 		}
 
-		protected function execute ( InputInterface $input, OutputInterface $output ) {
+		protected function execute ( InputInterface $input, OutputInterface $output ): int {
 			try {
 				$outputFile = $input->getOption ( self::OUTPUT_FILE_OPTION );
 				$varnishVersion = $input->getOption ( self::EXPORT_VERSION_OPTION );

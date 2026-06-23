@@ -53,7 +53,7 @@
 			$output->writeln ( $message );
 		}
 
-		protected function execute ( InputInterface $input, OutputInterface $output ) {
+		protected function execute ( InputInterface $input, OutputInterface $output ): int {
 			$output->writeln ("");
 			$this->_printLabel ( $output, "Powered By", "The JetRails Team" );
 			$this->_printLabel ( $output, "Email Us", "support@jetrails.com" );

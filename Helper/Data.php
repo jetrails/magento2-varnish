@@ -142,7 +142,6 @@
 				curl_setopt ( $handle, CURLOPT_CUSTOMREQUEST, "GET" );
 				$response = curl_exec ( $handle );
 				$responseCode = curl_getinfo ( $handle, CURLINFO_HTTP_CODE );
-				curl_close ( $handle );
 				$servers [] = (object) [
 					"host" => $server->host,
 					"port" => $server->port,

@@ -38,7 +38,6 @@
 				curl_setopt ( $handle, CURLOPT_HTTPHEADER, $additionalHeaders );
 				$response = curl_exec ( $handle );
 				$responseCode = curl_getinfo ( $handle, CURLINFO_HTTP_CODE );
-				curl_close ( $handle );
 				array_push ( $responses, ( object ) [
 					"server"    => $server->host . ":" . $server->port,
 					"target"    => $target,
