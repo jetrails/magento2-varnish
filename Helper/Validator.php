@@ -5,7 +5,7 @@
 	use Magento\Framework\App\Helper\AbstractHelper;
 
 	/**
-	 * @version         3.0.6
+	 * @version         3.0.7
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
