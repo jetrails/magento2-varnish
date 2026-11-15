@@ -88,7 +88,7 @@
 			$actionName     = $this->_request->getActionName ();
 			$currentUrl   = trim ( $this->_url->getCurrentUrl (), "/" );
 			$currentPath  = parse_url ( $currentUrl, PHP_URL_PATH );
-			$currentPath  = $currentPath === "" ? "/" : $currentPath;
+			$currentPath  = $currentPath === null || $currentPath === "" ? "/" : $currentPath;
 			$currentRoute = "$routeName/$moduleName/$controllerName/$actionName/";
 			$this->_response->setHeader ( "JR-Version", $version, true );
 			$this->_response->setHeader ( "JR-Debug", $isDebugMode ? "true" : "false", true );
