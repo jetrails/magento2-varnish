@@ -7,7 +7,6 @@
 	use JetRails\Varnish\Helper\Validator;
 	use JetRails\Varnish\Logger\Logger;
 	use Magento\Framework\App\Cache\TypeListInterface;
-	use Magento\Framework\Console\Cli;
 	use Symfony\Component\Console\Command\Command;
 	use Symfony\Component\Console\Input\InputInterface;
 	use Symfony\Component\Console\Output\OutputInterface;
@@ -63,8 +62,8 @@
 			if ( !$this->_runIfDisabled && !$this->_data->isEnabled () ) {
 				$status   = "unsuccessful";
 				$message  = "Cache application must be set to <options=underscore>Varnish Cache™</>";
-				$payload  = "<fg=red>varnish:status:set enable</>";
-				$payload .= "Run '$payload' to set Varnish Cache™ as caching application";
+				$payload  = "<fg=red>config:set system/full_page_cache/caching_application 2</>";
+				$payload  = "Run '$payload' to set Varnish Cache™ as caching application";
 				$response = ( object ) [
 					"status" => $status,
 					"message" => $message,
@@ -94,7 +93,7 @@
 				$output->writeln ( "\n" . implode ( "\n", $response->payload ) );
 			}
 			$output->writeln ("");
-			return Cli::RETURN_SUCCESS;
+			return $response->status === "successful" ? Command::SUCCESS : Command::FAILURE;
 		}
 
 		protected abstract function runCommand ( InputInterface $input );
