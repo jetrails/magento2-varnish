@@ -8,7 +8,7 @@
 	use Magento\PageCache\Model\Config;
 
 	/**
-	 * @version         3.0.7
+	 * @version         3.0.8
 	 * @package         JetRails® Varnish
 	 * @author          Rafael Grigorian - JetRails®
 	 * @copyright       JetRails®, all rights reserved
