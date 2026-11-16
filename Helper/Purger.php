@@ -64,7 +64,7 @@
 		}
 
 		public function all () {
-			$additionalHeaders = [ "JR-Purge: req.http.host ~ .*" ];
+			$additionalHeaders = [ "JR-Purge: obj.status != 0" ];
 			return $this->_purge ( "Everything", $additionalHeaders );
 		}
 
