@@ -58,7 +58,7 @@
 					$total++;
 				}
 				return [
-					"status" => $success > 0 && $total - $success > 0 ? null : $total == $success,
+					"status" => $success > 0 && $total - $success > 0 ? null : $total > 0 && $total == $success,
 					"message" => "purged tag from $success/$total varnish servers",
 					"payload" => $payload
 				];
