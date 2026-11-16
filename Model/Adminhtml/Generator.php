@@ -41,7 +41,7 @@
 
 		public function generateVcl ( $version, $inputFile = null ) {
 			$config = parent::generateVcl ( $version, $inputFile );
-			return $this->generator->generateDefault ( $config );
+			return $this->generator->generateDefault ( $config, $version );
 		}
 
 	}

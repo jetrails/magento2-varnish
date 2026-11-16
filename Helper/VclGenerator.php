@@ -169,7 +169,7 @@
 			return $node;
 		}
 
-		public function modifyRecv ( $node ) {
+		public function modifyRecv ( $node, $version = 6 ) {
 			if ( $node ["type"] == "sub" && $node ["identifier"] == "vcl_recv" ) {
 				$value = $node ["value"];
 				$value = preg_replace (
@@ -186,7 +186,11 @@
 					"/return\s*\(\s*synth\s*\(\s*200,\s*\"Purged\"\s*\)\s*\);/m",
 					implode ( "\n", [
 						"if ( req.http.JR-Purge ) {",
-						"            ban( req.http.JR-Purge );",
+						$version >= 7 ? implode ( "\n", [
+							"            if ( !std.ban ( req.http.JR-Purge ) ) {",
+							"                return (synth(400, std.ban_error()));",
+							"            }",
+						]) : "            ban( req.http.JR-Purge );",
 						"        }",
 						"        return (synth(200, \"Purged\"));",
 					]),
@@ -216,7 +220,7 @@
 			return $node;
 		}
 
-		function generateDefault ( $vcl ) {
+		function generateDefault ( $vcl, $version = 6 ) {
 			$this->parser->setData ( $vcl );
 			$root = $this->parser->getAST ();
 			if ( $this->parser->hasType ( $root, "unknown" ) ) {
@@ -224,7 +228,9 @@
 			}
 			$root = $this->insertHeaderComment ( $root );
 			$root = $this->parser->visit ( $root, [ $this, "versionEndpoint" ] );
-			$root = $this->parser->visit ( $root, [ $this, "modifyRecv" ] );
+			$root = $this->parser->visit ( $root, function ( $node ) use ( $version ) {
+				return $this->modifyRecv ( $node, $version );
+			});
 			$root = $this->parser->visit ( $root, [ $this, "insertBackendResponse" ] );
 			$root = $this->parser->visit ( $root, [ $this, "modifyBackend" ] );
 			$root = $this->parser->visit ( $root, [ $this, "insertDeliver" ] );
