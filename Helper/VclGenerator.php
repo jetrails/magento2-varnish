@@ -139,7 +139,10 @@
 				$prefixed = implode ( "\n", [
 					"    if ( beresp.http.JR-Exclude-By ) {",
 					"        set beresp.uncacheable = true;",
-					"        set beresp.ttl = 0s;",
+					"        set beresp.ttl = 120s;",
+					"        if ( beresp.http.content-type ~ \"text\" ) {",
+					"            set beresp.do_esi = true;",
+					"        }",
 					"        return (deliver);",
 					"    }",
 				]);
