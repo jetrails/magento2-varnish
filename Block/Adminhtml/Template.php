@@ -19,6 +19,7 @@
 
 		public $helper;
 		public $config;
+		public $metadata;
 
 		public function __construct (
 			Context $context,

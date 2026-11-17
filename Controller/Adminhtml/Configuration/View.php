@@ -22,7 +22,7 @@
 			PageFactory $resultPageFactory,
 			array $dataArray = []
 		) {
-			parent::__construct ( $context, $dataArray );
+			parent::__construct ( $context );
 			$this->_resultPageFactory = $resultPageFactory;
 		}
 

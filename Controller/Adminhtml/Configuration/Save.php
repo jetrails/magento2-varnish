@@ -2,8 +2,8 @@
 
 	namespace JetRails\Varnish\Controller\Adminhtml\Configuration;
 
-	use Magento\Framework\App\Action\Action;
-	use Magento\Framework\App\Action\Context;
+	use Magento\Backend\App\Action;
+	use Magento\Backend\App\Action\Context;
 	use Magento\Framework\App\Config\Storage\WriterInterface;
 	use Magento\Framework\App\Cache\TypeListInterface;
 	use Magento\Framework\Controller\ResultFactory;
@@ -27,7 +27,7 @@
 			TypeListInterface $cacheTypeList,
 			array $dataArray = []
 		) {
-			parent::__construct ( $context, $dataArray );
+			parent::__construct ( $context );
 			$this->_configWriter = $configWriter;
 			$this->_cacheTypeList = $cacheTypeList;
 		}
