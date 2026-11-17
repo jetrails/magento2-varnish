@@ -33,8 +33,7 @@
 			ManagerInterface $message,
 			TypeListInterface $cacheTypeList,
 			WriterInterface $configWriter,
-			Validator $validator,
-			array $dataArray = []
+			Validator $validator
 		) {
 			parent::__construct ( $context );
 			$this->_message = $message;

@@ -24,8 +24,7 @@
 		public function __construct (
 			Context $context,
 			WriterInterface $configWriter,
-			TypeListInterface $cacheTypeList,
-			array $dataArray = []
+			TypeListInterface $cacheTypeList
 		) {
 			parent::__construct ( $context );
 			$this->_configWriter = $configWriter;
