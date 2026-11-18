@@ -22,7 +22,11 @@
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^4.0",
-		"phpcompatibility/php-compatibility": "^10.0@alpha"
+		"phpcompatibility/php-compatibility": "^10.0@alpha",
+		"magento/magento-coding-standard": "^41",
+		"phpstan/phpstan": "^2.1",
+		"bitexpert/phpstan-magento": "^0.44",
+		"phpstan/extension-installer": "^1.4"
 	},
 	"require": {
 		"php": ">=7.2"
@@ -31,7 +35,8 @@
 	"prefer-stable": true,
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": false
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
 		}
 	}
 }

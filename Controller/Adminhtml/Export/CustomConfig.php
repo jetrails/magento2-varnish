@@ -23,6 +23,8 @@
 		protected $config;
 		protected $generator;
 
+		const VARNISH_7_CONFIGURATION_PATH = "system/full_page_cache/varnish7/path";
+
 		const ADMIN_RESOURCE = "Magento_Backend::system";
 
 		public function __construct (
@@ -45,7 +47,7 @@
 					$content = $this->config->getVclFile ( Config::VARNISH_6_CONFIGURATION_PATH );
 					break;
 				default:
-					$content = $this->config->getVclFile ( Config::VARNISH_7_CONFIGURATION_PATH );
+					$content = $this->config->getVclFile ( self::VARNISH_7_CONFIGURATION_PATH );
 					break;
 			}
 			$content = $this->generator->generateCustom ( $content );

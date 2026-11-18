@@ -6,8 +6,8 @@
 	use JetRails\Varnish\Helper\Purger;
 	use JetRails\Varnish\Helper\Validator;
 	use JetRails\Varnish\Logger\Logger;
-	use Magento\Framework\App\Action\Action;
-	use Magento\Framework\App\Action\Context;
+	use Magento\Backend\App\Action;
+	use Magento\Backend\App\Action\Context;
 	use Magento\Framework\Controller\ResultFactory;
 
 	/**

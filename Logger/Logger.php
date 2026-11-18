@@ -2,7 +2,7 @@
 
 	namespace JetRails\Varnish\Logger;
 
-	use Monolog\Logger as MonoLogger;
+	use Magento\Framework\Logger\Monolog as MonoLogger;
 
 	/**
 	 * @version         3.0.8

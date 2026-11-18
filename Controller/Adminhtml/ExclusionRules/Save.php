@@ -4,8 +4,8 @@
 
 	use JetRails\Varnish\Helper\Data;
 	use JetRails\Varnish\Helper\Validator;
-	use Magento\Framework\App\Action\Action;
-	use Magento\Framework\App\Action\Context;
+	use Magento\Backend\App\Action;
+	use Magento\Backend\App\Action\Context;
 	use Magento\Framework\App\Cache\Type\Config;
 	use Magento\Framework\App\Cache\TypeListInterface;
 	use Magento\Framework\App\Config\Storage\WriterInterface;
@@ -33,10 +33,9 @@
 			ManagerInterface $message,
 			TypeListInterface $cacheTypeList,
 			WriterInterface $configWriter,
-			Validator $validator,
-			array $dataArray = []
+			Validator $validator
 		) {
-			parent::__construct ( $context, $dataArray );
+			parent::__construct ( $context );
 			$this->_message = $message;
 			$this->_cacheTypeList = $cacheTypeList;
 			$this->_configWriter = $configWriter;
